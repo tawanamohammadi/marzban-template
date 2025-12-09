@@ -2222,7 +2222,7 @@
                 <span><i class="ri-time-line"></i> <span id="clock">08:30</span> Tehran</span>
             </div>
             <p class="welcome" data-t="welcome">Welcome back,</p>
-            <h1 class="uname" id="uname">tawana</h1>
+            <h1 class="uname" id="uname">{{ user.username }}</h1>
 
             <!-- Standardized Status Card -->
             <div class="dash-card">
@@ -2239,12 +2239,12 @@
 
                 <div class="dc-stats">
                     <div class="dc-stat">
-                        <div class="dcs-val" id="qDays">30</div>
+                        <div class="dcs-val" id="qDays">{{ user.expire | days_left }}</div>
                         <div class="dcs-lbl" data-t="daysLeft">Days</div>
                     </div>
                     <div class="dc-divider"></div>
                     <div class="dc-stat">
-                        <div class="dcs-val">71 GB</div>
+                        <div class="dcs-val">{{ user.data_limit | bytesformat }}</div>
                         <div class="dcs-lbl" data-t="dataLeft">Data</div>
                     </div>
                     <div class="dc-divider"></div>
