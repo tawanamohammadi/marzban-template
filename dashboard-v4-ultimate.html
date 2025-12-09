@@ -2239,14 +2239,17 @@
 
                 <div class="dc-stats">
                     <div class="dc-stat">
-                        <div class="dcs-val" id="qDays">{{ user.expire | days_left }}</div>
+                        <div class="dcs-val" id="qDays">-</div>
                         <div class="dcs-lbl" data-t="daysLeft">Days</div>
                     </div>
                     <div class="dc-divider"></div>
                     <div class="dc-stat">
-                        <div class="dcs-val">{{ user.data_limit | bytesformat }}</div>
+                        <div class="dcs-val" id="qData">-</div>
                         <div class="dcs-lbl" data-t="dataLeft">Data</div>
                     </div>
+                    <div class="hidden-data" id="uExpire" style="display:none">{{ user.expire }}</div>
+                    <div class="hidden-data" id="uLimit" style="display:none">{{ user.data_limit }}</div>
+                    <div class="hidden-data" id="uUsed" style="display:none">{{ user.used_traffic }}</div>
                     <div class="dc-divider"></div>
                     <div class="dc-stat">
                         <div class="dcs-val" id="qServers">13</div>
@@ -3022,8 +3025,57 @@
             document.getElementById('tuteSection').classList.toggle('open');
         }
 
+        // Initialize Data from Hidden Fields
+        function initData() {
+            try {
+                // Days Left
+                const expEl = document.getElementById('uExpire');
+                if (expEl) {
+                    const exp = expEl.textContent.trim();
+                    const now = Math.floor(Date.now() / 1000);
+                    if (exp && !isNaN(exp) && parseInt(exp) > 0) {
+                        const diff = parseInt(exp) - now;
+                        const d = Math.ceil(diff / 86400);
+                        document.getElementById('qDays').textContent = d > 0 ? d : 0;
+                    } else {
+                        document.getElementById('qDays').textContent = '∞';
+                    }
+                }
+
+                // Data Usage
+                const limEl = document.getElementById('uLimit');
+                const usedEl = document.getElementById('uUsed');
+
+                if (limEl && usedEl) {
+                    const lim = limEl.textContent.trim();
+                    const used = usedEl.textContent.trim();
+
+                    if (lim && !isNaN(lim) && parseInt(lim) > 0) {
+                        const rem = parseInt(lim) - parseInt(used || 0);
+                        document.getElementById('qData').textContent = formatBytes(rem > 0 ? rem : 0);
+                    } else {
+                        document.getElementById('qData').textContent = '∞';
+                    }
+                }
+
+            } catch (e) {
+                console.error("Data init error", e);
+            }
+        }
+
+        function formatBytes(bytes, decimals = 1) {
+            if (!+bytes) return '0 B';
+            const k = 1024;
+            const dm = decimals < 0 ? 0 : decimals;
+            const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+        }
+
         // Initialize
         function initV4() {
+            initData();
+
             // Load saved theme
             const savedTheme = localStorage.getItem('theme') || 'dark';
             document.documentElement.setAttribute('data-theme', savedTheme);
