@@ -1,0 +1,3053 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOOKA - Ultimate V4 Dashboard</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1DB954">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/niclis/vazir-font@v30.1.0/dist/Vazirmatn-Variable.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css" rel="stylesheet">
+    <style>
+        /* Theme Engine - Spotify Dark (Default) */
+        :root,
+        :root[data-theme="dark"] {
+            --accent: #1DB954;
+            --accent2: #1ed760;
+            --glow: rgba(29, 185, 84, 0.3);
+            --soft: rgba(29, 185, 84, 0.08);
+            --bg: #020204;
+            --bg2: #08080c;
+            --card: #0e0e14;
+            --card2: #151520;
+            --card3: #1a1a28;
+            --text: #fff;
+            --text2: #a1a1aa;
+            --text3: #71717a;
+            --border: rgba(255, 255, 255, 0.04);
+            --green: #22c55e;
+            --red: #ef4444;
+            --orange: #f59e0b;
+            --blue: #3b82f6;
+            --purple: #a855f7;
+            --pink: #ec4899;
+            --font: 'Plus Jakarta Sans', system-ui;
+            --font-fa: 'Vazirmatn', system-ui;
+            --r: 16px;
+            --r2: 12px;
+            --r3: 8px;
+            --tr: .3s cubic-bezier(0.2, 0.8, 0.2, 1)
+        }
+
+        /* Theme Engine - Apple Music Light */
+        :root[data-theme="light"] {
+            --accent: #fa2d48;
+            --accent2: #ff6b81;
+            --glow: rgba(250, 45, 72, 0.2);
+            --soft: rgba(250, 45, 72, 0.08);
+            --bg: #f5f5f7;
+            --bg2: #fff;
+            --card: #fff;
+            --card2: #f2f2f7;
+            --card3: #e5e5ea;
+            --text: #1d1d1f;
+            --text2: #86868b;
+            --text3: #aeaeb2;
+            --border: rgba(0, 0, 0, 0.06);
+            --green: #34c759;
+            --red: #ff3b30;
+            --orange: #ff9500;
+            --blue: #007aff;
+            --purple: #af52de;
+            --pink: #ff2d55
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font);
+            margin: 0;
+            min-height: 100vh;
+            overflow-x: hidden
+        }
+
+        /* Focus States for Accessibility */
+        button:focus-visible,
+        a:focus-visible,
+        .app:focus-visible,
+        .srv:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px
+        }
+
+        [dir="rtl"] body {
+            font-family: var(--font-fa)
+        }
+
+        /* BG Effects */
+        .bg-fx {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: radial-gradient(ellipse 60% 40% at 50% -5%, var(--soft), transparent), radial-gradient(ellipse 30% 30% at 90% 90%, rgba(139, 92, 246, 0.04), transparent), radial-gradient(ellipse 30% 30% at 10% 80%, rgba(59, 130, 246, 0.03), transparent)
+        }
+
+        /* Header - Always LTR */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(2, 2, 4, 0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: .75rem 1.25rem;
+            direction: ltr !important
+        }
+
+        [data-theme="light"] header {
+            background: rgba(255, 255, 255, 0.92)
+        }
+
+        .h-in {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .logo-i {
+            width: 34px;
+            height: 34px;
+            background: var(--accent);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            box-shadow: 0 0 20px var(--glow)
+        }
+
+        .logo-t {
+            font-family: 'Outfit';
+            font-size: 1.35rem;
+            font-weight: 900;
+            letter-spacing: -.5px
+        }
+
+        .logo-t span {
+            color: var(--accent)
+        }
+
+        .h-r {
+            display: flex;
+            align-items: center;
+            gap: .75rem
+        }
+
+        .h-time {
+            font-size: .75rem;
+            color: var(--text2);
+            text-align: right;
+            line-height: 1.3
+        }
+
+        .h-time .fa {
+            font-size: .7rem;
+            color: var(--text3)
+        }
+
+        .h-btns {
+            display: flex;
+            gap: .35rem
+        }
+
+        .h-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: .2s;
+            font-size: .9rem
+        }
+
+        .h-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent)
+        }
+
+        main {
+            padding: 80px 1rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 1.5rem 1rem 2rem;
+            position: relative
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle at 30% 40%, var(--glow), transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(59, 130, 246, 0.2), transparent 50%);
+            opacity: .5;
+            pointer-events: none;
+            animation: pulse 8s ease-in-out infinite
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: .5;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            50% {
+                opacity: .7;
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+
+        /* Avatar - Enhanced */
+        .av {
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--purple));
+            padding: 3px;
+            margin: 0 auto 1rem;
+            box-shadow: 0 0 40px var(--glow), 0 0 0 3px var(--bg), 0 0 0 5px var(--accent);
+            position: relative;
+            z-index: 1
+        }
+
+        .av img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            background: var(--bg)
+        }
+
+        .av-badge {
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            background: var(--accent);
+            color: #000;
+            font-size: .6rem;
+            font-weight: 900;
+            padding: .25rem .5rem;
+            border-radius: 12px;
+            border: 3px solid var(--bg);
+            text-transform: uppercase;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3)
+        }
+
+        .hero-date {
+            font-size: .7rem;
+            color: var(--text3);
+            margin-bottom: .5rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap
+        }
+
+        .hero-date span {
+            display: flex;
+            align-items: center;
+            gap: .3rem
+        }
+
+        .welcome {
+            font-size: .8rem;
+            color: var(--text2);
+            margin-bottom: .25rem
+        }
+
+        .uname {
+            font-size: clamp(1.5rem, 5vw, 2.25rem);
+            font-weight: 800;
+            letter-spacing: -.5px;
+            margin-bottom: .5rem
+        }
+
+        .member-msg {
+            background: linear-gradient(135deg, rgba(168, 85, 247, .08), rgba(236, 72, 153, .06));
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(168, 85, 247, .15);
+            border-radius: var(--r);
+            padding: 1rem;
+            margin: 1.25rem auto;
+            max-width: 500px
+        }
+
+        .member-msg h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: .25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .4rem
+        }
+
+        .member-msg h3 span {
+            color: var(--accent)
+        }
+
+        .member-msg p {
+            font-size: .8rem;
+            color: var(--text2)
+        }
+
+        /* Enhanced Welcome Box */
+        .hero-welcome-box {
+            background: linear-gradient(135deg,
+                    rgba(29, 185, 84, 0.1) 0%,
+                    rgba(59, 130, 246, 0.08) 50%,
+                    rgba(168, 85, 247, 0.06) 100%);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 1.25rem;
+            margin: 1.25rem auto;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12)
+        }
+
+        [data-theme="light"] .hero-welcome-box {
+            background: linear-gradient(135deg,
+                    rgba(250, 45, 72, 0.08) 0%,
+                    rgba(255, 107, 129, 0.06) 50%,
+                    rgba(255, 255, 255, 0.7) 100%);
+            backdrop-filter: blur(12px)
+        }
+
+        .hero-welcome-box::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, var(--glow), transparent 60%);
+            opacity: 0.4;
+            pointer-events: none
+        }
+
+        .welcome-icon {
+            font-size: 2.5rem;
+            margin-bottom: .75rem;
+            position: relative;
+            z-index: 1
+        }
+
+        .welcome-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-bottom: .5rem;
+            position: relative;
+            z-index: 1
+        }
+
+        .welcome-desc {
+            font-size: .85rem;
+            color: var(--text2);
+            line-height: 1.5;
+            position: relative;
+            z-index: 1
+        }
+
+        /* Quick Stats */
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: .75rem;
+            margin: 1.5rem 0;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto
+        }
+
+        @media(max-width:640px) {
+            .quick-stats {
+                grid-template-columns: 1fr;
+                max-width: 100%
+            }
+        }
+
+        .q-stat {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: var(--r2);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            transition: .3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1)
+        }
+
+        [data-theme="light"] .q-stat {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px)
+        }
+
+        .q-stat:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2)
+        }
+
+        .q-stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #fff;
+            flex-shrink: 0
+        }
+
+        .q-stat-info {
+            flex: 1;
+            min-width: 0
+        }
+
+        .q-stat-val {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: .1rem
+        }
+
+        .q-stat-l {
+            font-size: .65rem;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: .5px
+        }
+
+        /* Tutorial Box */
+        .tutorial-box {
+            background: linear-gradient(135deg, rgba(29, 185, 84, .08), rgba(59, 130, 246, .05));
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 1.25rem;
+            margin: 1.5rem auto;
+            max-width: 500px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1)
+        }
+
+        @media(max-width:640px) {
+            .tutorial-box {
+                padding: 1rem;
+                max-width: 100%
+            }
+        }
+
+        .tutorial-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .5rem;
+            font-size: .9rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem
+        }
+
+        .tutorial-header i {
+            font-size: 1.2rem
+        }
+
+        .tutorial-steps {
+            display: grid;
+            gap: .75rem
+        }
+
+        .tut-step {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--border);
+            border-radius: var(--r3);
+            padding: .85rem;
+            transition: .3s
+        }
+
+        [data-theme="light"] .tut-step {
+            background: rgba(255, 255, 255, 0.6)
+        }
+
+        @media(max-width:640px) {
+            .tut-step {
+                padding: .75rem;
+                gap: .5rem
+            }
+        }
+
+        .tut-step:hover {
+            border-color: var(--accent);
+            transform: translateX(4px)
+        }
+
+        .tut-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: .9rem;
+            flex-shrink: 0
+        }
+
+        .tut-content {
+            flex: 1;
+            min-width: 0
+        }
+
+        .tut-title {
+            font-size: .8rem;
+            font-weight: 700;
+            margin-bottom: .15rem
+        }
+
+        .tut-desc {
+            font-size: .7rem;
+            color: var(--text3)
+        }
+
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: .4rem;
+            flex-wrap: wrap;
+            margin: 1rem 0
+        }
+
+        .bdg {
+            display: inline-flex;
+            align-items: center;
+            gap: .35rem;
+            padding: .4rem .85rem;
+            border-radius: 99px;
+            font-size: .75rem;
+            font-weight: 600;
+            background: var(--card);
+            border: 1px solid var(--border)
+        }
+
+        .bdg-g {
+            background: var(--soft);
+            color: var(--accent);
+            border-color: rgba(29, 185, 84, .15)
+        }
+
+        .bdg-o {
+            background: rgba(245, 158, 11, .08);
+            color: #fbbf24;
+            border-color: rgba(245, 158, 11, .15)
+        }
+
+        .bdg-b {
+            background: rgba(59, 130, 246, .08);
+            color: #60a5fa;
+            border-color: rgba(59, 130, 246, .15)
+        }
+
+        .bdg-p {
+            background: rgba(168, 85, 247, .08);
+            color: #c084fc;
+            border-color: rgba(168, 85, 247, .15)
+        }
+
+        .hero-btns {
+            display: flex;
+            justify-content: center;
+            gap: .5rem;
+            flex-wrap: wrap
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: .35rem;
+            padding: .75rem 1.25rem;
+            border-radius: 99px;
+            font-size: .8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s;
+            border: none;
+            text-decoration: none
+        }
+
+        .btn-p {
+            background: linear-gradient(135deg, var(--accent), #15803d);
+            color: #000;
+            box-shadow: 0 4px 18px var(--glow)
+        }
+
+        .btn-p:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px var(--glow)
+        }
+
+        .btn-s {
+            background: var(--card);
+            color: var(--text);
+            border: 1px solid var(--border)
+        }
+
+        .btn-s:hover {
+            border-color: var(--accent)
+        }
+
+        .btn-r {
+            background: linear-gradient(135deg, var(--purple), #7c3aed);
+            color: #fff
+        }
+
+        .btn-r:hover {
+            transform: translateY(-2px)
+        }
+
+        /* Section */
+        .sec {
+            margin-bottom: 1.75rem
+        }
+
+        .sec-h {
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+            font-size: .95rem;
+            font-weight: 700;
+            margin-bottom: .85rem
+        }
+
+        .sec-h i {
+            color: var(--accent)
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: .6rem
+        }
+
+        .stat {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--r2);
+            padding: .85rem .75rem;
+            text-align: center;
+            transition: .2s;
+            position: relative;
+            overflow: hidden
+        }
+
+        .stat::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transition: .3s
+        }
+
+        .stat:hover {
+            border-color: rgba(29, 185, 84, .2);
+            transform: translateY(-2px)
+        }
+
+        .stat:hover::before {
+            transform: scaleX(1)
+        }
+
+        .stat-i {
+            font-size: 1.25rem;
+            margin-bottom: .3rem
+        }
+
+        .stat-v {
+            font-size: 1.1rem;
+            font-weight: 800
+        }
+
+        .stat-l {
+            font-size: .65rem;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            margin-top: .15rem
+        }
+
+        /* Chart Section */
+        .chart-sec {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 1.25rem;
+            margin-bottom: 1.75rem
+        }
+
+        .chart-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: .5rem
+        }
+
+        .c-tabs {
+            display: flex;
+            gap: .25rem
+        }
+
+        .c-tab {
+            padding: .35rem .65rem;
+            border-radius: 6px;
+            background: var(--card2);
+            border: 1px solid var(--border);
+            color: var(--text2);
+            cursor: pointer;
+            font-size: .7rem;
+            transition: .2s
+        }
+
+        .c-tab.active,
+        .c-tab:hover {
+            background: var(--soft);
+            color: var(--accent);
+            border-color: rgba(29, 185, 84, .2)
+        }
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 1.25rem
+        }
+
+        .chart-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem
+        }
+
+        .donut {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: conic-gradient(var(--accent) calc(var(--p)*1%), rgba(255, 255, 255, 0.04) 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, .4)
+        }
+
+        .donut::before {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: var(--card);
+            border-radius: 50%
+        }
+
+        .donut-in {
+            position: relative;
+            z-index: 1;
+            text-align: center
+        }
+
+        .donut-v {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--accent)
+        }
+
+        .donut-l {
+            font-size: .65rem;
+            color: var(--text3)
+        }
+
+        .legends {
+            display: flex;
+            flex-direction: column;
+            gap: .4rem;
+            width: 100%
+        }
+
+        .leg {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            padding: .5rem .65rem;
+            background: var(--card2);
+            border-radius: var(--r3)
+        }
+
+        .leg-d {
+            width: 6px;
+            height: 6px;
+            border-radius: 2px
+        }
+
+        .leg-l {
+            font-size: .7rem;
+            color: var(--text3);
+            flex: 1
+        }
+
+        .leg-v {
+            font-weight: 700;
+            font-size: .8rem
+        }
+
+        .chart-right {
+            display: flex;
+            flex-direction: column;
+            gap: .75rem
+        }
+
+        .bar-chart {
+            flex: 1
+        }
+
+        .bar-title {
+            font-size: .75rem;
+            color: var(--text2);
+            margin-bottom: .5rem
+        }
+
+        .bars {
+            display: flex;
+            flex-direction: column;
+            gap: .35rem
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .bar-day {
+            font-size: .65rem;
+            color: var(--text3);
+            width: 28px
+        }
+
+        .bar-wrap {
+            flex: 1;
+            height: 12px;
+            background: var(--card2);
+            border-radius: 99px;
+            overflow: hidden
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            border-radius: 99px;
+            transition: width .8s
+        }
+
+        .bar-val {
+            font-size: .65rem;
+            color: var(--text2);
+            width: 35px;
+            text-align: right
+        }
+
+        .chart-footer {
+            background: var(--card2);
+            border-radius: var(--r3);
+            padding: .75rem;
+            margin-top: .5rem
+        }
+
+        .prog-h {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: .4rem;
+            font-size: .75rem
+        }
+
+        .prog-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 99px;
+            overflow: hidden
+        }
+
+        .prog-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            border-radius: 99px;
+            position: relative
+        }
+
+        .prog-fill::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .2), transparent);
+            animation: shimmer 2s infinite
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%)
+            }
+
+            100% {
+                transform: translateX(100%)
+            }
+        }
+
+        .chart-alert {
+            background: rgba(245, 158, 11, .08);
+            border: 1px solid rgba(245, 158, 11, .15);
+            border-radius: var(--r3);
+            padding: .6rem .75rem;
+            margin-top: .75rem;
+            font-size: .75rem;
+            color: #fbbf24;
+            display: flex;
+            align-items: center;
+            gap: .4rem
+        }
+
+        /* Servers */
+        .srv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: .5rem
+        }
+
+        .srv {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--r2);
+            padding: .75rem;
+            text-align: center;
+            transition: .2s;
+            cursor: pointer;
+            position: relative
+        }
+
+        .srv:hover {
+            border-color: rgba(29, 185, 84, .25);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, .2)
+        }
+
+        .srv-flag {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto .4rem;
+            background: var(--card2);
+            overflow: hidden
+        }
+
+        .srv-flag .fi {
+            font-size: 1.4rem;
+            border-radius: 3px
+        }
+
+        .srv-name {
+            font-weight: 600;
+            font-size: .75rem;
+            margin-bottom: .3rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .srv-tags {
+            display: flex;
+            justify-content: center;
+            gap: .2rem;
+            flex-wrap: wrap;
+            margin-bottom: .35rem
+        }
+
+        .tag {
+            padding: .12rem .4rem;
+            border-radius: 3px;
+            font-size: .6rem;
+            font-weight: 600;
+            background: var(--soft);
+            color: var(--accent)
+        }
+
+        .tag-b {
+            background: rgba(59, 130, 246, .08);
+            color: #60a5fa
+        }
+
+        .tag-p {
+            background: rgba(168, 85, 247, .08);
+            color: #c084fc
+        }
+
+        .srv-ping {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .25rem;
+            font-size: .65rem;
+            color: var(--text3)
+        }
+
+        .ping-d {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%
+        }
+
+        .ping-g {
+            background: var(--green)
+        }
+
+        .ping-o {
+            background: var(--orange)
+        }
+
+        .ping-r {
+            background: var(--red)
+        }
+
+        .srv-cp {
+            position: absolute;
+            top: .4rem;
+            right: .4rem;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: .2s;
+            border: none;
+            cursor: pointer;
+            font-size: .7rem
+        }
+
+        .srv:hover .srv-cp {
+            opacity: 1
+        }
+
+        /* Apps - V3 Style */
+        .apps-sec {
+            margin-bottom: 2rem
+        }
+
+        .apps-w {
+            margin-bottom: 2rem
+        }
+
+        .app-tabs {
+            display: flex;
+            gap: .5rem;
+            margin-bottom: 1rem;
+            overflow-x: auto;
+            padding-bottom: .5rem
+        }
+
+        .app-tab {
+            background: var(--card2);
+            border: 1px solid var(--border);
+            padding: .5rem 1rem;
+            border-radius: var(--r3);
+            font-size: .8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .2s;
+            white-space: nowrap;
+            color: var(--text2)
+        }
+
+        .app-tab.active {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent)
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: .75rem
+        }
+
+        @media(max-width:1024px) {
+            .app-grid {
+                grid-template-columns: repeat(3, 1fr)
+            }
+        }
+
+        @media(max-width:640px) {
+            .app-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: .5rem
+            }
+        }
+
+        .app {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: var(--r2);
+            padding: 1.25rem .75rem;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text);
+            transition: .3s;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1)
+        }
+
+        [data-theme="light"] .app {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.6))
+        }
+
+        .app::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, var(--glow), transparent 70%);
+            opacity: 0;
+            transition: .3s
+        }
+
+        .app:hover::before {
+            opacity: 0.3
+        }
+
+        .app:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3)
+        }
+
+        .app-i {
+            font-size: 2.5rem;
+            margin-bottom: .75rem;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))
+        }
+
+        .app-n {
+            font-size: .65rem;
+            color: var(--text3);
+            margin-bottom: .3rem;
+            position: relative;
+            z-index: 1
+        }
+
+        .app-d {
+            font-size: .8rem;
+            font-weight: 700;
+            margin-bottom: .3rem;
+            position: relative;
+            z-index: 1
+        }
+
+        .app-v {
+            font-size: .65rem;
+            color: var(--accent);
+            font-weight: 700;
+            position: relative;
+            z-index: 1
+        }
+
+        /* Payment */
+        .pay {
+            background: linear-gradient(135deg, var(--card), rgba(168, 85, 247, .05));
+            border: 1px solid rgba(168, 85, 247, .12);
+            border-radius: var(--r);
+            padding: 1.25rem;
+            margin-bottom: 1.75rem;
+            text-align: center
+        }
+
+        .pay-i {
+            font-size: 2rem;
+            margin-bottom: .5rem
+        }
+
+        .pay-t {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: .25rem
+        }
+
+        .pay-d {
+            color: var(--text2);
+            font-size: .8rem;
+            margin-bottom: 1rem
+        }
+
+        .pay-cards {
+            display: flex;
+            justify-content: center;
+            gap: .5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap
+        }
+
+        .pay-card {
+            background: var(--card2);
+            border-radius: var(--r3);
+            padding: .65rem .85rem;
+            min-width: 140px
+        }
+
+        .pay-card-l {
+            font-size: .65rem;
+            color: var(--text3);
+            margin-bottom: .2rem
+        }
+
+        .pay-card-n {
+            font-size: .95rem;
+            font-weight: 800;
+            font-family: monospace;
+            letter-spacing: 1px
+        }
+
+        .pay-prices {
+            display: flex;
+            justify-content: center;
+            gap: .5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap
+        }
+
+        .pay-opt {
+            background: var(--card2);
+            border: 1px solid var(--border);
+            border-radius: var(--r3);
+            padding: .6rem .85rem;
+            cursor: pointer;
+            transition: .2s
+        }
+
+        .pay-opt:hover,
+        .pay-opt.active {
+            border-color: var(--accent);
+            background: var(--soft)
+        }
+
+        .pay-opt-t {
+            font-size: .7rem;
+            color: var(--text3);
+            margin-bottom: .15rem
+        }
+
+        .pay-opt-p {
+            font-weight: 800;
+            font-size: .9rem
+        }
+
+        /* Support */
+        .support {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: .5rem
+        }
+
+        .sup {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--r2);
+            padding: 1rem;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text);
+            transition: .2s
+        }
+
+        .sup:hover {
+            transform: translateY(-2px)
+        }
+
+        .sup.hl {
+            border-color: rgba(29, 185, 84, .2);
+            background: var(--soft)
+        }
+
+        .sup-i {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto .5rem;
+            font-size: 1rem
+        }
+
+        .sup-i.tg {
+            background: linear-gradient(135deg, #0088cc, #00b4d8);
+            color: #fff
+        }
+
+        .sup-i.em {
+            background: linear-gradient(135deg, #ea4335, #ff6b6b);
+            color: #fff
+        }
+
+        .sup-i.rn {
+            background: var(--purple);
+            color: #fff
+        }
+
+        .sup-t {
+            font-weight: 700;
+            font-size: .8rem;
+            margin-bottom: .15rem
+        }
+
+        .sup-d {
+            font-size: .65rem;
+            color: var(--text3)
+        }
+
+        /* Countdown */
+        .countdown {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 1rem;
+            margin-bottom: 1.75rem;
+            text-align: center
+        }
+
+        .cd-t {
+            font-size: .8rem;
+            color: var(--text2);
+            margin-bottom: .5rem
+        }
+
+        .cd-boxes {
+            display: flex;
+            justify-content: center;
+            gap: .5rem
+        }
+
+        .cd-box {
+            background: var(--card2);
+            border-radius: var(--r3);
+            padding: .5rem .75rem;
+            min-width: 50px
+        }
+
+        .cd-v {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--accent)
+        }
+
+        .cd-l {
+            font-size: .6rem;
+            color: var(--text3)
+        }
+
+
+        /* Support 24/7 Badge */
+        .sup-247 {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            background: linear-gradient(135deg, var(--accent), #15803d);
+            color: #000;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 0.25rem 0.5rem;
+            border-radius: 99px;
+            margin-left: 0.5rem;
+            box-shadow: 0 0 12px var(--glow);
+            animation: pulse-badge 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-badge {
+
+            0%,
+            100% {
+                box-shadow: 0 0 12px var(--glow);
+            }
+
+            50% {
+                box-shadow: 0 0 20px var(--glow);
+            }
+        }
+
+        .support {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: .5rem
+        }
+
+        @media(max-width:768px) {
+            .support {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        footer {
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            padding: 2rem 1rem 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media(max-width:768px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        .footer-col h3 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--accent);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-link {
+            color: var(--text2);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .footer-link:hover {
+            color: var(--accent);
+            transform: translateX(3px);
+        }
+
+        .footer-link i {
+            font-size: 0.9rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: var(--card2);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            text-decoration: none;
+            transition: 0.2s;
+            font-size: 1.1rem;
+        }
+
+        .social-link:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #000;
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: var(--text3);
+        }
+
+        @media(max-width:640px) {
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        .footer-version {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .version-badge {
+            background: var(--soft);
+            color: var(--accent);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 700;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 1.25rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: var(--accent);
+            color: #000;
+            padding: .75rem 1.25rem;
+            border-radius: var(--r3);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+            opacity: 0;
+            transition: .3s;
+            z-index: 999;
+            box-shadow: 0 6px 20px var(--glow);
+            font-size: .85rem
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .92);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999
+        }
+
+        .modal.show {
+            display: flex
+        }
+
+        .modal-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 1.25rem;
+            text-align: center;
+            max-width: 220px
+        }
+
+        .modal-t {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1rem
+        }
+
+        .lang-btns {
+            display: flex;
+            flex-direction: column;
+            gap: .4rem
+        }
+
+        .l-btn {
+            padding: .75rem;
+            border-radius: var(--r3);
+            background: var(--card2);
+            border: 1px solid var(--border);
+            color: var(--text);
+            cursor: pointer;
+            font-size: .9rem;
+            font-weight: 600;
+            transition: .2s
+        }
+
+        .l-btn:hover {
+            border-color: var(--accent)
+        }
+
+        .l-btn.active {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent)
+        }
+
+        /* FAB */
+        .fab {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            box-shadow: 0 4px 20px var(--glow);
+            cursor: pointer;
+            z-index: 90;
+            transition: .2s
+        }
+
+        .fab:hover {
+            transform: scale(1.1)
+        }
+
+        /* FAQ */
+        .faq {
+            margin-bottom: 1.75rem
+        }
+
+        .faq-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--r2);
+            margin-bottom: .5rem;
+            overflow: hidden
+        }
+
+        .faq-q {
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: .85rem
+        }
+
+        .faq-q i {
+            transition: .3s;
+            color: var(--accent)
+        }
+
+        .faq-item.open .faq-q i {
+            transform: rotate(180deg)
+        }
+
+        .faq-a {
+            padding: 0 1rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: .3s;
+            font-size: .8rem;
+            color: var(--text2)
+        }
+
+        .faq-item.open .faq-a {
+            padding: 0 1rem 1rem;
+            max-height: 200px
+        }
+
+        /* Server Status */
+        .srv-status {
+            background: linear-gradient(135deg, var(--card), rgba(59, 130, 246, .05));
+            border: 1px solid rgba(59, 130, 246, .12);
+            border-radius: var(--r);
+            padding: 1.25rem;
+            margin-bottom: 1.75rem
+        }
+
+        .srv-status-h {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            margin-bottom: 1rem;
+            font-weight: 700
+        }
+
+        .srv-status-h i {
+            color: var(--blue)
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: .5rem
+        }
+
+        .status-item {
+            background: var(--card2);
+            border-radius: var(--r3);
+            padding: .75rem;
+            text-align: center
+        }
+
+        .status-v {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--accent)
+        }
+
+        .status-l {
+            font-size: .6rem;
+            color: var(--text3);
+            text-transform: uppercase
+        }
+
+        @media(max-width:640px) {
+            .status-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        @media(max-width:640px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .support {
+                grid-template-columns: 1fr
+            }
+
+            .chart-grid {
+                grid-template-columns: 1fr
+            }
+
+            .srv-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .h-time {
+                display: none
+            }
+        }
+
+        /* Bottom Sheet Modal */
+        .sheet {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--tr)
+        }
+
+        .sheet.open {
+            opacity: 1;
+            pointer-events: auto
+        }
+
+        .sheet-c {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card);
+            border-radius: 24px 24px 0 0;
+            padding: 1.5rem;
+            transform: translateY(100%);
+            transition: var(--tr);
+            max-height: 80vh;
+            overflow-y: auto
+        }
+
+        .sheet.open .sheet-c {
+            transform: translateY(0)
+        }
+
+        .sheet-h {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem
+        }
+
+        .sheet-t {
+            font-size: 1.2rem;
+            font-weight: 800
+        }
+
+        .sheet-cl {
+            background: var(--card2);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 1.2rem
+        }
+
+        .det-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .det-l {
+            color: var(--text2)
+        }
+
+        .det-v {
+            font-weight: 700
+        }
+
+        .dl-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: var(--r2);
+            font-weight: 800;
+            font-size: 1rem;
+            text-align: center;
+            margin-top: 1.5rem;
+            cursor: pointer;
+            transition: var(--tr)
+        }
+
+        .dl-btn:hover {
+            transform: scale(1.02)
+        }
+
+        @media(min-width:768px) {
+            .sheet-c {
+                max-width: 500px;
+                margin: 1rem auto;
+                border-radius: 24px;
+                bottom: auto;
+                top: 50%;
+                transform: translateY(-50%) scale(0.9);
+                left: 0;
+                right: 0
+            }
+
+            .sheet.open .sheet-c {
+                transform: translateY(-50%) scale(1)
+            }
+        }
+
+        /* Interactive Stats */
+        .stat.clickable {
+            cursor: pointer
+        }
+
+        .stat.clickable:active {
+            transform: scale(0.95)
+        }
+
+        /* --- NEW HERO DESIGN (Standardized) --- */
+        .dash-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 1.5rem;
+            margin: 1.5rem auto;
+            max-width: 500px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.2);
+        }
+
+        .dash-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--blue));
+        }
+
+        .dc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .dc-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 0.9rem;
+            background: var(--soft);
+            padding: 0.35rem 0.75rem;
+            border-radius: 99px;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(29, 185, 84, 0.7);
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(29, 185, 84, 0.7);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 6px rgba(29, 185, 84, 0);
+            }
+
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(29, 185, 84, 0);
+            }
+        }
+
+        .dc-age {
+            font-size: 0.75rem;
+            color: var(--text3);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .dc-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dc-stat {
+            text-align: center;
+            flex: 1;
+        }
+
+        .dcs-val {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 0.1rem;
+            letter-spacing: -0.5px;
+        }
+
+        .dcs-lbl {
+            font-size: 0.7rem;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .dc-divider {
+            width: 1px;
+            height: 40px;
+            background: var(--border);
+        }
+
+        /* Action Buttons Grid */
+        .hero-actions {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 0.75rem;
+            max-width: 500px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .action-btn {
+            border: none;
+            border-radius: 16px;
+            padding: 1rem;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .action-btn.primary {
+            background: var(--text);
+            color: var(--bg);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="light"] .action-btn.primary {
+            background: #000;
+            color: #fff;
+        }
+
+        .action-btn.secondary {
+            background: var(--card2);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .action-btn.accent {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 4px 20px var(--glow);
+        }
+
+        .action-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* Tutorial Toggle */
+        .tute-sect {
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            background: var(--card2);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .tute-head {
+            padding: 1rem 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .tute-head span {
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tute-head i.arrow {
+            transition: 0.3s;
+            color: var(--text3);
+        }
+
+        .tute-sect.open .tute-head i.arrow {
+            transform: rotate(180deg);
+        }
+
+        .tute-body {
+            max-height: 0;
+            /* Hidden by default */
+            border-top: 1px solid transparent;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--card);
+        }
+
+        .tute-sect.open .tute-body {
+            border-top-color: var(--border);
+            max-height: 300px;
+            /* Approximate height */
+        }
+
+        .step-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .step-row:last-child {
+            border-bottom: none;
+        }
+
+        .step-n {
+            width: 24px;
+            height: 24px;
+            background: var(--soft);
+            color: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.8rem;
+        }
+
+        .step-t {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .step-d {
+            font-size: 0.75rem;
+            color: var(--text3);
+            margin-top: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-fx"></div>
+
+    <header>
+        <div class="h-in">
+            <div class="logo">
+                <div class="logo-i"><i class="ri-shield-star-fill"></i></div>
+                <div class="logo-t">L<span>OO</span>KA</div>
+            </div>
+            <div class="h-r">
+                <div class="h-time">
+                    <div id="timeEn">Mon, Dec 9, 2024 • 08:30</div>
+                    <div class="fa" id="timeFa">۱۹ آذر ۱۴۰۳</div>
+                </div>
+                <div class="h-btns"><button class="h-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle Theme"><i
+                            class="ri-sun-line"></i></button><button class="h-btn" onclick="showModal()"><i
+                            class="ri-global-line"></i></button><button class="h-btn" onclick="location.reload()"><i
+                            class="ri-refresh-line"></i></button></div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="av">
+                <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Felix" alt="Avatar">
+                <div class="av-badge">VIP</div>
+            </div>
+            <div class="hero-date">
+                <span><i class="ri-calendar-line"></i> <span id="dateFa">۱۹ آذر ۱۴۰۳</span></span>
+                <span><i class="ri-global-line"></i> <span id="dateEn">Dec 9, 2024</span></span>
+                <span><i class="ri-time-line"></i> <span id="clock">08:30</span> Tehran</span>
+            </div>
+            <p class="welcome" data-t="welcome">Welcome back,</p>
+            <h1 class="uname" id="uname">tawana</h1>
+
+            <!-- Standardized Status Card -->
+            <div class="dash-card">
+                <div class="dc-header">
+                    <div class="dc-status">
+                        <span class="pulse-dot"></span>
+                        <span data-t="heroTitle">Premium VPN Active</span>
+                    </div>
+                    <div class="dc-age">
+                        <i class="ri-medal-line"></i> <span id="months">10</span> <span
+                            data-t="monthsWith">Months</span>
+                    </div>
+                </div>
+
+                <div class="dc-stats">
+                    <div class="dc-stat">
+                        <div class="dcs-val" id="qDays">30</div>
+                        <div class="dcs-lbl" data-t="daysLeft">Days</div>
+                    </div>
+                    <div class="dc-divider"></div>
+                    <div class="dc-stat">
+                        <div class="dcs-val">71 GB</div>
+                        <div class="dcs-lbl" data-t="dataLeft">Data</div>
+                    </div>
+                    <div class="dc-divider"></div>
+                    <div class="dc-stat">
+                        <div class="dcs-val" id="qServers">13</div>
+                        <div class="dcs-lbl" data-t="servers">Servers</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="hero-actions">
+                <button class="action-btn primary" onclick="copyAll()">
+                    <i class="ri-file-copy-line"></i> <span data-t="copyAll">Copy Config</span>
+                </button>
+                <button class="action-btn secondary" onclick="showQR()">
+                    <i class="ri-qr-code-line"></i>
+                </button>
+                <button class="action-btn accent" onclick="renew()">
+                    <i class="ri-refresh-line"></i> <span data-t="renew">Renew</span>
+                </button>
+            </div>
+
+            <!-- Collapsible Tutorial -->
+            <div class="tute-sect" id="tuteSection">
+                <div class="tute-head" onclick="toggleTutorial()">
+                    <span><i class="ri-lightbulb-flash-line"></i> <span data-t="howToUse">How to Connect?</span></span>
+                    <i class="ri-arrow-down-s-line arrow"></i>
+                </div>
+                <div class="tute-body">
+                    <div class="step-row">
+                        <div class="step-n">1</div>
+                        <div>
+                            <div class="step-t" data-t="step1Title">Download App</div>
+                            <div class="step-d" data-t="step1Desc">Choose your device below</div>
+                        </div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-n">2</div>
+                        <div>
+                            <div class="step-t" data-t="step2Title">Copy Config</div>
+                            <div class="step-d" data-t="step2Desc">Click "Copy All" button</div>
+                        </div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-n">3</div>
+                        <div>
+                            <div class="step-t" data-t="step3Title">Import & Connect</div>
+                            <div class="step-d" data-t="step3Desc">Paste in app and enjoy!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Countdown -->
+        <div class="countdown">
+            <div class="cd-t" data-t="expiresIn">Subscription expires in:</div>
+            <div class="cd-boxes">
+                <div class="cd-box">
+                    <div class="cd-v" id="cdDays">30</div>
+                    <div class="cd-l" data-t="days">Days</div>
+                </div>
+                <div class="cd-box">
+                    <div class="cd-v" id="cdHrs">14</div>
+                    <div class="cd-l" data-t="hours">Hours</div>
+                </div>
+                <div class="cd-box">
+                    <div class="cd-v" id="cdMin">28</div>
+                    <div class="cd-l" data-t="mins">Mins</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <section class="sec">
+            <h2 class="sec-h"><i class="ri-bar-chart-box-fill"></i> <span data-t="stats">Statistics</span></h2>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-i">📊</div>
+                    <div class="stat-v" id="used">1.35 TB</div>
+                    <div class="stat-l" data-t="used">Used</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-i">📅</div>
+                    <div class="stat-v" id="expire">Feb 9</div>
+                    <div class="stat-l" data-t="expires">Expires</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-i">🕐</div>
+                    <div class="stat-v" id="online">2m</div>
+                    <div class="stat-l" data-t="lastSeen">Last Seen</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-i">📱</div>
+                    <div class="stat-v" id="app">v2rayNG</div>
+                    <div class="stat-l" data-t="app">App</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-i">📈</div>
+                    <div class="stat-v" id="lifetime">5.12 TB</div>
+                    <div class="stat-l" data-t="lifetime">Lifetime</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-i">🌐</div>
+                    <div class="stat-v" id="conns">13</div>
+                    <div class="stat-l" data-t="conns">Servers</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chart -->
+        <div class="chart-sec">
+            <div class="chart-head">
+                <h3 class="sec-h" style="margin:0"><i class="ri-pie-chart-fill"></i> <span data-t="analytics">Usage
+                        Analytics</span></h3>
+                <div class="c-tabs"><button class="c-tab active" data-t="month">Month</button><button class="c-tab"
+                        data-t="week">Week</button><button class="c-tab" data-t="today">Today</button></div>
+            </div>
+            <div class="chart-grid">
+                <div class="chart-left">
+                    <div class="donut" style="--p:95">
+                        <div class="donut-in">
+                            <div class="donut-v">95%</div>
+                            <div class="donut-l" data-t="used">Used</div>
+                        </div>
+                    </div>
+                    <div class="legends">
+                        <div class="leg">
+                            <div class="leg-d" style="background:var(--accent)"></div>
+                            <div class="leg-l" data-t="used">Used</div>
+                            <div class="leg-v">1.35 TB</div>
+                        </div>
+                        <div class="leg">
+                            <div class="leg-d" style="background:rgba(255,255,255,.1)"></div>
+                            <div class="leg-l" data-t="remaining">Remaining</div>
+                            <div class="leg-v">71 GB</div>
+                        </div>
+                        <div class="leg">
+                            <div class="leg-d" style="background:var(--purple)"></div>
+                            <div class="leg-l" data-t="lifetime">Lifetime</div>
+                            <div class="leg-v">5.12 TB</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-right">
+                    <div class="bar-chart">
+                        <div class="bar-title" data-t="daily">Daily Usage (Last 7 Days)</div>
+                        <div class="bars">
+                            <div class="bar-row"><span class="bar-day">Sat</span>
+                                <div class="bar-wrap">
+                                    <div class="bar-fill" style="width:75%"></div>
+                                </div><span class="bar-val">45GB</span>
+                            </div>
+                            <div class="bar-row"><span class="bar-day">Sun</span>
+                                <div class="bar-wrap">
+                                    <div class="bar-fill" style="width:63%"></div>
+                                </div><span class="bar-val">38GB</span>
+                            </div>
+                            <div class="bar-row"><span class="bar-day">Mon</span>
+                                <div class="bar-wrap">
+                                    <div class="bar-fill" style="width:87%"></div>
+                                </div><span class="bar-val">52GB</span>
+                            </div>
+                            <div class="bar-row"><span class="bar-day">Tue</span>
+                                <div class="bar-wrap">
+                                    <div class="bar-fill" style="width:47%"></div>
+                                </div><span class="bar-val">28GB</span>
+                            </div>
+                            <div class="bar-row"><span class="bar-day">Wed</span>
+                                <div class="bar-wrap">
+                                    <div class="bar-fill" style="width:68%"></div>
+                                </div><span class="bar-val">41GB</span>
+                            </div>
+                            <div class="bar-row"><span class="bar-day">Thu</span>
+                                <div class="bar-wrap">
+                                    <div class="bar-fill" style="width:100%"></div>
+                                </div><span class="bar-val">60GB</span>
+                            </div>
+                            <div class="bar-row"><span class="bar-day">Fri</span>
+                                <div class="bar-wrap">
+                                    <div class="bar-fill" style="width:37%"></div>
+                                </div><span class="bar-val">22GB</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-footer">
+                        <div class="prog-h"><span data-t="total">Total Progress</span><span>95%</span></div>
+                        <div class="prog-bar">
+                            <div class="prog-fill" style="width:95%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-alert"><i class="ri-alert-line"></i> <span data-t="alert">At this rate, your data will run
+                    out in ~5 days!</span></div>
+        </div>
+
+        <!-- Servers -->
+        <section class="sec">
+            <h2 class="sec-h"><i class="ri-global-line"></i> <span data-t="serverList">Servers</span></h2>
+            <div class="srv-grid" id="srvList"></div>
+        </section>
+
+        <!-- Apps -->
+        <section class="apps-sec">
+            <h2 class="sec-h"><i class="ri-download-cloud-2-line"></i> <span data-t="apps">Download Apps</span></h2>
+            <div class="app-tabs">
+                <button class="app-tab active"><i class="ri-android-fill"></i> Android</button>
+                <button class="app-tab"><i class="ri-apple-fill"></i> iOS</button>
+                <button class="app-tab"><i class="ri-windows-fill"></i> Windows</button>
+                <button class="app-tab"><i class="ri-mac-fill"></i> macOS</button>
+                <button class="app-tab"><i class="ri-ubuntu-fill"></i> Linux</button>
+            </div>
+            <div class="app-grid">
+                <a href="https://github.com/2dust/v2rayNG/releases" target="_blank" class="app">
+                    <div class="app-i">🌐</div>
+                    <div class="app-n">Universal</div>
+                    <div class="app-d">v2rayNG</div>
+                    <div class="app-v">v1.8.23</div>
+                </a>
+                <a href="https://github.com/2dust/v2rayNG/releases" target="_blank" class="app">
+                    <div class="app-i">📱</div>
+                    <div class="app-n">Samsung</div>
+                    <div class="app-d">v2rayNG</div>
+                    <div class="app-v">v1.8.23</div>
+                </a>
+                <a href="https://github.com/MatsuriDayo/NekoBoxForAndroid/releases" target="_blank" class="app">
+                    <div class="app-i">📱</div>
+                    <div class="app-n">Xiaomi</div>
+                    <div class="app-d">NekoBox</div>
+                    <div class="app-v">v1.3.5</div>
+                </a>
+                <a href="https://github.com/hiddify/hiddify-next/releases" target="_blank" class="app">
+                    <div class="app-i">📱</div>
+                    <div class="app-n">Huawei</div>
+                    <div class="app-d">Hiddify</div>
+                    <div class="app-v">v2.0.5</div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Payment -->
+        <div class="pay">
+            <div class="pay-i">💳</div>
+            <h3 class="pay-t" data-t="renewSub">Renew Subscription</h3>
+            <p class="pay-d" data-t="payDesc">Transfer and send receipt via Telegram</p>
+            <div class="pay-cards">
+                <div class="pay-card">
+                    <div class="pay-card-l" data-t="cardNum">Card Number</div>
+                    <div class="pay-card-n" id="cardNum">6037 •••• •••• 1234</div>
+                </div>
+                <div class="pay-card">
+                    <div class="pay-card-l" data-t="holder">Holder</div>
+                    <div class="pay-card-n">Admin Name</div>
+                </div>
+            </div>
+            <div class="pay-prices">
+                <div class="pay-opt">
+                    <div class="pay-opt-t">1 Month</div>
+                    <div class="pay-opt-p">150,000 T</div>
+                </div>
+                <div class="pay-opt active">
+                    <div class="pay-opt-t">3 Months</div>
+                    <div class="pay-opt-p">400,000 T</div>
+                </div>
+                <div class="pay-opt">
+                    <div class="pay-opt-t">1 Year</div>
+                    <div class="pay-opt-p">1,500,000 T</div>
+                </div>
+            </div>
+            <button class="btn btn-r" onclick="renew()"><i class="ri-telegram-fill"></i> <span data-t="sendReceipt">Send
+                    Receipt</span></button>
+        </div>
+
+        <!-- Support -->
+        <section class="sec">
+            <h2 class="sec-h"><i class="ri-customer-service-2-line"></i> <span data-t="support">Support</span> <span
+                    class="sup-247">24/7</span></h2>
+            <div class="support">
+                <a href="https://t.me/rahbarusd" target="_blank" class="sup">
+                    <div class="sup-i tg"><i class="ri-telegram-fill"></i></div>
+                    <div class="sup-t">Telegram</div>
+                    <div class="sup-d">@rahbarusd</div>
+                </a>
+                <a href="https://t.me/panbehnet" target="_blank" class="sup">
+                    <div class="sup-i tg"><i class="ri-send-plane-fill"></i></div>
+                    <div class="sup-t" data-t="channel">Channel</div>
+                    <div class="sup-d">@panbehnet</div>
+                </a>
+                <a href="https://wa.me/989901120235" target="_blank" class="sup hl">
+                    <div class="sup-i" style="background:linear-gradient(135deg,#25D366,#128C7E)"><i
+                            class="ri-whatsapp-fill"></i></div>
+                    <div class="sup-t">WhatsApp</div>
+                    <div class="sup-d">+98 990 112 0235</div>
+                </a>
+                <a href="tel:+989901120235" class="sup">
+                    <div class="sup-i" style="background:linear-gradient(135deg,#3b82f6,#1e40af)"><i
+                            class="ri-phone-fill"></i></div>
+                    <div class="sup-t" data-t="phone">Phone</div>
+                    <div class="sup-d">+98 990 112 0235</div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Server Status -->
+        <div class="srv-status">
+            <div class="srv-status-h"><i class="ri-pulse-line"></i> <span data-t="srvStatus">Server Status</span></div>
+            <div class="status-grid">
+                <div class="status-item">
+                    <div class="status-v">99.9%</div>
+                    <div class="status-l">Uptime</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-v">1Gbps</div>
+                    <div class="status-l">Bandwidth</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-v">13</div>
+                    <div class="status-l">Active</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-v">45ms</div>
+                    <div class="status-l">Avg Ping</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <section class="sec faq">
+            <h2 class="sec-h"><i class="ri-question-answer-line"></i> <span data-t="faqTitle">FAQ</span></h2>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+                <div class="faq-q"><span data-t="faq1q">How to connect?</span><i class="ri-arrow-down-s-line"></i></div>
+                <div class="faq-a" data-t="faq1a">Download the app for your device, copy the subscription link, and
+                    import it into the app.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+                <div class="faq-q"><span data-t="faq2q">Connection issues?</span><i class="ri-arrow-down-s-line"></i>
+                </div>
+                <div class="faq-a" data-t="faq2a">Try switching servers. If problem persists, update the subscription
+                    and restart the app.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+                <div class="faq-q"><span data-t="faq3q">How to renew?</span><i class="ri-arrow-down-s-line"></i></div>
+                <div class="faq-a" data-t="faq3a">Transfer the amount to the card number above and send the receipt via
+                    Telegram.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+                <div class="faq-q"><span data-t="faq4q">Why is the speed slow?</span><i
+                        class="ri-arrow-down-s-line"></i></div>
+                <div class="faq-a" data-t="faq4a">Try connecting to a different server closer to your location. Check
+                    your internet connection and ensure no other apps are consuming bandwidth.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+                <div class="faq-q"><span data-t="faq5q">How to change servers?</span><i
+                        class="ri-arrow-down-s-line"></i></div>
+                <div class="faq-a" data-t="faq5a">In your VPN app, tap on the server list and select a different server.
+                    We recommend choosing servers with green status for best performance.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+                <div class="faq-q"><span data-t="faq6q">Can I use on multiple devices?</span><i
+                        class="ri-arrow-down-s-line"></i></div>
+                <div class="faq-a" data-t="faq6a">Yes! You can use your subscription on multiple devices simultaneously.
+                    Simply import the same config on each device.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+                <div class="faq-q"><span data-t="faq7q">How to cancel subscription?</span><i
+                        class="ri-arrow-down-s-line"></i></div>
+                <div class="faq-a" data-t="faq7a">Contact our support team via Telegram @rahbarusd. Your subscription
+                    will remain active until the expiry date.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+                <div class="faq-q"><span data-t="faq8q">Are activity logs kept?</span><i
+                        class="ri-arrow-down-s-line"></i></div>
+                <div class="faq-a" data-t="faq8a">No. We have a strict no-logs policy. Your browsing activity and
+                    connection logs are never stored.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+                <div class="faq-q"><span data-t="faq9q">What protocols are supported?</span><i
+                        class="ri-arrow-down-s-line"></i></div>
+                <div class="faq-a" data-t="faq9a">We support VLESS, VMess, Trojan, and Shadowsocks protocols with TLS
+                    and Reality encryption for maximum security.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+                <div class="faq-q"><span data-t="faq10q">How to fix DNS issues?</span><i
+                        class="ri-arrow-down-s-line"></i></div>
+                <div class="faq-a" data-t="faq10a">In your app settings, try changing DNS to 1.1.1.1 or 8.8.8.8. Also
+                    ensure DNS routing is enabled in the app.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+                <div class="faq-q"><span data-t="faq11q">Can I get a static IP?</span><i
+                        class="ri-arrow-down-s-line"></i></div>
+                <div class="faq-a" data-t="faq11a">Static IP is available as a premium add-on. Contact support
+                    @rahbarusd for pricing and availability.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+                <div class="faq-q"><span data-t="faq12q">What if I run out of data?</span><i
+                        class="ri-arrow-down-s-line"></i></div>
+                <div class="faq-a" data-t="faq12a">You can purchase additional data packages or upgrade to a higher
+                    plan. Contact us on WhatsApp +989901120235 for instant top-up.</div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3><i class="ri-information-line"></i> <span data-t="aboutTitle">About LOOKA</span></h3>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link"><i class="ri-shield-check-line"></i> <span
+                                data-t="privacy">Privacy Policy</span></a>
+                        <a href="#" class="footer-link"><i class="ri-file-text-line"></i> <span data-t="terms">Terms of
+                                Service</span></a>
+                        <a href="#" class="footer-link"><i class="ri-question-line"></i> <span
+                                data-t="faqTitle">FAQ</span></a>
+                        <a href="https://github.com/Gozargah/Marzban" target="_blank" class="footer-link"><i
+                                class="ri-github-fill"></i> Marzban</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3><i class="ri-customer-service-line"></i> <span data-t="support">Support</span></h3>
+                    <div class="footer-links">
+                        <a href="https://t.me/rahbarusd" target="_blank" class="footer-link"><i
+                                class="ri-telegram-fill"></i> @rahbarusd</a>
+                        <a href="https://t.me/panbehnet" target="_blank" class="footer-link"><i
+                                class="ri-send-plane-fill"></i> @panbehnet</a>
+                        <a href="https://wa.me/989901120235" target="_blank" class="footer-link"><i
+                                class="ri-whatsapp-fill"></i> +98 990 112 0235</a>
+                        <a href="tel:+989901120235" class="footer-link"><i class="ri-phone-fill"></i> <span
+                                data-t="phone">Phone</span></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3><i class="ri-share-line"></i> <span data-t="followUs">Follow Us</span></h3>
+                    <div class="footer-social">
+                        <a href="https://t.me/panbehnet" target="_blank" class="social-link" title="Telegram"><i
+                                class="ri-telegram-fill"></i></a>
+                        <a href="https://wa.me/989901120235" target="_blank" class="social-link" title="WhatsApp"><i
+                                class="ri-whatsapp-fill"></i></a>
+                        <a href="https://instagram.com/looka.vpn" target="_blank" class="social-link"
+                            title="Instagram"><i class="ri-instagram-fill"></i></a>
+                        <a href="https://twitter.com/looka_vpn" target="_blank" class="social-link" title="Twitter"><i
+                                class="ri-twitter-x-fill"></i></a>
+                    </div>
+                    <div class="footer-links" style="margin-top:1rem">
+                        <a href="#" class="footer-link"><i class="ri-download-cloud-line"></i> <span
+                                data-t="apps">Download Apps</span></a>
+                        <a href="#" class="footer-link"><i class="ri-refresh-line"></i> <span
+                                data-t="renew">Renew</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div>
+                    © 2025 <strong>LOOKA VPN</strong> — Powered by <a href="https://github.com/Gozargah/Marzban"
+                        target="_blank" style="color:var(--accent);text-decoration:none">Marzban</a>
+                </div>
+                <div class="footer-version">
+                    <span data-t="version">Version</span> <span class="version-badge">v5.0 Ultimate</span>
+                    <span style="margin-left:0.5rem;color:var(--text3)">|</span>
+                    <span style="margin-left:0.5rem" data-t="lastUpdate">Last Update:</span> <span
+                        style="color:var(--accent)">Dec 2024</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="fab" onclick="copyAll()"><i class="ri-file-copy-line"></i></div>
+
+    <!-- Bottom Sheet Modal -->
+    <div class="sheet" id="sheet" onclick="closeSheet(event)">
+        <div class="sheet-c">
+            <div class="sheet-h">
+                <div class="sheet-t" id="sheetT">Details</div>
+                <button class="sheet-cl" onclick="closeSheet()"><i class="ri-close-line"></i></button>
+            </div>
+            <div id="sheetContent"></div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"><i class="ri-checkbox-circle-fill"></i> <span id="toastMsg">Copied!</span></div>
+    <div class="modal" id="modal" onclick="hideModal()">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <h3 class="modal-t">Language</h3>
+            <div class="lang-btns">
+                <button class="l-btn active" id="lEn" onclick="setLang('en')"><span class="fi fi-us"></span>
+                    English</button>
+                <button class="l-btn" id="lFa" onclick="setLang('fa')"><span class="fi fi-ir"></span> فارسی</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        let lang = 'en';
+        const T = {
+            en: {
+                welcome: "Welcome back,",
+                heroTitle: "Your Premium VPN is Active & Ready!",
+                heroDesc: "Experience blazing-fast speeds across 13 global servers. Your privacy is our priority.",
+                daysLeft: "Days Left",
+                dataLeft: "Data Left",
+                howToUse: "How to Use",
+                step1Title: "Download App",
+                step1Desc: "Choose your device below",
+                step2Title: "Copy Config",
+                step2Desc: "Click \"Copy All\" button",
+                step3Title: "Import & Connect",
+                step3Desc: "Paste in app and enjoy!",
+                monthsWith: "Months With Us!",
+                thankMsg: "Thank you for being a valued member of the LOOKA family. Your trust means everything to us!",
+                active: "Active",
+                days: "Days",
+                servers: "Servers",
+                vip: "VIP Member",
+                copyAll: "Copy All",
+                renew: "Renew",
+                expiresIn: "Subscription expires in:",
+                hours: "Hours",
+                mins: "Mins",
+                stats: "Statistics",
+                used: "Used",
+                expires: "Expires",
+                lastSeen: "Last Seen",
+                app: "App",
+                lifetime: "Lifetime",
+                conns: "Servers",
+                analytics: "Usage Analytics",
+                month: "Month",
+                week: "Week",
+                today: "Today",
+                remaining: "Remaining",
+                daily: "Daily Usage (Last 7 Days)",
+                total: "Total Progress",
+                alert: "At this rate, your data will run out in ~5 days!",
+                serverList: "Servers",
+                apps: "Download Apps",
+                renewSub: "Renew Subscription",
+                payDesc: "Transfer and send receipt via Telegram",
+                cardNum: "Card Number",
+                holder: "Holder",
+                sendReceipt: "Send Receipt",
+                support: "Support",
+                fast: "Fast Response",
+                sendEmail: "Send Email",
+                renewNow: "Renew Now",
+                extend: "Extend Plan",
+                copied: "Copied!",
+                srvStatus: "Server Status",
+                faqTitle: "FAQ",
+                faq1q: "How to connect?",
+                faq1a: "Download the app for your device, copy the subscription link, and import it into the app.",
+                faq2q: "Connection issues?",
+                faq2a: "Try switching servers. If problem persists, update the subscription and restart the app.",
+                faq3q: "How to renew?",
+                faq3a: "Transfer the amount to the card number above and send the receipt via Telegram.",
+                faq4q: "Why is the speed slow?",
+                faq4a: "Try connecting to a different server closer to your location. Check your internet connection and ensure no other apps are consuming bandwidth.",
+                faq5q: "How to change servers?",
+                faq5a: "In your VPN app, tap on the server list and select a different server. We recommend choosing servers with green status for best performance.",
+                faq6q: "Can I use on multiple devices?",
+                faq6a: "Yes! You can use your subscription on multiple devices simultaneously. Simply import the same config on each device.",
+                faq7q: "How to cancel subscription?",
+                faq7a: "Contact our support team via Telegram @rahbarusd. Your subscription will remain active until the expiry date.",
+                faq8q: "Are activity logs kept?",
+                faq8a: "No. We have a strict no-logs policy. Your browsing activity and connection logs are never stored.",
+                faq9q: "What protocols are supported?",
+                faq9a: "We support VLESS, VMess, Trojan, and Shadowsocks protocols with TLS and Reality encryption for maximum security.",
+                faq10q: "How to fix DNS issues?",
+                faq10a: "In your app settings, try changing DNS to 1.1.1.1 or 8.8.8.8. Also ensure DNS routing is enabled in the app.",
+                faq11q: "Can I get a static IP?",
+                faq11a: "Static IP is available as a premium add-on. Contact support @rahbarusd for pricing and availability.",
+                faq12q: "What if I run out of data?",
+                faq12a: "You can purchase additional data packages or upgrade to a higher plan. Contact us on WhatsApp +989901120235 for instant top-up.",
+                channel: "Channel",
+                phone: "Phone",
+                aboutTitle: "About LOOKA",
+                privacy: "Privacy Policy",
+                terms: "Terms of Service",
+                followUs: "Follow Us",
+                version: "Version",
+                lastUpdate: "Last Update"
+            },
+            fa: {
+                welcome: "خوش آمدید،",
+                heroTitle: "VPN پریمیوم شما فعال و آماده است!",
+                heroDesc: "سرعت فوق‌العاده در ۱۳ سرور جهانی. حریم خصوصی شما اولویت ماست.",
+                daysLeft: "روز باقیمانده",
+                dataLeft: "حجم باقیمانده",
+                howToUse: "نحوه استفاده",
+                step1Title: "دانلود برنامه",
+                step1Desc: "دستگاه خود را انتخاب کنید",
+                step2Title: "کپی تنظیمات",
+                step2Desc: "دکمه \"کپی همه\" را بزنید",
+                step3Title: "وارد کردن و اتصال",
+                step3Desc: "در برنامه Paste کنید!",
+                monthsWith: "ماه با ما!",
+                thankMsg: "سپاس از اینکه عضو خانواده LOOKA هستید. اعتماد شما ارزشمندترین سرمایه ماست!",
+                active: "فعال",
+                days: "روز",
+                servers: "سرور",
+                vip: "کاربر ویژه",
+                copyAll: "کپی همه",
+                renew: "تمدید",
+                expiresIn: "اشتراک منقضی می‌شود در:",
+                hours: "ساعت",
+                mins: "دقیقه",
+                stats: "آمار",
+                used: "مصرف شده",
+                expires: "انقضا",
+                lastSeen: "آخرین اتصال",
+                app: "برنامه",
+                lifetime: "کل مصرف",
+                conns: "سرور",
+                analytics: "تحلیل مصرف",
+                month: "ماه",
+                week: "هفته",
+                today: "امروز",
+                remaining: "باقیمانده",
+                daily: "مصرف روزانه (۷ روز اخیر)",
+                total: "پیشرفت کل",
+                alert: "با این روند، حجم شما تا ۵ روز دیگر تمام می‌شود!",
+                serverList: "سرورها",
+                apps: "دانلود برنامه",
+                renewSub: "تمدید اشتراک",
+                payDesc: "مبلغ را واریز و فیش را به تلگرام ارسال کنید",
+                cardNum: "شماره کارت",
+                holder: "نام صاحب کارت",
+                sendReceipt: "ارسال فیش",
+                support: "پشتیبانی",
+                fast: "پاسخ سریع",
+                sendEmail: "ایمیل",
+                renewNow: "تمدید",
+                extend: "تمدید پلن",
+                copied: "کپی شد!",
+                srvStatus: "وضعیت سرور",
+                faqTitle: "سوالات متداول",
+                faq1q: "چگونه متصل شوم؟",
+                faq1a: "برنامه مناسب دستگاه خود را دانلود کنید، لینک اشتراک را کپی و در برنامه وارد کنید.",
+                faq2q: "مشکل اتصال دارید؟",
+                faq2a: "سرور را عوض کنید. اگر مشکل ادامه داشت، اشتراک را آپدیت و برنامه را ریست کنید.",
+                faq3q: "چگونه تمدید کنم؟",
+                faq3a: "مبلغ را به شماره کارت بالا واریز کنید و فیش را در تلگرام ارسال کنید.",
+                faq4q: "چرا سرعت کند است؟",
+                faq4a: "به سرور نزدیک‌تر به موقعیت خود متصل شوید. اتصال اینترنت خود را بررسی کنید و مطمئن شوید برنامه دیگری پهنای باند مصرف نمی‌کند.",
+                faq5q: "چگونه سرور را عوض کنم؟",
+                faq5a: "در برنامه VPN، روی لیست سرورها بزنید و سرور دیگری انتخاب کنید. توصیه می‌کنیم سرورهای سبز رنگ را انتخاب کنید.",
+                faq6q: "آیا می‌توانم در چند دستگاه استفاده کنم؟",
+                faq6a: "بله! می‌توانید اشتراک خود را همزمان در چند دستگاه استفاده کنید. کافیست همان کانفیگ را در هر دستگاه وارد کنید.",
+                faq7q: "چگونه اشتراک را لغو کنم؟",
+                faq7a: "با تیم پشتیبانی از طریق تلگرام @rahbarusd تماس بگیرید. اشتراک شما تا تاریخ انقضا فعال خواهد ماند.",
+                faq8q: "آیا لاگ فعالیت نگه‌داری می‌شود؟",
+                faq8a: "خیر. ما سیاست عدم ثبت لاگ داریم. فعالیت‌های مرور و لاگ‌های اتصال شما هرگز ذخیره نمی‌شود.",
+                faq9q: "چه پروتکل‌هایی پشتیبانی می‌شود؟",
+                faq9a: "ما از پروتکل‌های VLESS، VMess، Trojan و Shadowsocks با رمزگذاری TLS و Reality پشتیبانی می‌کنیم.",
+                faq10q: "چگونه مشکلات DNS را حل کنم؟",
+                faq10a: "در تنظیمات برنامه، DNS را به 1.1.1.1 یا 8.8.8.8 تغییر دهید. همچنین مطمئن شوید مسیریابی DNS فعال است.",
+                faq11q: "آیا می‌توانم IP ثابت داشته باشم؟",
+                faq11a: "IP ثابت به عنوان افزونه پریمیوم موجود است. برای قیمت و موجودی با پشتیبانی @rahbarusd تماس بگیرید.",
+                faq12q: "اگر حجمم تمام شد چه کنم؟",
+                faq12a: "می‌توانید بسته‌های حجم اضافی خریداری کنید یا به پلن بالاتر ارتقا دهید. برای شارژ فوری با واتساپ +989901120235 تماس بگیرید.",
+                channel: "کانال",
+                phone: "تلفن",
+                aboutTitle: "درباره LOOKA",
+                privacy: "حریم خصوصی",
+                terms: "شرایط استفاده",
+                followUs: "ما را دنبال کنید",
+                version: "نسخه",
+                lastUpdate: "آخرین بروزرسانی"
+            }
+        };
+
+
+        const SERVERS = [{ flag: "us", name: "USA 1", proto: "VLESS", type: "Reality", ping: 45, st: "g" }, { flag: "us", name: "USA 2", proto: "VLESS", type: "TLS", ping: 62, st: "g" }, { flag: "us", name: "USA 3", proto: "VLESS", type: "xHTTP", ping: 78, st: "o" }, { flag: "de", name: "Germany 1", proto: "VLESS", type: "Reality", ping: 38, st: "g" }, { flag: "de", name: "Germany 2", proto: "VLESS", type: "TLS", ping: 52, st: "g" }, { flag: "nl", name: "Netherlands", proto: "VLESS", type: "TLS", ping: 41, st: "g" }, { flag: "gb", name: "England 1", proto: "VLESS", type: "Reality", ping: 48, st: "g" }, { flag: "gb", name: "England 2", proto: "VLESS", type: "TLS", ping: 67, st: "o" }, { flag: "nz", name: "NewZealand 1", proto: "VMESS", type: "TLS", ping: 142, st: "o" }, { flag: "nz", name: "NewZealand 2", proto: "VMESS", type: "TLS", ping: 158, st: "o" }, { flag: "nz", name: "NewZealand 3", proto: "VMESS", type: "TLS", ping: 165, st: "r" }, { flag: "nz", name: "NewZealand 4", proto: "VMESS", type: "TLS", ping: 178, st: "r" }, { flag: "fr", name: "France", proto: "VLESS", type: "TLS", ping: 55, st: "g" }];
+
+        function toast(m) { const t = document.getElementById('toast'); document.getElementById('toastMsg').textContent = m; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500) }
+        function showModal() { document.getElementById('modal').classList.add('show') }
+        function hideModal() { document.getElementById('modal').classList.remove('show') }
+        function setLang(l) { lang = l; document.documentElement.dir = l === 'fa' ? 'rtl' : 'ltr'; document.body.style.fontFamily = l === 'fa' ? 'var(--font-fa)' : 'var(--font)'; document.querySelectorAll('.l-btn').forEach(b => b.classList.remove('active')); document.getElementById(l === 'en' ? 'lEn' : 'lFa').classList.add('active'); applyLang(); hideModal() }
+        function applyLang() { document.querySelectorAll('[data-t]').forEach(e => { const k = e.getAttribute('data-t'); if (T[lang][k]) e.textContent = T[lang][k] }) }
+
+        function copyAll() { toast(T[lang].copied) }
+        function showQR() { const m = document.createElement('div'); m.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;z-index:999'; m.innerHTML = '<div id="qr" style="background:#fff;padding:1.25rem;border-radius:12px"></div>'; m.onclick = () => m.remove(); document.body.appendChild(m); new QRCode(document.getElementById('qr'), { text: window.location.href, width: 180, height: 180 }) }
+        function renew() { window.open('https://t.me/support?start=renew_' + document.getElementById('uname').textContent, '_blank') }
+
+        function renderServers() { document.getElementById('srvList').innerHTML = SERVERS.map((s, i) => `<div class="srv" onclick="openSrvSheet(${i})"><button class="srv-cp"><i class="ri-file-copy-line"></i></button><div class="srv-flag"><span class="fi fi-${s.flag}"></span></div><div class="srv-name">${s.name}</div><div class="srv-tags"><span class="tag">${s.proto}</span><span class="tag ${s.type === 'Reality' ? 'tag-p' : 'tag-b'}">${s.type}</span></div><div class="srv-ping"><span class="ping-d ping-${s.st}"></span>${s.ping}ms</div></div>`).join(''); document.getElementById('srvCount').textContent = SERVERS.length; document.getElementById('conns').textContent = SERVERS.length }
+
+        function updateTime() { const now = new Date(); const opts = { timeZone: 'Asia/Tehran' }; document.getElementById('clock').textContent = now.toLocaleTimeString('en-US', { ...opts, hour: '2-digit', minute: '2-digit', hour12: false }); document.getElementById('dateEn').textContent = now.toLocaleDateString('en-US', { ...opts, month: 'short', day: 'numeric', year: 'numeric' }); document.getElementById('dateFa').textContent = now.toLocaleDateString('fa-IR', opts); document.getElementById('timeEn').textContent = now.toLocaleDateString('en-US', { ...opts, weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }) + ' • ' + now.toLocaleTimeString('en-US', { ...opts, hour: '2-digit', minute: '2-digit', hour12: false }); document.getElementById('timeFa').textContent = now.toLocaleDateString('fa-IR', opts) }
+
+        // ===== V4 NEW FEATURES =====
+
+        // Theme Toggle (Spotify Dark / Apple Music Light)
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme') || 'dark';
+            const next = current === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            // Update icon
+            const btn = document.getElementById('themeBtn');
+            btn.innerHTML = next === 'dark' ? '<i class="ri-sun-line"></i>' : '<i class="ri-moon-line"></i>';
+            toast(next === 'dark' ? '🌙 Spotify Dark' : '☀️ Apple Music Light');
+        }
+
+        // Smart Greeting
+        function setGreeting() {
+            const h = new Date().getHours();
+            let g = lang === 'fa' ? 'خوش آمدید' : 'Welcome back';
+            if (h >= 5 && h < 12) g = lang === 'fa' ? 'صبح بخیر' : 'Good Morning';
+            else if (h >= 12 && h < 18) g = lang === 'fa' ? 'عصر بخیر' : 'Good Afternoon';
+            else g = lang === 'fa' ? 'شب بخیر' : 'Good Evening';
+            const el = document.querySelector('.welcome');
+            if (el) el.textContent = g + ',';
+        }
+
+        // Bottom Sheet Modal
+        const sheet = document.getElementById('sheet');
+        const sheetContent = document.getElementById('sheetContent');
+        const sheetTitle = document.getElementById('sheetT');
+
+        function openSheet(title, content) {
+            sheetTitle.textContent = title;
+            sheetContent.innerHTML = content;
+            sheet.classList.add('open');
+        }
+
+        function closeSheet(e) {
+            if (!e || e.target === sheet || e.target.closest('.sheet-cl')) {
+                sheet.classList.remove('open');
+            }
+        }
+
+        // Open Server Details with QR
+        function openSrvSheet(i) {
+            const s = SERVERS[i];
+            const link = `vless://${s.name.replace(/ /g, '')}@looka.vpn:443`;
+            openSheet(s.name, `
+                <div class="det-row"><span class="det-l">Location</span><span class="det-v"><span class="fi fi-${s.flag}"></span> ${s.name}</span></div>
+                <div class="det-row"><span class="det-l">Protocol</span><span class="det-v">${s.proto}</span></div>
+                <div class="det-row"><span class="det-l">Type</span><span class="det-v">${s.type}</span></div>
+                <div class="det-row"><span class="det-l">Ping</span><span class="det-v" style="color:var(--${s.st === 'g' ? 'green' : s.st === 'o' ? 'orange' : 'red'})">${s.ping}ms</span></div>
+                <div id="srvQR" style="margin:1.5rem auto;display:flex;justify-content:center"></div>
+                <button class="dl-btn" onclick="importToApp('${link}')"><i class="ri-download-line"></i> Import to App</button>
+                <div style="display:flex;gap:.5rem;margin-top:.75rem">
+                    <button class="btn btn-s" style="flex:1" onclick="navigator.clipboard.writeText('${link}');toast('${T[lang].copied}')"><i class="ri-file-copy-line"></i> Copy</button>
+                    <button class="btn btn-s" style="flex:1" onclick="shareLink('${link}')"><i class="ri-share-line"></i> Share</button>
+                </div>
+            `);
+            setTimeout(() => new QRCode(document.getElementById('srvQR'), { text: link, width: 160, height: 160 }), 100);
+        }
+
+        // Import to App (Deep Link)
+        function importToApp(link) {
+            const deepLinks = [
+                `v2rayng://install-config?url=${encodeURIComponent(link)}`,
+                `clash://install-config?url=${encodeURIComponent(link)}`
+            ];
+            window.location.href = deepLinks[0];
+            toast('Opening app...');
+        }
+
+        // Share Link
+        function shareLink(link) {
+            if (navigator.share) {
+                navigator.share({ title: 'LOOKA VPN', text: 'My VPN Config', url: link });
+            } else {
+                navigator.clipboard.writeText(link);
+                toast(T[lang].copied);
+            }
+        }
+
+        // Toggle Tutorial
+        function toggleTutorial() {
+            document.getElementById('tuteSection').classList.toggle('open');
+        }
+
+        // Initialize
+        function initV4() {
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            const btn = document.getElementById('themeBtn');
+            if (btn) btn.innerHTML = savedTheme === 'dark' ? '<i class="ri-sun-line"></i>' : '<i class="ri-moon-line"></i>';
+
+            setGreeting();
+            renderServers();
+            applyLang();
+            updateTime();
+            setInterval(updateTime, 60000);
+        }
+
+        initV4();
+
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW registered'))
+                    .catch(err => console.log('SW failed', err));
+            });
+        }
+    </script>
+</body>
+
+</html>

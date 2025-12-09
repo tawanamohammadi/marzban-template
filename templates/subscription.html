@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription Dashboard</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#10b981">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.0.0/Vazirmatn-font-face.css" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #10b981;
+            --primary-hover: #059669;
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-image:
+                radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.15) 0px, transparent 50%);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .user-info h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--primary);
+            border-radius: 99px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: currentColor;
+            border-radius: 50%;
+            box-shadow: 0 0 8px currentColor;
+        }
+
+        /* Usage Card */
+        .usage-card {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .usage-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .usage-bar-bg {
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 99px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .usage-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #3b82f6);
+            border-radius: 99px;
+            width: 0%;
+            /* Animated via JS */
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
+        }
+
+        .usage-details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .date-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+        }
+
+        .date-label {
+            color: var(--text-muted);
+        }
+
+        .date-value {
+            color: var(--text-main);
+        }
+
+        /* Actions */
+        .action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .btn {
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 16px;
+            border-radius: 16px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #000;
+            grid-column: span 2;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .btn i {
+            font-size: 1.5rem;
+        }
+
+        /* QR Section */
+        .qr-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 16px;
+            display: none;
+            /* Hidden by default */
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 24px;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #qrcode {
+            margin-bottom: 10px;
+        }
+
+        .qr-text {
+            color: #333;
+            font-size: 0.9rem;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        /* Links List */
+        .links-container {
+            margin-top: 30px;
+        }
+
+        .links-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+        }
+
+        .protocol-card {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-left: 4px solid var(--primary);
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+
+        .protocol-card:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .protocol-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .protocol-type {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        /* Notification Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--text-main);
+            color: var(--bg-dark);
+            padding: 12px 24px;
+            border-radius: 99px;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="profile-header">
+            <div class="user-info">
+                <h1 id="username-display">User</h1>
+                <div class="status-badge">
+                    <div class="status-dot"></div>
+                    <span id="status-display">Active</span>
+                </div>
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center;">
+                <button class="btn btn-secondary" onclick="toggleLanguage()"
+                    style="padding: 0; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.1); font-weight: 700; font-size: 0.9rem;">
+                    <span id="lang-text">EN</span>
+                </button>
+                <button class="btn btn-secondary" onclick="toggleTheme()"
+                    style="padding: 12px; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.1);">
+                    <i id="theme-icon" class="ri-moon-line" style="font-size: 1.2rem;"></i>
+                </button>
+                <div
+                    style="width: 48px; height: 48px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="ri-user-smile-line" style="font-size: 1.5rem;"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Usage Stats -->
+        <div class="usage-card">
+            <div class="usage-header">
+                <span data-i18n="data_usage">Data Usage</span>
+                <span id="usage-percent">0%</span>
+            </div>
+            <div class="usage-bar-bg">
+                <div class="usage-bar-fill" id="progress-bar"></div>
+            </div>
+            <div class="usage-details">
+                <span id="used-traffic">0 GB</span>
+                <span style="color: var(--text-muted); font-weight: 400;"><span data-i18n="of">of</span> <span
+                        id="total-traffic" style="color: var(--text-main); font-weight: 600;">0 GB</span></span>
+            </div>
+
+            <div class="date-info">
+                <div>
+                    <div class="date-label" data-i18n="expires_on">Expires on</div>
+                    <div class="date-value" id="expire-date" data-i18n="unlimited">Unlimited</div>
+                </div>
+                <div style="text-align: right;">
+                    <div class="date-label" data-i18n="days_left">Days Left</div>
+                    <div class="date-value" id="days-left" style="color: var(--primary);">∞</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- QR Code Area -->
+        <div class="qr-section" id="qr-container">
+            <div id="qrcode"></div>
+            <div class="qr-text" data-i18n="scan_import">Scan to Import</div>
+        </div>
+
+        <!-- Actions -->
+        <div class="action-grid">
+            <button class="btn btn-primary" onclick="copySubscription()">
+                <i class="ri-file-copy-line"></i>
+                <span data-i18n="copy_link">Copy Subscription Link</span>
+            </button>
+
+            <button class="btn btn-secondary" onclick="toggleQR()">
+                <i class="ri-qr-code-line"></i>
+                <span data-i18n="qr_code">QR Code</span>
+            </button>
+
+            <a href="#" id="import-btn" class="btn btn-secondary">
+                <i class="ri-download-cloud-2-line"></i>
+                <span data-i18n="import_app">Import App</span>
+            </a>
+        </div>
+
+        <!-- Protocols List (Optional) -->
+        <div class="links-container">
+            <div class="links-title">
+                <i class="ri-links-line"></i> <span data-i18n="access_keys">Access Keys</span>
+            </div>
+            <div id="protocols-list">
+                <!-- Populated via JS -->
+                <div class="protocol-card" onclick="alert('Use the main subscription button for auto-updates!')">
+                    <div>
+                        <div class="protocol-name" data-i18n="auto_update">Auto-Update Profile</div>
+                        <div class="protocol-type" data-i18n="subscription">Subscription</div>
+                    </div>
+                    <i class="ri-arrow-right-s-line" style="color: var(--text-muted);"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">
+        <i class="ri-checkbox-circle-fill" style="color: var(--primary);"></i>
+        <span>Link Copied!</span>
+    </div>
+
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script>
+        // ---------------------------------------------------------
+        // MOCK DATA - REPLACE THIS SECTION WITH JINJA2 VARIABLES 
+        // FOR PRODUCTION DEPLOYMENT
+        // ---------------------------------------------------------
+
+        // Example of how usage on Marzban might look:
+        // const user = {
+        //    username: "{{ user.username }}",
+        //    status: "{{ user.status }}",
+        //    used_traffic: {{ user.used_traffic }},
+        //    data_limit: {{ user.data_limit }},
+        //    expire: {{ user.expire | default('null') }},
+        // };
+        // const subLink = "{{ link }}";
+
+        // For DEMO purposes (AntiGravity Preview):
+        const DATA = {
+            username: "{{ username }}",
+            status: "{{ status }}",
+            used: {{ used_traffic }},
+        limit: { { data_limit } },
+        expire: { { expire if expire else 'null' } },
+        link: "{{ link }}"
+    };
+
+        // Helper to format bytes
+        function formatBytes(bytes, decimals = 2) {
+            if (!+bytes) return '0 Bytes';
+            const k = 1024;
+            const dm = decimals < 0 ? 0 : decimals;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+        }
+
+        // Helper to format date
+        function formatDate(ts) {
+            if (!ts) return "Never";
+            const lang = currentLang === 'fa' ? 'fa-IR' : 'en-US';
+            return new Date(ts * 1000).toLocaleDateString(lang);
+        }
+
+        // Initialize UI
+        function init() {
+            document.getElementById('username-display').textContent = DATA.username;
+            document.getElementById('status-display').textContent = DATA.status.toUpperCase();
+
+            // Usage logic
+            const percent = DATA.limit ? Math.min(100, (DATA.used / DATA.limit) * 100).toFixed(1) : 0;
+            document.getElementById('usage-percent').textContent = percent + '%';
+            document.getElementById('progress-bar').style.width = percent + '%';
+
+            // Colorize bar based on usage
+            const bar = document.getElementById('progress-bar');
+            if (percent > 90) bar.style.background = 'var(--danger)';
+            else if (percent > 70) bar.style.background = 'var(--warning)';
+
+            document.getElementById('used-traffic').textContent = formatBytes(DATA.used);
+            document.getElementById('total-traffic').textContent = DATA.limit ? formatBytes(DATA.limit) : 'Unlimited';
+
+            // Expiry
+            if (DATA.expire) {
+                document.getElementById('expire-date').textContent = formatDate(DATA.expire);
+                // Calculate days left
+                const now = Date.now() / 1000;
+                const diff = DATA.expire - now;
+                const days = Math.ceil(diff / (3600 * 24));
+                document.getElementById('days-left').textContent = days > 0 ? days + " Days" : "Expired";
+            } else {
+                document.getElementById('expire-date').textContent = "Lifetime";
+                document.getElementById('days-left').textContent = "∞";
+            }
+
+            // Import Button (Try to open with v2rayNG scheme)
+            // Usually v2rayng://install-sub?url=... but support varies. 
+            // Best is just open the sub link or copy it.
+            // We'll set it to the sub link directly for now.
+            document.getElementById('import-btn').href = DATA.link;
+        }
+
+        // Actions
+        function copySubscription() {
+            navigator.clipboard.writeText(DATA.link).then(() => {
+                showToast();
+            }).catch(err => {
+                console.error('Failed', err);
+                // Fallback
+                const ta = document.createElement('textarea');
+                ta.value = DATA.link;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                showToast();
+            });
+        }
+
+        function showToast() {
+            const t = document.getElementById('toast');
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        let qrGenerated = false;
+        function toggleQR() {
+            const c = document.getElementById('qr-container');
+            if (c.style.display === 'flex') {
+                c.style.display = 'none';
+            } else {
+                c.style.display = 'flex';
+                if (!qrGenerated) {
+                    new QRCode(document.getElementById("qrcode"), {
+                        text: DATA.link,
+                        width: 180,
+                        height: 180,
+                        colorDark: "#000000",
+                        colorLight: "#ffffff",
+                        correctLevel: QRCode.CorrectLevel.H
+                    });
+                    qrGenerated = true;
+                }
+            }
+        }
+
+        // Theme Toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                html.style.setProperty('--bg-dark', '#f8fafc');
+                html.style.setProperty('--card-bg', '#ffffff');
+                html.style.setProperty('--text-main', '#0f172a');
+                html.style.setProperty('--text-muted', '#64748b');
+                icon.className = 'ri-sun-line';
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                html.style.removeProperty('--bg-dark');
+                html.style.removeProperty('--card-bg');
+                html.style.removeProperty('--text-main');
+                html.style.removeProperty('--text-muted');
+                icon.className = 'ri-moon-line';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Language Support
+        const TRANS = {
+            en: {
+                data_usage: "Data Usage",
+                of: "of",
+                expires_on: "Expires on",
+                days_left: "Days Left",
+                scan_import: "Scan to Import",
+                copy_link: "Copy Subscription Link",
+                qr_code: "QR Code",
+                import_app: "Import App",
+                access_keys: "Access Keys",
+                auto_update: "Auto-Update Profile",
+                subscription: "Subscription",
+                link_copied: "Link Copied!",
+                unlimited: "Unlimited",
+                lifetime: "Lifetime",
+                days: " Days",
+                expired: "Expired"
+            },
+            fa: {
+                data_usage: "میزان مصرف",
+                of: "از",
+                expires_on: "تاریخ انقضا",
+                days_left: "روز باقیمانده",
+                scan_import: "اسکن جهت افزودن",
+                copy_link: "کپی لینک اشتراک",
+                qr_code: "کیو‌آر کد",
+                import_app: "افزودن به برنامه",
+                access_keys: "کلیدهای دسترسی",
+                auto_update: "پروفایل آپدیت خودکار",
+                subscription: "اشتراک",
+                link_copied: "لینک کپی شد!",
+                unlimited: "نامحدود",
+                lifetime: "مادام‌العمر",
+                days: " روز",
+                expired: "منقضی شده"
+            }
+        };
+
+        let currentLang = 'en';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'fa' : 'en';
+            localStorage.setItem('lang', currentLang);
+            applyLanguage();
+        }
+
+        function applyLanguage() {
+            const t = TRANS[currentLang];
+            const html = document.documentElement;
+            const langBtn = document.getElementById('lang-text');
+
+            // Text updates
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.textContent = t[key];
+            });
+
+            // Direction and Font
+            if (currentLang === 'fa') {
+                html.setAttribute('dir', 'rtl');
+                html.style.fontFamily = 'Vazirmatn, Outfit, sans-serif';
+                langBtn.textContent = 'FA';
+                document.body.style.fontFamily = 'Vazirmatn, Outfit, sans-serif';
+            } else {
+                html.setAttribute('dir', 'ltr');
+                html.style.fontFamily = 'Outfit, sans-serif';
+                langBtn.textContent = 'EN';
+                document.body.style.fontFamily = 'Outfit, sans-serif';
+            }
+
+            // Dynamic updates for values handled in init() need refresh usually, 
+            // but for now we just update static labels. 
+            // We might need to re-run parts of init() if it sets text.
+            // Let's re-run text setting part of init if needed.
+            if (DATA.limit) {
+                document.getElementById('total-traffic').innerHTML = `${formatBytes(DATA.limit)}`;
+                // Note: "of" is static in HTML, handled by data-i18n
+            } else {
+                document.getElementById('total-traffic').textContent = t.unlimited;
+            }
+
+            if (!DATA.expire) {
+                document.getElementById('expire-date').textContent = t.lifetime;
+            }
+
+            // Re-calc days left text
+            if (DATA.expire) {
+                const now = Date.now() / 1000;
+                const diff = DATA.expire - now;
+                const days = Math.ceil(diff / (3600 * 24));
+                document.getElementById('days-left').textContent = days > 0 ? days + t.days : t.expired;
+            } else {
+                document.getElementById('days-left').textContent = "∞";
+            }
+        }
+
+        // Load saved lang
+        if (localStorage.getItem('lang')) {
+            currentLang = localStorage.getItem('lang');
+        }
+        // Apply initial language (will be called after DOM load effectively via init or just here)
+        // We will call it at end of init()
+
+        // ... (end of script)
+
+        // Run
+        init();
+        applyLanguage();
+
+    </script>
+</body>
+
+</html>
