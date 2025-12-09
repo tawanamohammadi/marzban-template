@@ -66,13 +66,10 @@ marzban-template/
 
 ### For Marzban Panel
 
-1. **Copy the template file**:
+1. **Easy Install (Recommended)**:
    ```bash
-   cp dashboard-v4-ultimate.html /var/lib/marzban/templates/subscription/index.html
-   ```
-
-2. **Restart Marzban**:
-   ```bash
+   mkdir -p /var/lib/marzban/templates/subscription && \
+   wget -O /var/lib/marzban/templates/subscription/index.html https://raw.githubusercontent.com/tawanamohammadi/marzban-template/main/dashboard-v4-ultimate.html && \
    marzban restart
    ```
 
