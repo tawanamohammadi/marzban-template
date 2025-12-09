@@ -2922,7 +2922,77 @@
         };
 
 
-        const SERVERS = [{ flag: "us", name: "USA 1", proto: "VLESS", type: "Reality", ping: 45, st: "g" }, { flag: "us", name: "USA 2", proto: "VLESS", type: "TLS", ping: 62, st: "g" }, { flag: "us", name: "USA 3", proto: "VLESS", type: "xHTTP", ping: 78, st: "o" }, { flag: "de", name: "Germany 1", proto: "VLESS", type: "Reality", ping: 38, st: "g" }, { flag: "de", name: "Germany 2", proto: "VLESS", type: "TLS", ping: 52, st: "g" }, { flag: "nl", name: "Netherlands", proto: "VLESS", type: "TLS", ping: 41, st: "g" }, { flag: "gb", name: "England 1", proto: "VLESS", type: "Reality", ping: 48, st: "g" }, { flag: "gb", name: "England 2", proto: "VLESS", type: "TLS", ping: 67, st: "o" }, { flag: "nz", name: "NewZealand 1", proto: "VMESS", type: "TLS", ping: 142, st: "o" }, { flag: "nz", name: "NewZealand 2", proto: "VMESS", type: "TLS", ping: 158, st: "o" }, { flag: "nz", name: "NewZealand 3", proto: "VMESS", type: "TLS", ping: 165, st: "r" }, { flag: "nz", name: "NewZealand 4", proto: "VMESS", type: "TLS", ping: 178, st: "r" }, { flag: "fr", name: "France", proto: "VLESS", type: "TLS", ping: 55, st: "g" }];
+        // --- DATA INJECTION ---
+        let SERVERS = [];
+        const SUB_LINKS = [
+            {% for link in user.links %}
+        "{{ link }}",
+            {% endfor %}
+        ];
+
+        const USER_STATUS = "{{ user.status.value }}";
+
+        // Link Parser
+        function parseLinks() {
+            SERVERS = SUB_LINKS.map(link => {
+                let name = "Server";
+                let proto = "Unknown";
+                let type = "TLS";
+                let flag = "un";
+
+                try {
+                    if (link.startsWith("vless://")) {
+                        proto = "VLESS";
+                        const parts = link.split("@");
+                        if (parts[1]) {
+                            const afterAt = parts[1].split("#");
+                            name = decodeURIComponent(afterAt[1] || "Server");
+                        }
+                    } else if (link.startsWith("vmess://")) {
+                        proto = "VMESS";
+                        const b64 = link.substring(8);
+                        try {
+                            const json = JSON.parse(atob(b64));
+                            name = json.ps || "Server";
+                            type = json.net || "ws";
+                        } catch (e) { }
+                    } else if (link.startsWith("trojan://")) {
+                        proto = "Trojan";
+                        const parts = link.split("@");
+                        if (parts[1]) {
+                            const afterAt = parts[1].split("#");
+                            name = decodeURIComponent(afterAt[1] || "Server");
+                        }
+                    } else if (link.startsWith("ss://")) {
+                        proto = "Shadowsocks";
+                        const parts = link.split("#");
+                        name = decodeURIComponent(parts[1] || "Server");
+                    }
+
+                    // Flag Helper
+                    const n = name.toLowerCase();
+                    if (n.includes("us") || n.includes("usa") || n.includes("america")) flag = "us";
+                    else if (n.includes("de") || n.includes("ger") || n.includes("alm")) flag = "de";
+                    else if (n.includes("nl") || n.includes("neth")) flag = "nl";
+                    else if (n.includes("fr") || n.includes("fra")) flag = "fr";
+                    else if (n.includes("gb") || n.includes("uk") || n.includes("eng")) flag = "gb";
+                    else if (n.includes("tr")) flag = "tr";
+                    else if (n.includes("ir")) flag = "ir";
+                    else if (n.includes("fi")) flag = "fi";
+                    else if (n.includes("pl")) flag = "pl";
+                } catch (e) { console.error("Link Parse Error", e); }
+
+                return {
+                    flag: flag,
+                    name: name,
+                    proto: proto,
+                    type: type,
+                    ping: Math.floor(Math.random() * 200) + 50, // Simulated ping
+                    st: "g",
+                    link: link // Store original link
+                };
+            });
+        }
 
         function toast(m) { const t = document.getElementById('toast'); document.getElementById('toastMsg').textContent = m; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500) }
         function showModal() { document.getElementById('modal').classList.add('show') }
@@ -3074,7 +3144,9 @@
 
         // Initialize
         function initV4() {
+            parseLinks();
             initData();
+            updateStatus();
 
             // Load saved theme
             const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -3087,6 +3159,26 @@
             applyLang();
             updateTime();
             setInterval(updateTime, 60000);
+        }
+
+        function updateStatus() {
+            const dot = document.querySelector('.pulse-dot');
+            const txt = document.querySelector('[data-t="heroTitle"]');
+
+            if (USER_STATUS === 'active') {
+                dot.style.background = 'var(--accent)';
+                txt.textContent = 'Premium VPN Active';
+            } else if (USER_STATUS === 'limited') {
+                dot.style.background = 'orange';
+                txt.textContent = 'Subscription Limited';
+            } else if (USER_STATUS === 'expired') {
+                dot.style.background = 'red';
+                txt.textContent = 'Subscription Expired';
+                dot.style.animation = 'none';
+            } else {
+                dot.style.background = 'gray';
+                txt.textContent = 'Status: ' + USER_STATUS;
+            }
         }
 
         initV4();
