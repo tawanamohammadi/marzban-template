@@ -2184,7 +2184,529 @@
             color: var(--text3);
             margin-top: 2px;
         }
+
+        /* Footer */
+        footer {
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            padding: 3rem 1.5rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        .footer-col h3 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text);
+        }
+
+        .footer-col h3 i {
+            color: var(--accent);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-link {
+            color: var(--text2);
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: 0.2s;
+        }
+
+        .footer-link:hover {
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .footer-link i {
+            font-size: 1rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card2);
+            border: 1px solid var(--border);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: 0.2s;
+        }
+
+        .social-link:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #000;
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem;
+            color: var(--text3);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        @media (max-width: 640px) {
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        .footer-version {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .version-badge {
+            background: var(--soft);
+            color: var(--accent);
+            padding: 0.25rem 0.75rem;
+            border-radius: 99px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        }
+
+        /* Countdown Section - WORLD CLASS PRODUCT DESIGN */
+        .countdown-sec {
+            position: relative;
+            max-width: 680px;
+            margin: 4rem auto;
+            border-radius: 32px;
+            overflow: hidden;
+            /* Apple-style shadow */
+            box-shadow:
+                0 20px 40px -10px rgba(0, 0, 0, 0.2),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+            transform: translateZ(0);
+            /* Hardware acceleration */
+        }
+
+        /* 1. The Living Background (Spotify Style) */
+        .cd-glow {
+            position: absolute;
+            inset: -50%;
+            background: conic-gradient(from 0deg at 50% 50%,
+                    var(--blue) 0deg,
+                    var(--accent) 120deg,
+                    var(--purple) 240deg,
+                    var(--blue) 360deg);
+            filter: blur(80px);
+            /* Heavy blur for that smooth look */
+            opacity: 0.15;
+            animation: spin 20s linear infinite;
+            z-index: 0;
+        }
+
+        [data-theme="dark"] .cd-glow {
+            opacity: 0.25;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* 2. The Content Layer (Glass) */
+        .cd-content {
+            position: relative;
+            z-index: 1;
+            padding: 3rem 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            /* Tiny tint */
+            backdrop-filter: blur(20px);
+            /* Frosted glass */
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 3. Header Styling */
+        .cd-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2.5rem;
+            background: rgba(var(--text-rgb), 0.05);
+            padding: 0.5rem 1rem;
+            border-radius: 99px;
+            border: 1px solid rgba(var(--text-rgb), 0.1);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.5);
+                opacity: 0.5;
+            }
+        }
+
+        .cd-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text);
+            opacity: 0.8;
+        }
+
+        /* 4. The Timer Typography (Apple Style) */
+        .circ-timer-wrap {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+            align-items: baseline;
+            gap: 0.5rem;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .circ-timer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .circ-val {
+            font-size: 3.5rem;
+            font-weight: 700;
+            /* Bold numbers like Spotify */
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -2px;
+            /* Tight tracking */
+            color: var(--text);
+            /* Gradient Text */
+            background: linear-gradient(180deg, var(--text) 0%, rgba(var(--text-rgb), 0.7) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .circ-lbl {
+            margin-top: 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text3);
+        }
+
+        .sep {
+            font-size: 2.5rem;
+            color: var(--text3);
+            font-weight: 300;
+            opacity: 0.3;
+            transform: translateY(-10px);
+        }
+
+        /* Responsive Polish */
+        @media (max-width: 640px) {
+            .countdown-sec {
+                margin: 2rem 1rem;
+                border-radius: 24px;
+            }
+
+            .cd-content {
+                padding: 2rem 1rem;
+            }
+
+            .circ-timer-wrap {
+                gap: 0.25rem;
+            }
+
+            .circ-val {
+                font-size: 2rem;
+                letter-spacing: -1px;
+            }
+
+            .sep {
+                font-size: 1.5rem;
+                transform: translateY(-5px);
+            }
+
+            .circ-lbl {
+                font-size: 0.6rem;
+                letter-spacing: 1px;
+            }
+        }
+
+        /* Hover Interaction */
+        .countdown-sec:hover .cd-glow {
+            opacity: 0.6;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Hide SVGs */
+        svg defs {
+            display: none;
+        }
+
+        .circ-svg {
+            display: none;
+        }
+
+        /* Stats Section */
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 640px) {
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .status-item {
+            background: var(--card2);
+            border: 1px solid var(--border);
+            border-radius: var(--r3);
+            padding: 0.75rem;
+            text-align: center;
+        }
+
+        .status-v {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+        }
+
+        .status-l {
+            font-size: 0.7rem;
+            color: var(--text3);
+            text-transform: uppercase;
+        }
+
+        /* FAQ Section */
+        .faq {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--r2);
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .faq-item:hover {
+            border-color: var(--accent);
+        }
+
+        .faq-q {
+            padding: 1rem 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            user-select: none;
+        }
+
+        .faq-q i {
+            transition: 0.3s;
+            color: var(--text3);
+        }
+
+        .faq-item.open .faq-q i {
+            transform: rotate(180deg);
+            color: var(--accent);
+        }
+
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s;
+            color: var(--text2);
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .faq-item.open .faq-a {
+            max-height: 200px;
+            padding: 0 1.25rem 1rem;
+        }
+
+        /* Donut Chart */
+        .donut {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(var(--accent) calc(var(--p) * 1%), var(--card2) 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .donut-in {
+            width: 100px;
+            height: 100px;
+            background: var(--card);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .donut-v {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .donut-l {
+            font-size: 0.7rem;
+            color: var(--text3);
+        }
+
+        /* Legends */
+        .legends {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .leg {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .leg-d {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        .leg-l {
+            font-size: 0.8rem;
+            color: var(--text2);
+            flex: 1;
+        }
+
+        .leg-v {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        /* Bar Chart */
+        .bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 0.5rem;
+            height: 150px;
+        }
+
+        .bar {
+            flex: 1;
+            background: var(--card2);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            min-height: 20px;
+            transition: 0.3s;
+        }
+
+        .bar:hover {
+            background: var(--accent);
+        }
+
+        .bar-v {
+            position: absolute;
+            top: -1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text2);
+        }
+
+        .bar-l {
+            margin-top: 0.5rem;
+            font-size: 0.65rem;
+            color: var(--text3);
+            text-align: center;
+        }
     </style>
+
 </head>
 
 <body>
@@ -2305,42 +2827,39 @@
             </div>
         </section>
 
-        <!-- Circular Countdown -->
+        <!-- Circular Countdown - Enhanced -->
+        <!-- Cyber-Glass Countdown -->
         <div class="countdown-sec">
-            <div class="cd-t" style="text-align:center;margin-bottom:1rem;opacity:0.8" data-t="expiresIn">Subscription
-                expires in:</div>
-            <div class="circ-timer-wrap">
-                <!-- Days -->
-                <div class="circ-timer" id="ctDays">
-                    <svg class="circ-svg" viewBox="0 0 80 80">
-                        <circle class="circ-circle-bg" cx="40" cy="40" r="35"></circle>
-                        <circle class="circ-circle-fg" cx="40" cy="40" r="35" style="stroke-dashoffset: 0"></circle>
-                    </svg>
-                    <div class="circ-info">
+            <div class="cd-glow"></div>
+            <div class="cd-content">
+                <div class="cd-header">
+                    <div class="status-dot"></div>
+                    <div class="cd-title" data-t="expiresIn">SUBSCRIPTION EXPIRES IN</div>
+                </div>
+
+                <div class="circ-timer-wrap">
+                    <!-- Days -->
+                    <div class="circ-timer">
                         <div class="circ-val" id="cdDaysVal">0</div>
                         <div class="circ-lbl" data-t="days">Days</div>
                     </div>
-                </div>
-                <!-- Hours -->
-                <div class="circ-timer" id="ctHrs">
-                    <svg class="circ-svg" viewBox="0 0 80 80">
-                        <circle class="circ-circle-bg" cx="40" cy="40" r="35"></circle>
-                        <circle class="circ-circle-fg" cx="40" cy="40" r="35"></circle>
-                    </svg>
-                    <div class="circ-info">
+                    <div class="sep">:</div>
+                    <!-- Hours -->
+                    <div class="circ-timer">
                         <div class="circ-val" id="cdHrsVal">0</div>
-                        <div class="circ-lbl" data-t="hours">Hrs</div>
+                        <div class="circ-lbl" data-t="hours">Hours</div>
                     </div>
-                </div>
-                <!-- Mins -->
-                <div class="circ-timer" id="ctMins">
-                    <svg class="circ-svg" viewBox="0 0 80 80">
-                        <circle class="circ-circle-bg" cx="40" cy="40" r="35"></circle>
-                        <circle class="circ-circle-fg" cx="40" cy="40" r="35"></circle>
-                    </svg>
-                    <div class="circ-info">
+                    <div class="sep">:</div>
+                    <!-- Minutes -->
+                    <div class="circ-timer">
                         <div class="circ-val" id="cdMinsVal">0</div>
                         <div class="circ-lbl" data-t="mins">Mins</div>
+                    </div>
+                    <div class="sep">:</div>
+                    <!-- Seconds -->
+                    <div class="circ-timer">
+                        <div class="circ-val" id="cdSecsVal">0</div>
+                        <div class="circ-lbl" data-t="secs">Secs</div>
                     </div>
                 </div>
             </div>
@@ -2480,36 +2999,144 @@
         <section class="apps-sec">
             <h2 class="sec-h"><i class="ri-download-cloud-2-line"></i> <span data-t="apps">Download Apps</span></h2>
             <div class="app-tabs">
-                <button class="app-tab active"><i class="ri-android-fill"></i> Android</button>
-                <button class="app-tab"><i class="ri-apple-fill"></i> iOS</button>
-                <button class="app-tab"><i class="ri-windows-fill"></i> Windows</button>
-                <button class="app-tab"><i class="ri-mac-fill"></i> macOS</button>
-                <button class="app-tab"><i class="ri-ubuntu-fill"></i> Linux</button>
+                <button class="app-tab active" onclick="showApps('android')"><i class="ri-android-fill"></i>
+                    Android</button>
+                <button class="app-tab" onclick="showApps('ios')"><i class="ri-apple-fill"></i> iOS</button>
+                <button class="app-tab" onclick="showApps('windows')"><i class="ri-windows-fill"></i> Windows</button>
+                <button class="app-tab" onclick="showApps('macos')"><i class="ri-mac-fill"></i> macOS</button>
+                <button class="app-tab" onclick="showApps('linux')"><i class="ri-ubuntu-fill"></i> Linux</button>
             </div>
-            <div class="app-grid">
-                <a href="https://github.com/2dust/v2rayNG/releases" target="_blank" class="app">
+            <!-- Android Apps -->
+            <div class="app-grid" id="apps-android">
+                <a href="https://github.com/2dust/v2rayNG/releases/download/1.9.32/v2rayNG_1.9.32_universal.apk"
+                    target="_blank" class="app">
                     <div class="app-i">🌐</div>
                     <div class="app-n">Universal</div>
                     <div class="app-d">v2rayNG</div>
-                    <div class="app-v">v1.8.23</div>
+                    <div class="app-v">v1.9.32</div>
                 </a>
-                <a href="https://github.com/2dust/v2rayNG/releases" target="_blank" class="app">
+                <a href="https://github.com/2dust/v2rayNG/releases/download/1.9.32/v2rayNG_1.9.32_arm64-v8a.apk"
+                    target="_blank" class="app">
                     <div class="app-i">📱</div>
-                    <div class="app-n">Samsung</div>
-                    <div class="app-d">v2rayNG</div>
-                    <div class="app-v">v1.8.23</div>
+                    <div class="app-n">Samsung/Pixel</div>
+                    <div class="app-d">v2rayNG (arm64)</div>
+                    <div class="app-v">v1.9.32</div>
                 </a>
-                <a href="https://github.com/MatsuriDayo/NekoBoxForAndroid/releases" target="_blank" class="app">
-                    <div class="app-i">📱</div>
-                    <div class="app-n">Xiaomi</div>
-                    <div class="app-d">NekoBox</div>
-                    <div class="app-v">v1.3.5</div>
+                <a href="https://github.com/hiddify/hiddify-app/releases/download/v2.5.7/Hiddify-Android-universal.apk"
+                    target="_blank" class="app">
+                    <div class="app-i">🔮</div>
+                    <div class="app-n">Hiddify</div>
+                    <div class="app-d">Universal</div>
+                    <div class="app-v">v2.5.7</div>
                 </a>
-                <a href="https://github.com/hiddify/hiddify-next/releases" target="_blank" class="app">
-                    <div class="app-i">📱</div>
-                    <div class="app-n">Huawei</div>
-                    <div class="app-d">Hiddify</div>
-                    <div class="app-v">v2.0.5</div>
+                <a href="https://github.com/MatsuriDayo/NekoBoxForAndroid/releases/download/1.3.9/NB4A-1.3.9-arm64-v8a.apk"
+                    target="_blank" class="app">
+                    <div class="app-i">🐱</div>
+                    <div class="app-n">NekoBox</div>
+                    <div class="app-d">arm64</div>
+                    <div class="app-v">v1.3.9</div>
+                </a>
+            </div>
+            <!-- iOS Apps -->
+            <div class="app-grid" id="apps-ios" style="display:none">
+                <a href="https://apps.apple.com/app/streisand/id6450534064" target="_blank" class="app">
+                    <div class="app-i">🎭</div>
+                    <div class="app-n">Streisand</div>
+                    <div class="app-d">Free</div>
+                    <div class="app-v">App Store</div>
+                </a>
+                <a href="https://apps.apple.com/app/v2box-v2ray-client/id6446814690" target="_blank" class="app">
+                    <div class="app-i">📦</div>
+                    <div class="app-n">V2Box</div>
+                    <div class="app-d">Free</div>
+                    <div class="app-v">App Store</div>
+                </a>
+                <a href="https://apps.apple.com/app/foxray/id6448898396" target="_blank" class="app">
+                    <div class="app-i">🦊</div>
+                    <div class="app-n">FoXray</div>
+                    <div class="app-d">Free</div>
+                    <div class="app-v">App Store</div>
+                </a>
+                <a href="https://apps.apple.com/app/shadowrocket/id932747118" target="_blank" class="app">
+                    <div class="app-i">🚀</div>
+                    <div class="app-n">Shadowrocket</div>
+                    <div class="app-d">Paid ($2.99)</div>
+                    <div class="app-v">App Store</div>
+                </a>
+            </div>
+            <!-- Windows Apps -->
+            <div class="app-grid" id="apps-windows" style="display:none">
+                <a href="https://github.com/2dust/v2rayN/releases/download/7.10.5/v2rayN-windows-64-SelfContained.zip"
+                    target="_blank" class="app">
+                    <div class="app-i">💻</div>
+                    <div class="app-n">v2rayN</div>
+                    <div class="app-d">x64 Self-Contained</div>
+                    <div class="app-v">v7.10.5</div>
+                </a>
+                <a href="https://github.com/hiddify/hiddify-app/releases/download/v2.5.7/Hiddify-Windows-Setup-x64.exe"
+                    target="_blank" class="app">
+                    <div class="app-i">🔮</div>
+                    <div class="app-n">Hiddify</div>
+                    <div class="app-d">Setup x64</div>
+                    <div class="app-v">v2.5.7</div>
+                </a>
+                <a href="https://github.com/MatsuriDayo/nekoray/releases/download/4.0.1/nekoray-4.0.1-2024-12-01-windows64.zip"
+                    target="_blank" class="app">
+                    <div class="app-i">🐱</div>
+                    <div class="app-n">Nekoray</div>
+                    <div class="app-d">x64</div>
+                    <div class="app-v">v4.0.1</div>
+                </a>
+                <a href="https://github.com/GUI-for-Cores/GUI.for" target="_blank" class="app">
+                    <div class="app-i">⚡</div>
+                    <div class="app-n">GUI.for.Cores</div>
+                    <div class="app-d">Multi-Core</div>
+                    <div class="app-v">Latest</div>
+                </a>
+            </div>
+            <!-- macOS Apps -->
+            <div class="app-grid" id="apps-macos" style="display:none">
+                <a href="https://github.com/hiddify/hiddify-app/releases/download/v2.5.7/Hiddify-MacOS-Universal.dmg"
+                    target="_blank" class="app">
+                    <div class="app-i">🔮</div>
+                    <div class="app-n">Hiddify</div>
+                    <div class="app-d">Universal</div>
+                    <div class="app-v">v2.5.7</div>
+                </a>
+                <a href="https://github.com/2dust/v2rayU/releases" target="_blank" class="app">
+                    <div class="app-i">💻</div>
+                    <div class="app-n">V2RayU</div>
+                    <div class="app-d">Universal</div>
+                    <div class="app-v">Latest</div>
+                </a>
+                <a href="https://github.com/abbabon/Clash-for-FlClash" target="_blank" class="app">
+                    <div class="app-i">⚔️</div>
+                    <div class="app-n">FlClash</div>
+                    <div class="app-d">GUI</div>
+                    <div class="app-v">Latest</div>
+                </a>
+            </div>
+            <!-- Linux Apps -->
+            <div class="app-grid" id="apps-linux" style="display:none">
+                <a href="https://github.com/hiddify/hiddify-app/releases/download/v2.5.7/Hiddify-Linux-x64.AppImage"
+                    target="_blank" class="app">
+                    <div class="app-i">🔮</div>
+                    <div class="app-n">Hiddify</div>
+                    <div class="app-d">AppImage x64</div>
+                    <div class="app-v">v2.5.7</div>
+                </a>
+                <a href="https://github.com/MatsuriDayo/nekoray/releases/download/4.0.1/nekoray-4.0.1-2024-12-01-linux64.zip"
+                    target="_blank" class="app">
+                    <div class="app-i">🐱</div>
+                    <div class="app-n">Nekoray</div>
+                    <div class="app-d">x64</div>
+                    <div class="app-v">v4.0.1</div>
+                </a>
+                <a href="https://github.com/GUI-for-Cores/GUI.for.SingBox" target="_blank" class="app">
+                    <div class="app-i">⚡</div>
+                    <div class="app-n">GUI.for.SingBox</div>
+                    <div class="app-d">GUI</div>
+                    <div class="app-v">Latest</div>
                 </a>
             </div>
         </section>
@@ -3180,6 +3807,18 @@
         // Toggle Tutorial
         function toggleTutorial() {
             document.getElementById('tuteSection').classList.toggle('open');
+        }
+
+        // Show Apps by Platform
+        function showApps(platform) {
+            // Hide all app grids
+            document.querySelectorAll('[id^="apps-"]').forEach(el => el.style.display = 'none');
+            // Show selected platform
+            const grid = document.getElementById('apps-' + platform);
+            if (grid) grid.style.display = 'grid';
+            // Update active tab
+            document.querySelectorAll('.app-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
         }
 
         // Initialize Data from Hidden Fields

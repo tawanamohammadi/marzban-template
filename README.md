@@ -1,8 +1,8 @@
 # 🚀 Marzban V4 Ultimate Dashboard
 
-[![Version](https://img.shields.io/badge/version-4.0%20Ultimate-brightgreen)](https://github.com/YOUR_USERNAME/marzban-template)
+[![Version](https://img.shields.io/badge/version-4.0%20Ultimate-brightgreen)](https://github.com/tawanamohammadi/marzban-template)
 [![Marzban](https://img.shields.io/badge/Marzban-Compatible-blue)](https://github.com/Gozargah/Marzban)
-[![License](https://img.shields.io/badge/license-MIT-orange)](LICENSE)
+[![License](https://img.shields.io/badge/license-Proprietary-red)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.8+-blue)](https://www.python.org/)
 
 A premium, feature-rich subscription dashboard for [Marzban](https://github.com/Gozargah/Marzban) VPN panel with stunning UI/UX, FastAPI backend, and full Marzban API integration.
@@ -66,31 +66,36 @@ marzban-template/
 
 **This is the simplest and recommended method for production use.**
 
-1. **Upload the dashboard file to your Marzban server**:
-   ```bash
-   # SSH to your Marzban server
-   ssh user@your-server.com
-   
-   # Create templates directory if it doesn't exist
-   mkdir -p /var/lib/marzban/templates/subscription
-   
-   # Download the dashboard file
-   wget -O /var/lib/marzban/templates/subscription/index.html \
-     https://raw.githubusercontent.com/YOUR_USERNAME/marzban-template/main/templates/dashboard.html
-   
-   # Or upload from your local machine
-   scp templates/dashboard.html user@your-server:/var/lib/marzban/templates/subscription/index.html
-   ```
+#### Step 1: SSH to your Marzban server
+```bash
+ssh user@your-server.com
+```
 
-2. **Restart Marzban**:
-   ```bash
-   marzban restart
-   ```
+#### Step 2: Create templates directory
+```bash
+mkdir -p /var/lib/marzban/templates/subscription
+```
 
-3. **Access your subscription page**:
-   ```
-   https://your-domain.com/sub/{username}
-   ```
+#### Step 3: Download the dashboard file
+```bash
+wget -O /var/lib/marzban/templates/subscription/index.html \
+  https://raw.githubusercontent.com/tawanamohammadi/marzban-template/main/templates/dashboard.html
+```
+
+**Or** upload from your local machine:
+```bash
+scp templates/dashboard.html user@your-server:/var/lib/marzban/templates/subscription/index.html
+```
+
+#### Step 4: Restart Marzban
+```bash
+marzban restart
+```
+
+#### Step 5: Access your subscription page
+```
+https://your-domain.com/sub/{username}
+```
 
 **That's it!** Marzban will automatically inject user data into the dashboard.
 
@@ -107,30 +112,28 @@ marzban-template/
 
 **Only use this if you want to test locally or develop custom features.**
 
-Perfect for testing without a Marzban server.
+#### Step 1: Clone the repository
+```bash
+git clone https://github.com/tawanamohammadi/marzban-template.git
+cd marzban-template
+```
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/marzban-template.git
-   cd marzban-template
-   ```
+#### Step 2: Install dependencies
+```bash
+pip install -r requirements.txt
+```
 
-2. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+#### Step 3: Run the development server
+```bash
+python main.py
+```
 
-3. **Run the server**:
-   ```bash
-   python main.py
-   ```
+#### Step 4: Open in browser
+```
+http://localhost:8000/sub/testuser
+```
 
-4. **Open in browser**:
-   ```
-   http://localhost:8000/sub/testuser
-   ```
-
-   The server will use mock data automatically (13 sample servers, realistic stats).
+The server will use mock data automatically (13 sample servers, realistic stats).
 
 ---
 
@@ -138,33 +141,36 @@ Perfect for testing without a Marzban server.
 
 **Only use this if you want to run the dashboard as a separate service from Marzban.**
 
-Connect to your actual Marzban panel via API.
+#### Step 1: Clone and install
+```bash
+git clone https://github.com/tawanamohammadi/marzban-template.git
+cd marzban-template
+pip install -r requirements.txt
+```
 
-1. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+#### Step 2: Set environment variables
 
-2. **Set environment variables**:
-   ```bash
-   # Windows PowerShell
-   $env:MARZBAN_URL="https://your-marzban.com"
-   $env:MARZBAN_TOKEN="your-admin-token-here"
-   
-   # Linux/Mac
-   export MARZBAN_URL="https://your-marzban.com"
-   export MARZBAN_TOKEN="your-admin-token-here"
-   ```
+**Windows PowerShell:**
+```powershell
+$env:MARZBAN_URL="https://your-marzban.com"
+$env:MARZBAN_TOKEN="your-admin-token-here"
+```
 
-3. **Run the server**:
-   ```bash
-   python main.py
-   ```
+**Linux/Mac:**
+```bash
+export MARZBAN_URL="https://your-marzban.com"
+export MARZBAN_TOKEN="your-admin-token-here"
+```
 
-4. **Access dashboard**:
-   ```
-   http://localhost:8000/sub/{username}
-   ```
+#### Step 3: Run the production server
+```bash
+python main.py
+```
+
+#### Step 4: Access dashboard
+```
+http://localhost:8000/sub/{username}
+```
 
 > **Note**: For most users, **Method 1 (Direct Installation)** is the best choice!
 
@@ -317,7 +323,7 @@ Edit CSS variables in `templates/dashboard.html`:
 
 Contributions are welcome! Please:
 
-1. Fork the repository
+1. Fork the repository at [github.com/tawanamohammadi/marzban-template](https://github.com/tawanamohammadi/marzban-template)
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your changes (`git commit -m 'Add AmazingFeature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
