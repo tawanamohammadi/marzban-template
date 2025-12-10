@@ -1,12 +1,13 @@
-# 🚀 LOOKA VPN - Ultimate Marzban Dashboard Template v5.0
+# 🚀 Marzban V4 Ultimate Dashboard
 
-[![Version](https://img.shields.io/badge/version-5.0%20Ultimate-brightgreen)](https://github.com/YOUR_USERNAME/marzban-template)
+[![Version](https://img.shields.io/badge/version-4.0%20Ultimate-brightgreen)](https://github.com/YOUR_USERNAME/marzban-template)
 [![Marzban](https://img.shields.io/badge/Marzban-Compatible-blue)](https://github.com/Gozargah/Marzban)
 [![License](https://img.shields.io/badge/license-MIT-orange)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.8+-blue)](https://www.python.org/)
 
-A premium, feature-rich subscription dashboard template for [Marzban](https://github.com/Gozargah/Marzban) VPN panel with stunning UI/UX, comprehensive features, and full responsiveness.
+A premium, feature-rich subscription dashboard for [Marzban](https://github.com/Gozargah/Marzban) VPN panel with stunning UI/UX, FastAPI backend, and full Marzban API integration.
 
-![Dashboard Preview](https://via.placeholder.com/1200x600/0e0e14/1DB954?text=LOOKA+VPN+Dashboard)
+![Dashboard Preview](https://via.placeholder.com/1200x600/0e0e14/1DB954?text=Marzban+V4+Dashboard)
 
 ## ✨ Features
 
@@ -18,187 +19,262 @@ A premium, feature-rich subscription dashboard template for [Marzban](https://gi
 - **RTL/LTR Support**: Full bilingual support (English & Persian)
 
 ### 📊 **Comprehensive Dashboard**
-- **Hero Section**: Clean status card with subscription info
+- **Dynamic Server List**: Automatically parses user's subscription links
 - **Real-time Stats**: Usage analytics with animated charts
-- **Server List**: 13 global servers with ping status
-- **Usage Analytics**: Donut charts & bar graphs
 - **Countdown Timer**: Visual subscription expiry countdown
+- **Usage Analytics**: Donut charts & bar graphs
+- **Server Details**: Click any server for QR code and details
 
-### 🛠️ **User Features**
+### 🛠️ **Backend Features**
+- **FastAPI Backend**: Modern async Python framework
+- **Marzban API Integration**: Direct connection to Marzban panel
+- **Development Mode**: Mock data for local testing
+- **Production Mode**: Live data from Marzban API
+- **Auto Data Normalization**: Ensures compatibility with V4 dashboard
+
+### 📱 **User Features**
 - **12+ FAQ Items**: Comprehensive help section
-- **24/7 Support**: Multiple contact channels (Telegram, WhatsApp, Phone)
-- **App Downloads**: Direct links for all platforms
+- **24/7 Support**: Multiple contact channels
 - **QR Code Generation**: Easy config sharing
 - **Copy to Clipboard**: One-click config copy
 - **Collapsible Tutorial**: Step-by-step connection guide
-
-### 📱 **Contact & Support**
-- **Telegram Support**: [@rahbarusd](https://t.me/rahbarusd)
-- **Support Channel**: [@panbehnet](https://t.me/panbehnet)
-- **WhatsApp/Phone**: +98 990 112 0235
-- **24/7 Availability**: Round-the-clock support
-
-### 🔧 **Technical Features**
 - **PWA Ready**: Installable as mobile app
-- **Offline Support**: Service worker caching
-- **SEO Optimized**: Proper meta tags and structure
-- **Performance**: Lighthouse score 90+
-- **Accessibility**: WCAG 2.1 AA compliant
-- **No Dependencies**: Pure HTML/CSS/JS (except icons & fonts)
 
 ## 📁 Project Structure
 
 ```
 marzban-template/
-├── dashboard-v4-ultimate.html    # Main dashboard file (LATEST)
-├── manifest.json                 # PWA manifest
-├── sw.js                         # Service worker
-├── README.md                     # This file
-├── docs/                         # Documentation
-│   ├── implementation-plan-v2.md
-│   ├── logs-v4-ultimate.md
-│   └── ...
-├── logs/                         # Change logs
-└── templates/                    # Template variations
+├── main.py                      # FastAPI backend (NEW)
+├── requirements.txt             # Python dependencies (NEW)
+├── manifest.json                # PWA manifest
+├── sw.js                        # Service worker
+├── templates/
+│   └── dashboard.html           # V4 Ultimate Dashboard (Jinja2)
+├── docs/
+│   ├── project-audit-report.md
+│   ├── implementation-plan-v4-transition.md
+│   ├── technical-verification.md
+│   └── archive/                 # Old files
+└── README.md                    # This file
 ```
 
 ## 🚀 Quick Start
 
-### For Marzban Panel
+### Method 1: Development Mode (Local Testing)
 
-1. **Easy Install (Recommended)**:
+Perfect for testing and development without a Marzban server.
+
+1. **Clone the repository**:
    ```bash
-   mkdir -p /var/lib/marzban/templates/subscription && \
-   wget -O /var/lib/marzban/templates/subscription/index.html https://raw.githubusercontent.com/tawanamohammadi/marzban-template/main/dashboard-v4-ultimate.html && \
-   marzban restart
+   git clone https://github.com/YOUR_USERNAME/marzban-template.git
+   cd marzban-template
    ```
 
-3. **Access your subscription page**:
-   ```
-   https://your-domain.com/sub/YOUR_TOKEN
-   ```
-
-### For Testing Locally
-
-1. **Open directly in browser**:
+2. **Install dependencies**:
    ```bash
-   # Windows
-   start dashboard-v4-ultimate.html
-   
-   # macOS
-   open dashboard-v4-ultimate.html
-   
-   # Linux
-   xdg-open dashboard-v4-ultimate.html
+   pip install -r requirements.txt
    ```
 
-2. **Or use a local server**:
+3. **Run the server**:
    ```bash
-   # Python 3
-   python -m http.server 8000
-   
-   # Node.js
-   npx http-server
+   python main.py
    ```
 
-## 🎯 Marzban Integration
+4. **Open in browser**:
+   ```
+   http://localhost:8000/sub/testuser
+   ```
 
-### Required Marzban Variables
+   The server will use mock data automatically (13 sample servers, realistic stats).
 
-The template automatically integrates with Marzban's subscription system. The following variables are injected by Marzban:
+### Method 2: Production Mode (With Marzban)
+
+Connect to your actual Marzban panel.
+
+1. **Install dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **Set environment variables**:
+   ```bash
+   # Windows PowerShell
+   $env:MARZBAN_URL="https://your-marzban.com"
+   $env:MARZBAN_TOKEN="your-admin-token-here"
+   
+   # Linux/Mac
+   export MARZBAN_URL="https://your-marzban.com"
+   export MARZBAN_TOKEN="your-admin-token-here"
+   ```
+
+3. **Run the server**:
+   ```bash
+   python main.py
+   ```
+
+4. **Access dashboard**:
+   ```
+   http://localhost:8000/sub/{username}
+   ```
+
+### Method 3: Deploy as Marzban Template (Coming Soon)
+
+Direct integration with Marzban's template system.
+
+> **Note**: This method is under development. Currently, use Method 2 (Production Mode) and proxy through your web server.
+
+## 🔧 Configuration
+
+### Environment Variables
+
+| Variable | Description | Required | Default |
+|----------|-------------|----------|---------|
+| `MARZBAN_URL` | Your Marzban panel URL | Production | `http://localhost:8080` |
+| `MARZBAN_TOKEN` | Admin API token from Marzban | Production | `""` (Dev Mode) |
+
+### Getting Marzban API Token
+
+1. Login to your Marzban panel
+2. Go to **Settings** → **API**
+3. Create a new admin token
+4. Copy the token and use it in `MARZBAN_TOKEN`
+
+## 📊 How It Works
+
+### Data Flow
+
+```
+User Request → FastAPI Backend → Marzban API → User Data
+                     ↓
+              Jinja2 Template → Dashboard HTML
+                     ↓
+              JavaScript Parser → Server List
+                     ↓
+              Rendered Dashboard
+```
+
+### Server List Generation
+
+The dashboard **automatically parses** the user's subscription links:
+
+1. Backend fetches `user.links` from Marzban API
+2. Jinja2 injects links into JavaScript
+3. Client-side parser extracts:
+   - Server name
+   - Protocol (VLESS, VMESS, Trojan, SS)
+   - Country flag (from server name)
+   - Connection type (TLS, Reality, WS)
+
+**Result**: Each user sees their own unique server list!
+
+## 🎯 Marzban API Integration
+
+### Required User Data
+
+The dashboard expects the following fields from Marzban API:
 
 ```python
 {
-    "username": "user123",
-    "status": "active",
-    "expire": 1704067200,  # Unix timestamp
-    "data_limit": 107374182400,  # Bytes
-    "data_limit_reset_strategy": "no_reset",
-    "used_traffic": 96636764160,  # Bytes
-    "lifetime_used_traffic": 5497558138880,  # Bytes
-    "sub_updated_at": "2024-12-09",
-    "sub_last_user_agent": "v2rayNG/1.8.23",
-    "online_at": "2024-12-09 08:30:00"
+    "username": "john_doe",
+    "status": "active",              # or {"value": "active"}
+    "used_traffic": 1234567890,      # bytes
+    "data_limit": 50000000000,       # bytes
+    "expire": 1735123456,            # unix timestamp
+    "online_at": 1735000000,         # unix timestamp (for "Last Seen")
+    "created_at": 1700000000,        # unix timestamp (for "Months With Us")
+    "links": [                       # List of subscription links
+        "vless://...",
+        "vmess://...",
+        "trojan://..."
+    ]
 }
 ```
 
-### Customization
+All fields are provided by Marzban's standard `/api/user/{username}` endpoint.
 
-1. **Update Contact Information**:
-   - Edit lines 2373-2396 (Support section)
-   - Replace `@rahbarusd`, `@panbehnet`, `+989901120235` with your info
+## 🛠️ Customization
 
-2. **Modify Branding**:
-   - Line 7: Change `<title>` tag
-   - Lines 1793-1794: Update logo text
-   - Line 2685: Update footer copyright
+### 1. Update Contact Information
 
-3. **Adjust Colors**:
-   - Lines 22-46: Dark theme colors
-   - Lines 50-70: Light theme colors
+Edit `templates/dashboard.html`:
+
+- **Support Section** (lines ~2550-2577): Update Telegram, WhatsApp, Phone
+- **Footer** (lines ~2680-2740): Update social links and copyright
+
+### 2. Modify Branding
+
+- **Logo** (line ~2197): Change `LOOKA` text
+- **Title** (line 7): Update page title
+- **Footer** (line ~2730): Update copyright text
+
+### 3. Adjust Colors
+
+Edit CSS variables in `templates/dashboard.html`:
+
+```css
+/* Dark Theme (lines 20-47) */
+:root[data-theme="dark"] {
+    --accent: #1DB954;  /* Primary color */
+    --bg: #020204;      /* Background */
+    /* ... */
+}
+
+/* Light Theme (lines 50-70) */
+:root[data-theme="light"] {
+    --accent: #fa2d48;  /* Primary color */
+    --bg: #f5f5f7;      /* Background */
+    /* ... */
+}
+```
 
 ## 📱 Supported Platforms
 
-### Mobile Apps
+### Client Apps
 - **Android**: v2rayNG, NekoBox, Hiddify
 - **iOS**: Shadowrocket, Streisand, FoXray
 - **Windows**: v2rayN, Hiddify, Nekoray
 - **macOS**: V2RayXS, Hiddify
 - **Linux**: Nekoray, Hiddify
 
-## 🌐 Browser Compatibility
-
+### Browsers
 | Browser | Version | Status |
 |---------|---------|--------|
 | Chrome | 90+ | ✅ Full Support |
 | Firefox | 88+ | ✅ Full Support |
 | Safari | 14+ | ✅ Full Support |
 | Edge | 90+ | ✅ Full Support |
-| Opera | 76+ | ✅ Full Support |
-| Mobile Browsers | Latest | ✅ Full Support |
 
-## 📊 Performance
+## 🔒 Security
 
-- **Lighthouse Score**: 95+
-- **First Contentful Paint**: < 1.2s
-- **Time to Interactive**: < 2.5s
-- **Total Bundle Size**: ~90KB (uncompressed)
-
-## 🔒 Security Features
-
-- ✅ No external JavaScript dependencies
-- ✅ CSP-ready (Content Security Policy)
+- ✅ No external JavaScript dependencies (except CDN fonts/icons)
+- ✅ HTTPS recommended for production
 - ✅ No tracking or analytics
-- ✅ No-logs policy
-- ✅ HTTPS-only recommended
+- ✅ Environment variables for sensitive data
+- ✅ CORS-ready for API integration
 
 ## 📝 Changelog
 
-### v5.0 Ultimate (December 2024)
-- ✨ Expanded FAQ from 3 to 12 comprehensive questions
-- ✨ Updated support contacts (Telegram, WhatsApp, Phone)
-- ✨ Added comprehensive footer with social links
-- ✨ Improved hero section with cleaner layout
-- ✨ Added collapsible tutorial section
-- ✨ Enhanced support section with 24/7 badge
+### v4.0 Ultimate (December 2024)
+- ✨ **NEW**: FastAPI backend with Marzban API integration
+- ✨ **NEW**: Development mode with mock data
+- ✨ **NEW**: Production mode with live Marzban data
+- ✨ **NEW**: Dynamic server list from user's subscription links
+- ✨ **NEW**: Automatic data normalization
+- ✨ Improved service worker caching
 - ✨ Complete Persian/English translations
-- 🐛 Fixed responsive issues on small screens
-- 🎨 Improved overall visual consistency
+- ✨ Enhanced PWA support
+- 🐛 Fixed responsive issues
+- 📚 Comprehensive documentation
 
-### v4.0 (Previous)
-- Added PWA support
-- Implemented theme switching
-- Enhanced charts and visualizations
-
-[View Full Changelog](docs/logs-v4-ultimate.md)
+[View Full Documentation](docs/)
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please:
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+3. Commit your changes (`git commit -m 'Add AmazingFeature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
@@ -209,6 +285,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🙏 Acknowledgments
 
 - [Marzban](https://github.com/Gozargah/Marzban) - The amazing VPN panel
+- [FastAPI](https://fastapi.tiangolo.com/) - Modern Python web framework
 - [Remix Icon](https://remixicon.com/) - Beautiful icon set
 - [Vazirmatn Font](https://github.com/rastikerdar/vazirmatn) - Persian font
 - [Plus Jakarta Sans](https://fonts.google.com/specimen/Plus+Jakarta+Sans) - English font
@@ -218,7 +295,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Telegram**: [@rahbarusd](https://t.me/rahbarusd)
 - **Channel**: [@panbehnet](https://t.me/panbehnet)
 - **WhatsApp**: [+98 990 112 0235](https://wa.me/989901120235)
-- **Phone**: +98 990 112 0235
 
 ## 🌟 Show Your Support
 
@@ -229,5 +305,5 @@ Give a ⭐️ if this project helped you!
 <div align="center">
   <strong>Made with ❤️ for the Marzban community</strong>
   <br>
-  <sub>© 2025 LOOKA VPN - Powered by Marzban</sub>
+  <sub>© 2025 Marzban V4 Dashboard - Powered by FastAPI & Marzban</sub>
 </div>

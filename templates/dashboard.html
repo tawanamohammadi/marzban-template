@@ -2250,6 +2250,8 @@
                     <div class="hidden-data" id="uExpire" style="display:none">{{ user.expire }}</div>
                     <div class="hidden-data" id="uLimit" style="display:none">{{ user.data_limit }}</div>
                     <div class="hidden-data" id="uUsed" style="display:none">{{ user.used_traffic }}</div>
+                    <div class="hidden-data" id="uOnline" style="display:none">{{ user.online_at }}</div>
+                    <div class="hidden-data" id="uCreated" style="display:none">{{ user.created_at }}</div>
                     <div class="dc-divider"></div>
                     <div class="dc-stat">
                         <div class="dcs-val" id="qServers">13</div>
@@ -2303,21 +2305,43 @@
             </div>
         </section>
 
-        <!-- Countdown -->
-        <div class="countdown">
-            <div class="cd-t" data-t="expiresIn">Subscription expires in:</div>
-            <div class="cd-boxes">
-                <div class="cd-box">
-                    <div class="cd-v" id="cdDays">30</div>
-                    <div class="cd-l" data-t="days">Days</div>
+        <!-- Circular Countdown -->
+        <div class="countdown-sec">
+            <div class="cd-t" style="text-align:center;margin-bottom:1rem;opacity:0.8" data-t="expiresIn">Subscription
+                expires in:</div>
+            <div class="circ-timer-wrap">
+                <!-- Days -->
+                <div class="circ-timer" id="ctDays">
+                    <svg class="circ-svg" viewBox="0 0 80 80">
+                        <circle class="circ-circle-bg" cx="40" cy="40" r="35"></circle>
+                        <circle class="circ-circle-fg" cx="40" cy="40" r="35" style="stroke-dashoffset: 0"></circle>
+                    </svg>
+                    <div class="circ-info">
+                        <div class="circ-val" id="cdDaysVal">0</div>
+                        <div class="circ-lbl" data-t="days">Days</div>
+                    </div>
                 </div>
-                <div class="cd-box">
-                    <div class="cd-v" id="cdHrs">14</div>
-                    <div class="cd-l" data-t="hours">Hours</div>
+                <!-- Hours -->
+                <div class="circ-timer" id="ctHrs">
+                    <svg class="circ-svg" viewBox="0 0 80 80">
+                        <circle class="circ-circle-bg" cx="40" cy="40" r="35"></circle>
+                        <circle class="circ-circle-fg" cx="40" cy="40" r="35"></circle>
+                    </svg>
+                    <div class="circ-info">
+                        <div class="circ-val" id="cdHrsVal">0</div>
+                        <div class="circ-lbl" data-t="hours">Hrs</div>
+                    </div>
                 </div>
-                <div class="cd-box">
-                    <div class="cd-v" id="cdMin">28</div>
-                    <div class="cd-l" data-t="mins">Mins</div>
+                <!-- Mins -->
+                <div class="circ-timer" id="ctMins">
+                    <svg class="circ-svg" viewBox="0 0 80 80">
+                        <circle class="circ-circle-bg" cx="40" cy="40" r="35"></circle>
+                        <circle class="circ-circle-fg" cx="40" cy="40" r="35"></circle>
+                    </svg>
+                    <div class="circ-info">
+                        <div class="circ-val" id="cdMinsVal">0</div>
+                        <div class="circ-lbl" data-t="mins">Mins</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -3006,7 +3030,70 @@
 
         function renderServers() { document.getElementById('srvList').innerHTML = SERVERS.map((s, i) => `<div class="srv" onclick="openSrvSheet(${i})"><button class="srv-cp"><i class="ri-file-copy-line"></i></button><div class="srv-flag"><span class="fi fi-${s.flag}"></span></div><div class="srv-name">${s.name}</div><div class="srv-tags"><span class="tag">${s.proto}</span><span class="tag ${s.type === 'Reality' ? 'tag-p' : 'tag-b'}">${s.type}</span></div><div class="srv-ping"><span class="ping-d ping-${s.st}"></span>${s.ping}ms</div></div>`).join(''); document.getElementById('srvCount').textContent = SERVERS.length; document.getElementById('conns').textContent = SERVERS.length }
 
-        function updateTime() { const now = new Date(); const opts = { timeZone: 'Asia/Tehran' }; document.getElementById('clock').textContent = now.toLocaleTimeString('en-US', { ...opts, hour: '2-digit', minute: '2-digit', hour12: false }); document.getElementById('dateEn').textContent = now.toLocaleDateString('en-US', { ...opts, month: 'short', day: 'numeric', year: 'numeric' }); document.getElementById('dateFa').textContent = now.toLocaleDateString('fa-IR', opts); document.getElementById('timeEn').textContent = now.toLocaleDateString('en-US', { ...opts, weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }) + ' • ' + now.toLocaleTimeString('en-US', { ...opts, hour: '2-digit', minute: '2-digit', hour12: false }); document.getElementById('timeFa').textContent = now.toLocaleDateString('fa-IR', opts) }
+        function updateTime() {
+            const now = new Date();
+            const opts = { timeZone: 'Asia/Tehran' };
+
+            // Header Clock
+            document.getElementById('clock').textContent = now.toLocaleTimeString('en-US', { ...opts, hour: '2-digit', minute: '2-digit', hour12: false });
+            document.getElementById('dateEn').textContent = now.toLocaleDateString('en-US', { ...opts, month: 'short', day: 'numeric', year: 'numeric' });
+            document.getElementById('dateFa').textContent = now.toLocaleDateString('fa-IR', opts);
+            document.getElementById('timeEn').textContent = now.toLocaleDateString('en-US', { ...opts, weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }) + ' • ' + now.toLocaleTimeString('en-US', { ...opts, hour: '2-digit', minute: '2-digit', hour12: false });
+            document.getElementById('timeFa').textContent = now.toLocaleDateString('fa-IR', opts);
+
+            // CIRCULAR COUNTDOWN LOGIC
+            const expEl = document.getElementById('uExpire');
+            if (expEl) {
+                const expTimestamp = parseInt(expEl.textContent.trim());
+                if (expTimestamp && !isNaN(expTimestamp)) {
+                    const diff = expTimestamp - Math.floor(Date.now() / 1000);
+
+                    if (diff > 0) {
+                        const d = Math.floor(diff / 86400);
+                        const h = Math.floor((diff % 86400) / 3600);
+                        const m = Math.floor((diff % 3600) / 60);
+
+                        // Update Values
+                        document.getElementById('cdDaysVal').textContent = d;
+                        document.getElementById('cdHrsVal').textContent = h;
+                        document.getElementById('cdMinsVal').textContent = m;
+
+                        // Update Rings (Assuming max 30 days for visual scaling, 24h, 60m)
+                        // Circumference = 2 * PI * 35 ≈ 220
+                        const MAX_C = 220;
+
+                        const dPct = Math.min(d / 30, 1); // Max 30 days scale
+                        const hPct = h / 24;
+                        const mPct = m / 60;
+
+                        setRing('ctDays', dPct, MAX_C);
+                        setRing('ctHrs', hPct, MAX_C);
+                        setRing('ctMins', mPct, MAX_C);
+
+                        // Color Logic
+                        if (d < 3) document.getElementById('ctDays').classList.add('crit');
+                        else if (d < 7) document.getElementById('ctDays').classList.add('warn');
+                    } else {
+                        document.getElementById('cdDaysVal').textContent = 0;
+                        document.getElementById('cdHrsVal').textContent = 0;
+                        document.getElementById('cdMinsVal').textContent = 0;
+                    }
+                }
+            }
+        }
+
+        function setRing(id, pct, max) {
+            const el = document.querySelector(`#${id} .circ-circle-fg`);
+            if (el) {
+                // StrokeDashoffset: max means empty, 0 means full
+                // We want to show REMAINING time
+                // If pct is 1 (full time), offset should be 0? 
+                // Actually usually countdowns show "full" and decrease. 
+                // Let's standardise: Full ring = full health. 
+                // As time goes down, ring empties.
+                el.style.strokeDashoffset = max * (1 - pct);
+            }
+        }
 
         // ===== V4 NEW FEATURES =====
 
@@ -3054,7 +3141,7 @@
         // Open Server Details with QR
         function openSrvSheet(i) {
             const s = SERVERS[i];
-            const link = `vless://${s.name.replace(/ /g, '')}@looka.vpn:443`;
+            const link = s.link; // Use real link
             openSheet(s.name, `
                 <div class="det-row"><span class="det-l">Location</span><span class="det-v"><span class="fi fi-${s.flag}"></span> ${s.name}</span></div>
                 <div class="det-row"><span class="det-l">Protocol</span><span class="det-v">${s.proto}</span></div>
@@ -3119,12 +3206,75 @@
                 if (limEl && usedEl) {
                     const lim = limEl.textContent.trim();
                     const used = usedEl.textContent.trim();
+                    // Update main stats
+                    document.getElementById('used').textContent = formatBytes(used || 0);
 
+                    // Update Data Left Card
                     if (lim && !isNaN(lim) && parseInt(lim) > 0) {
                         const rem = parseInt(lim) - parseInt(used || 0);
                         document.getElementById('qData').textContent = formatBytes(rem > 0 ? rem : 0);
+                        document.querySelector('[data-t="dataLeft"]').textContent = 'Data Left';
                     } else {
                         document.getElementById('qData').textContent = '∞';
+                        document.getElementById('qData').style.fontSize = '2rem';
+                        document.querySelector('[data-t="dataLeft"]').textContent = 'Unlimited';
+                    }
+                }
+
+                // Last Seen & Created
+                const onEl = document.getElementById('uOnline');
+                const crEl = document.getElementById('uCreated');
+
+                if (onEl) {
+                    const t = onEl.textContent.trim();
+                    const el = document.getElementById('online');
+                    if (t && t !== 'None' && !isNaN(t) && parseInt(t) > 0) {
+                        const diff = Math.floor((Date.now() / 1000) - parseInt(t));
+                        if (diff < 60) el.textContent = 'Just now';
+                        else if (diff < 3600) el.textContent = Math.floor(diff / 60) + 'm ago';
+                        else if (diff < 86400) el.textContent = Math.floor(diff / 3600) + 'h ago';
+                        else el.textContent = Math.floor(diff / 86400) + 'd ago';
+                    } else {
+                        if (el && el.parentElement) el.parentElement.style.display = 'none';
+                    }
+                }
+
+                if (crEl) {
+                    const t = crEl.textContent.trim();
+                    const el = document.getElementById('months');
+                    // If created_at is available, calculate age, else hide "Months with us"
+                    if (t && t !== 'None' && !isNaN(t) && parseInt(t) > 0) {
+                        const diff = Math.floor((Date.now() / 1000) - parseInt(t));
+                        const m = Math.floor(diff / 2592000); // approx month
+                        if (el) el.textContent = m;
+                    } else {
+                        // Hide the badge if no data
+                        const badge = document.querySelector('.dc-age');
+                        if (badge) badge.style.display = 'none';
+                    }
+                }
+
+                // SERVER COUNT
+                if (typeof SERVERS !== 'undefined' && SERVERS.length > 0) {
+                    const srvEl = document.getElementById('qServers');
+                    if (srvEl) srvEl.textContent = SERVERS.length;
+                    const connEl = document.getElementById('conns');
+                    if (connEl) connEl.textContent = SERVERS.length;
+                }
+
+                // DATE FORMATTING
+                const expElDate = document.getElementById('uExpire');
+                if (expElDate) {
+                    const t = expElDate.textContent.trim();
+                    const el = document.getElementById('expire');
+                    if (el) {
+                        if (t && !isNaN(t)) {
+                            const d = new Date(parseInt(t) * 1000);
+                            const opts = { month: 'short', day: 'numeric' };
+                            el.textContent = d.toLocaleDateString('en-US', opts);
+                        } else {
+                            el.textContent = '∞';
+                        }
                     }
                 }
 
@@ -3133,7 +3283,7 @@
             }
         }
 
-        function formatBytes(bytes, decimals = 1) {
+        function formatBytes(bytes, decimals = 2) {
             if (!+bytes) return '0 B';
             const k = 1024;
             const dm = decimals < 0 ? 0 : decimals;
