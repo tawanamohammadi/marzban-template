@@ -60,9 +60,54 @@ marzban-template/
 
 ## 🚀 Quick Start
 
-### Method 1: Development Mode (Local Testing)
+## 🚀 Quick Start
 
-Perfect for testing and development without a Marzban server.
+### Method 1: Direct Installation on Marzban Server (Recommended)
+
+**This is the simplest and recommended method for production use.**
+
+1. **Upload the dashboard file to your Marzban server**:
+   ```bash
+   # SSH to your Marzban server
+   ssh user@your-server.com
+   
+   # Create templates directory if it doesn't exist
+   mkdir -p /var/lib/marzban/templates/subscription
+   
+   # Download the dashboard file
+   wget -O /var/lib/marzban/templates/subscription/index.html \
+     https://raw.githubusercontent.com/YOUR_USERNAME/marzban-template/main/templates/dashboard.html
+   
+   # Or upload from your local machine
+   scp templates/dashboard.html user@your-server:/var/lib/marzban/templates/subscription/index.html
+   ```
+
+2. **Restart Marzban**:
+   ```bash
+   marzban restart
+   ```
+
+3. **Access your subscription page**:
+   ```
+   https://your-domain.com/sub/{username}
+   ```
+
+**That's it!** Marzban will automatically inject user data into the dashboard.
+
+**Advantages:**
+- ✅ No additional setup required
+- ✅ No need for Python or dependencies
+- ✅ No need for API tokens
+- ✅ Marzban handles everything automatically
+- ✅ Works out of the box
+
+---
+
+### Method 2: Local Development/Testing (Optional)
+
+**Only use this if you want to test locally or develop custom features.**
+
+Perfect for testing without a Marzban server.
 
 1. **Clone the repository**:
    ```bash
@@ -87,9 +132,13 @@ Perfect for testing and development without a Marzban server.
 
    The server will use mock data automatically (13 sample servers, realistic stats).
 
-### Method 2: Production Mode (With Marzban)
+---
 
-Connect to your actual Marzban panel.
+### Method 3: Standalone Production Server (Advanced)
+
+**Only use this if you want to run the dashboard as a separate service from Marzban.**
+
+Connect to your actual Marzban panel via API.
 
 1. **Install dependencies**:
    ```bash
@@ -117,11 +166,7 @@ Connect to your actual Marzban panel.
    http://localhost:8000/sub/{username}
    ```
 
-### Method 3: Deploy as Marzban Template (Coming Soon)
-
-Direct integration with Marzban's template system.
-
-> **Note**: This method is under development. Currently, use Method 2 (Production Mode) and proxy through your web server.
+> **Note**: For most users, **Method 1 (Direct Installation)** is the best choice!
 
 ## 🔧 Configuration
 
