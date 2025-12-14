@@ -60,8 +60,6 @@ marzban-template/
 
 ## 🚀 Quick Start
 
-## 🚀 Quick Start
-
 ### Method 1: Direct Installation on Marzban Server (Recommended)
 
 **This is the simplest and recommended method for production use.**
@@ -80,11 +78,6 @@ mkdir -p /var/lib/marzban/templates/subscription
 ```bash
 wget -O /var/lib/marzban/templates/subscription/index.html \
   https://raw.githubusercontent.com/tawanamohammadi/marzban-template/main/templates/dashboard.html
-```
-
-**Or** upload from your local machine:
-```bash
-scp templates/dashboard.html user@your-server:/var/lib/marzban/templates/subscription/index.html
 ```
 
 #### Step 4: Restart Marzban
@@ -115,20 +108,24 @@ https://your-domain.com/sub/{username}
 #### Step 1: Clone the repository
 ```bash
 git clone https://github.com/tawanamohammadi/marzban-template.git
+```
+
+#### Step 2: Enter the directory
+```bash
 cd marzban-template
 ```
 
-#### Step 2: Install dependencies
+#### Step 3: Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-#### Step 3: Run the development server
+#### Step 4: Run the development server
 ```bash
 python main.py
 ```
 
-#### Step 4: Open in browser
+#### Step 5: Open in browser
 ```
 http://localhost:8000/sub/testuser
 ```
@@ -141,14 +138,22 @@ The server will use mock data automatically (13 sample servers, realistic stats)
 
 **Only use this if you want to run the dashboard as a separate service from Marzban.**
 
-#### Step 1: Clone and install
+#### Step 1: Clone the repository
 ```bash
 git clone https://github.com/tawanamohammadi/marzban-template.git
+```
+
+#### Step 2: Enter the directory
+```bash
 cd marzban-template
+```
+
+#### Step 3: Install dependencies
+```bash
 pip install -r requirements.txt
 ```
 
-#### Step 2: Set environment variables
+#### Step 4: Set environment variables
 
 **Windows PowerShell:**
 ```powershell
@@ -162,7 +167,7 @@ export MARZBAN_URL="https://your-marzban.com"
 export MARZBAN_TOKEN="your-admin-token-here"
 ```
 
-#### Step 3: Run the production server
+#### Step 5: Run the production server
 ```bash
 python main.py
 ```
