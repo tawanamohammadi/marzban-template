@@ -1867,81 +1867,61 @@
         }
 
         footer {
-            background: var(--card);
-            border-top: 1px solid var(--border);
-            padding: 2rem 1rem 1.5rem;
+            background: linear-gradient(135deg, rgba(14, 14, 20, 0.95), rgba(21, 21, 32, 0.9));
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(29, 185, 84, 0.1);
+            padding: 1.25rem 1rem;
             margin-top: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.5;
         }
 
         .footer-content {
             max-width: 1000px;
             margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            flex-wrap: wrap;
         }
 
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        @media(max-width:768px) {
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
+        @media (max-width: 640px) {
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
             }
         }
 
-        .footer-col h3 {
-            font-size: 0.9rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-            color: var(--accent);
-        }
-
-        .footer-links {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .footer-link {
-            color: var(--text2);
-            text-decoration: none;
-            font-size: 0.8rem;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 0.35rem;
-        }
-
-        .footer-link:hover {
-            color: var(--accent);
-            transform: translateX(3px);
-        }
-
-        .footer-link i {
-            font-size: 0.9rem;
-        }
-
+        /* Social Links - Compact */
         .footer-social {
             display: flex;
             gap: 0.5rem;
-            margin-top: 0.5rem;
         }
 
         .social-link {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            background: var(--card2);
-            border: 1px solid var(--border);
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--text);
             text-decoration: none;
-            transition: 0.2s;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
             font-size: 1.1rem;
         }
 
@@ -1949,41 +1929,44 @@
             background: var(--accent);
             border-color: var(--accent);
             color: #000;
-            transform: translateY(-2px);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 4px 12px var(--glow);
         }
 
-        .footer-bottom {
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            font-size: 0.75rem;
+        /* Footer Text - Single Line */
+        .footer-text {
+            font-size: 0.8rem;
             color: var(--text3);
-        }
-
-        @media(max-width:640px) {
-            .footer-bottom {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-
-        .footer-version {
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-sep {
+            color: var(--border);
+            opacity: 0.5;
+        }
+
+        .footer-link-inline {
+            color: var(--text2);
+            text-decoration: none;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+
+        .footer-link-inline:hover {
+            color: var(--accent);
         }
 
         .version-badge {
-            background: var(--soft);
+            background: rgba(29, 185, 84, 0.15);
             color: var(--accent);
-            padding: 0.15rem 0.4rem;
-            border-radius: 4px;
-            font-size: 0.65rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
             font-weight: 700;
+            border: 1px solid rgba(29, 185, 84, 0.3);
         }
 
         .toast {
@@ -4778,137 +4761,62 @@
             <h2 class="sec-h"><i class="ri-question-answer-line"></i> <span data-t="faqTitle">FAQ</span></h2>
             <div class="faq-item" onclick="this.classList.toggle('open')">
                 <div class="faq-q"><span data-t="faq1q">How to connect?</span><i class="ri-arrow-down-s-line"></i></div>
-                <div class="faq-a" data-t="faq1a">Download the app for your device, copy the subscription link, and
-                    import it into the app.</div>
+                <div class="faq-a" data-t="faq1a">Download the app, copy your subscription link, and import it.</div>
             </div>
             <div class="faq-item" onclick="this.classList.toggle('open')">
                 <div class="faq-q"><span data-t="faq2q">Connection issues?</span><i class="ri-arrow-down-s-line"></i>
                 </div>
-                <div class="faq-a" data-t="faq2a">Try switching servers. If problem persists, update the subscription
-                    and restart the app.</div>
+                <div class="faq-a" data-t="faq2a">Try switching servers or update your subscription.</div>
             </div>
             <div class="faq-item" onclick="this.classList.toggle('open')">
                 <div class="faq-q"><span data-t="faq3q">How to renew?</span><i class="ri-arrow-down-s-line"></i></div>
-                <div class="faq-a" data-t="faq3a">Transfer the amount to the card number above and send the receipt via
-                    Telegram.</div>
+                <div class="faq-a" data-t="faq3a">Transfer to the card above and send receipt via Telegram.</div>
             </div>
             <div class="faq-item" onclick="this.classList.toggle('open')">
                 <div class="faq-q"><span data-t="faq4q">Why is the speed slow?</span><i
                         class="ri-arrow-down-s-line"></i></div>
-                <div class="faq-a" data-t="faq4a">Try connecting to a different server closer to your location. Check
-                    your internet connection and ensure no other apps are consuming bandwidth.</div>
+                <div class="faq-a" data-t="faq4a">Connect to a closer server and check your internet connection.</div>
             </div>
-            <div class="faq-item" onclick="this.classList.toggle('open')">
-                <div class="faq-q"><span data-t="faq5q">How to change servers?</span><i
-                        class="ri-arrow-down-s-line"></i></div>
-                <div class="faq-a" data-t="faq5a">In your VPN app, tap on the server list and select a different server.
-                    We recommend choosing servers with green status for best performance.</div>
-            </div>
+
             <div class="faq-item" onclick="this.classList.toggle('open')">
                 <div class="faq-q"><span data-t="faq6q">Can I use on multiple devices?</span><i
                         class="ri-arrow-down-s-line"></i></div>
-                <div class="faq-a" data-t="faq6a">Yes! You can use your subscription on multiple devices simultaneously.
-                    Simply import the same config on each device.</div>
+                <div class="faq-a" data-t="faq6a">Yes! Use the same config on all your devices simultaneously.</div>
             </div>
-            <div class="faq-item" onclick="this.classList.toggle('open')">
-                <div class="faq-q"><span data-t="faq7q">How to cancel subscription?</span><i
-                        class="ri-arrow-down-s-line"></i></div>
-                <div class="faq-a" data-t="faq7a">Contact our support team via Telegram @rahbarusd. Your subscription
-                    will remain active until the expiry date.</div>
-            </div>
+
             <div class="faq-item" onclick="this.classList.toggle('open')">
                 <div class="faq-q"><span data-t="faq8q">Are activity logs kept?</span><i
                         class="ri-arrow-down-s-line"></i></div>
-                <div class="faq-a" data-t="faq8a">No. We have a strict no-logs policy. Your browsing activity and
-                    connection logs are never stored.</div>
+                <div class="faq-a" data-t="faq8a">No. We have a strict no-logs policy for your privacy.</div>
             </div>
-            <div class="faq-item" onclick="this.classList.toggle('open')">
-                <div class="faq-q"><span data-t="faq9q">What protocols are supported?</span><i
-                        class="ri-arrow-down-s-line"></i></div>
-                <div class="faq-a" data-t="faq9a">We support VLESS, VMess, Trojan, and Shadowsocks protocols with TLS
-                    and Reality encryption for maximum security.</div>
-            </div>
-            <div class="faq-item" onclick="this.classList.toggle('open')">
-                <div class="faq-q"><span data-t="faq10q">How to fix DNS issues?</span><i
-                        class="ri-arrow-down-s-line"></i></div>
-                <div class="faq-a" data-t="faq10a">In your app settings, try changing DNS to 1.1.1.1 or 8.8.8.8. Also
-                    ensure DNS routing is enabled in the app.</div>
-            </div>
-            <div class="faq-item" onclick="this.classList.toggle('open')">
-                <div class="faq-q"><span data-t="faq11q">Can I get a static IP?</span><i
-                        class="ri-arrow-down-s-line"></i></div>
-                <div class="faq-a" data-t="faq11a">Static IP is available as a premium add-on. Contact support
-                    @rahbarusd for pricing and availability.</div>
-            </div>
-            <div class="faq-item" onclick="this.classList.toggle('open')">
-                <div class="faq-q"><span data-t="faq12q">What if I run out of data?</span><i
-                        class="ri-arrow-down-s-line"></i></div>
-                <div class="faq-a" data-t="faq12a">You can purchase additional data packages or upgrade to a higher
-                    plan. Contact us on WhatsApp +989901120235 for instant top-up.</div>
-            </div>
+
+
+
+
         </section>
     </main>
 
     <footer>
         <div class="footer-content">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h3><i class="ri-information-line"></i> <span data-t="aboutTitle">About LOOKA</span></h3>
-                    <div class="footer-links">
-                        <a href="#" class="footer-link"><i class="ri-shield-check-line"></i> <span
-                                data-t="privacy">Privacy Policy</span></a>
-                        <a href="#" class="footer-link"><i class="ri-file-text-line"></i> <span data-t="terms">Terms of
-                                Service</span></a>
-                        <a href="#" class="footer-link"><i class="ri-question-line"></i> <span
-                                data-t="faqTitle">FAQ</span></a>
-                        <a href="https://github.com/Gozargah/Marzban" target="_blank" class="footer-link"><i
-                                class="ri-github-fill"></i> Marzban</a>
-                    </div>
-                </div>
-                <div class="footer-col">
-                    <h3><i class="ri-customer-service-line"></i> <span data-t="support">Support</span></h3>
-                    <div class="footer-links">
-                        <a href="https://t.me/rahbarusd" target="_blank" class="footer-link"><i
-                                class="ri-telegram-fill"></i> @rahbarusd</a>
-                        <a href="https://t.me/panbehnet" target="_blank" class="footer-link"><i
-                                class="ri-send-plane-fill"></i> @panbehnet</a>
-                        <a href="https://wa.me/989901120235" target="_blank" class="footer-link"><i
-                                class="ri-whatsapp-fill"></i> +98 990 112 0235</a>
-                        <a href="tel:+989901120235" class="footer-link"><i class="ri-phone-fill"></i> <span
-                                data-t="phone">Phone</span></a>
-                    </div>
-                </div>
-                <div class="footer-col">
-                    <h3><i class="ri-share-line"></i> <span data-t="followUs">Follow Us</span></h3>
-                    <div class="footer-social">
-                        <a href="https://t.me/panbehnet" target="_blank" class="social-link" title="Telegram"><i
-                                class="ri-telegram-fill"></i></a>
-                        <a href="https://wa.me/989901120235" target="_blank" class="social-link" title="WhatsApp"><i
-                                class="ri-whatsapp-fill"></i></a>
-                        <a href="https://instagram.com/looka.vpn" target="_blank" class="social-link"
-                            title="Instagram"><i class="ri-instagram-fill"></i></a>
-                        <a href="https://twitter.com/looka_vpn" target="_blank" class="social-link" title="Twitter"><i
-                                class="ri-twitter-x-fill"></i></a>
-                    </div>
-                    <div class="footer-links" style="margin-top:1rem">
-                        <a href="#" class="footer-link"><i class="ri-download-cloud-line"></i> <span
-                                data-t="apps">Download Apps</span></a>
-                        <a href="#" class="footer-link"><i class="ri-refresh-line"></i> <span
-                                data-t="renew">Renew</span></a>
-                    </div>
-                </div>
+            <div class="footer-social">
+                <a href="https://t.me/rahbarusd" target="_blank" class="social-link" title="Telegram">
+                    <i class="ri-telegram-fill"></i>
+                </a>
+                <a href="https://wa.me/989901120235" target="_blank" class="social-link" title="WhatsApp">
+                    <i class="ri-whatsapp-fill"></i>
+                </a>
+                <a href="https://instagram.com/looka.vpn" target="_blank" class="social-link" title="Instagram">
+                    <i class="ri-instagram-fill"></i>
+                </a>
+                <a href="tel:+989901120235" class="social-link" title="Call">
+                    <i class="ri-phone-fill"></i>
+                </a>
             </div>
-            <div class="footer-bottom">
-                <div>
-                    © 2025 <strong>LOOKA VPN</strong> — Powered by <a href="https://github.com/Gozargah/Marzban"
-                        target="_blank" style="color:var(--accent);text-decoration:none">Marzban</a>
-                </div>
-                <div class="footer-version">
-                    <span data-t="version">Version</span> <span class="version-badge">v5.0 Ultimate</span>
-                    <span style="margin-left:0.5rem;color:var(--text3)">|</span>
-                    <span style="margin-left:0.5rem" data-t="lastUpdate">Last Update:</span> <span
-                        style="color:var(--accent)">Dec 2024</span>
-                </div>
+            <div class="footer-text">
+                © 2025 <strong>LOOKA VPN</strong> <span class="footer-sep">•</span>
+                <a href="#" class="footer-link-inline">Privacy</a> <span class="footer-sep">•</span>
+                <a href="#" class="footer-link-inline">Terms</a> <span class="footer-sep">•</span>
+                <span class="version-badge">v5.0</span>
             </div>
         </div>
     </footer>

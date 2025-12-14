@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOOKA - Ultra Premium Menu</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --accent: #1DB954;
+            --accent-dark: #158a3f;
+            --glow: rgba(29, 185, 84, 0.4);
+            --bg: #020204;
+            --card: #0e0e14;
+            --card2: #151520;
+            --text: #fff;
+            --text2: #a1a1aa;
+            --text3: #71717a;
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(ellipse at top, #0a0a12, #020204);
+            color: var(--text);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--accent);
+            top: -200px;
+            left: -200px;
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: #a855f7;
+            bottom: -150px;
+            right: -150px;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+        }
+
+        /* Ultra Premium Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            bottom: 20px;
+            width: 280px;
+            background: linear-gradient(135deg,
+                    rgba(14, 14, 20, 0.7) 0%,
+                    rgba(21, 21, 32, 0.8) 100%);
+            backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 1.5rem;
+            z-index: 1000;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 1px;
+            background: linear-gradient(135deg,
+                    rgba(29, 185, 84, 0.3),
+                    rgba(168, 85, 247, 0.3));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .sidebar:hover::before {
+            opacity: 1;
+        }
+
+        /* User Profile Section */
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .user-profile:hover {
+            background: rgba(29, 185, 84, 0.1);
+            border-color: rgba(29, 185, 84, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .user-avatar {
+            position: relative;
+            width: 48px;
+            height: 48px;
+        }
+
+        .avatar-ring {
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #a855f7);
+            animation: rotate 3s linear infinite;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .avatar-img {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2a2a2a, #000);
+            border: 3px solid var(--card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            z-index: 1;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+
+        .user-status {
+            font-size: 0.75rem;
+            color: var(--text3);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--glow);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Menu Items */
+        .menu {
+            list-style: none;
+        }
+
+        .menu-item {
+            margin-bottom: 0.4rem;
+            position: relative;
+        }
+
+        .menu-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.9rem 1rem;
+            border-radius: 14px;
+            color: var(--text2);
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-link::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg,
+                    rgba(29, 185, 84, 0.15),
+                    rgba(29, 185, 84, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .menu-link:hover::before,
+        .menu-link.active::before {
+            opacity: 1;
+        }
+
+        .menu-link:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .menu-link.active {
+            color: var(--accent);
+            background: rgba(29, 185, 84, 0.1);
+            border: 1px solid rgba(29, 185, 84, 0.2);
+            box-shadow: 0 4px 12px rgba(29, 185, 84, 0.2);
+        }
+
+        .menu-icon {
+            font-size: 1.3rem;
+            min-width: 28px;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+
+        .menu-link:hover .menu-icon,
+        .menu-link.active .menu-icon {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 8px var(--glow));
+        }
+
+        .menu-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .menu-badge {
+            margin-left: auto;
+            background: var(--accent);
+            color: #000;
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Progress Bar */
+        .progress-section {
+            margin-top: auto;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .progress-title {
+            font-size: 0.75rem;
+            color: var(--text3);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #15803d);
+            border-radius: 10px;
+            width: 65%;
+            position: relative;
+            transition: width 1s ease;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.3),
+                    transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(100%);
+            }
+        }
+
+        .progress-text {
+            font-size: 0.8rem;
+            color: var(--text2);
+            margin-top: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 320px;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header Card */
+        .header-card {
+            background: linear-gradient(135deg,
+                    rgba(14, 14, 20, 0.9),
+                    rgba(21, 21, 32, 0.8));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-title {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-subtitle {
+            color: var(--text2);
+            font-size: 1rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg,
+                    rgba(14, 14, 20, 0.9),
+                    rgba(21, 21, 32, 0.8));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), #a855f7);
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(29, 185, 84, 0.3);
+            box-shadow: 0 20px 40px rgba(29, 185, 84, 0.2);
+        }
+
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stat-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: linear-gradient(135deg,
+                    rgba(29, 185, 84, 0.2),
+                    rgba(29, 185, 84, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 8px 16px rgba(29, 185, 84, 0.2);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text3);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--text);
+        }
+
+        /* Bottom Navigation Bar (Mobile Only) */
+        .bottom-nav {
+            display: none;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+                padding-bottom: 100px;
+            }
+
+            /* Bottom Navigation */
+            .bottom-nav {
+                display: block;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg,
+                        rgba(14, 14, 20, 0.95) 0%,
+                        rgba(21, 21, 32, 0.98) 100%);
+                backdrop-filter: blur(30px) saturate(180%);
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                padding: 0.75rem 0.5rem calc(0.75rem + env(safe-area-inset-bottom));
+                z-index: 1000;
+                box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+            }
+
+            .bottom-nav::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: linear-gradient(90deg,
+                        transparent,
+                        var(--accent),
+                        transparent);
+                opacity: 0.5;
+            }
+
+            .bottom-nav-items {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .bottom-nav-item {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.25rem;
+                padding: 0.5rem 0.75rem;
+                color: var(--text3);
+                text-decoration: none;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                cursor: pointer;
+                flex: 1;
+                max-width: 80px;
+            }
+
+            .bottom-nav-item::before {
+                content: '';
+                position: absolute;
+                inset: -8px;
+                border-radius: 16px;
+                background: radial-gradient(circle,
+                        rgba(29, 185, 84, 0.2),
+                        transparent 70%);
+                opacity: 0;
+                transform: scale(0.8);
+                transition: all 0.3s;
+            }
+
+            .bottom-nav-item.active::before {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            .bottom-nav-icon {
+                position: relative;
+                font-size: 1.4rem;
+                transition: all 0.3s;
+            }
+
+            .bottom-nav-item.active .bottom-nav-icon {
+                color: var(--accent);
+                transform: translateY(-3px) scale(1.1);
+                filter: drop-shadow(0 0 8px var(--glow));
+            }
+
+            .bottom-nav-label {
+                font-size: 0.65rem;
+                font-weight: 600;
+                transition: all 0.3s;
+                opacity: 0.7;
+            }
+
+            .bottom-nav-item.active .bottom-nav-label {
+                color: var(--accent);
+                opacity: 1;
+                font-weight: 700;
+            }
+
+            .bottom-nav-badge {
+                position: absolute;
+                top: 0.25rem;
+                right: 0.5rem;
+                background: var(--accent);
+                color: #000;
+                font-size: 0.6rem;
+                font-weight: 800;
+                padding: 0.15rem 0.35rem;
+                border-radius: 10px;
+                min-width: 18px;
+                text-align: center;
+                box-shadow: 0 2px 8px var(--glow);
+                animation: badge-pulse 2s infinite;
+            }
+
+            @keyframes badge-pulse {
+
+                0%,
+                100% {
+                    transform: scale(1);
+                }
+
+                50% {
+                    transform: scale(1.1);
+                }
+            }
+
+            .bottom-nav-indicator {
+                position: absolute;
+                top: -2px;
+                left: 50%;
+                transform: translateX(-50%) scaleX(0);
+                width: 30px;
+                height: 3px;
+                background: linear-gradient(90deg, var(--accent), #15803d);
+                border-radius: 0 0 10px 10px;
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .bottom-nav-item.active .bottom-nav-indicator {
+                transform: translateX(-50%) scaleX(1);
+            }
+
+            /* Ripple Effect */
+            .bottom-nav-item::after {
+                content: '';
+                position: absolute;
+                inset: 0;
+                border-radius: 16px;
+                background: radial-gradient(circle,
+                        rgba(29, 185, 84, 0.3),
+                        transparent);
+                opacity: 0;
+                transform: scale(0);
+                transition: all 0.4s;
+            }
+
+            .bottom-nav-item:active::after {
+                opacity: 1;
+                transform: scale(1.5);
+                transition: all 0s;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="bg-orb orb-1"></div>
+        <div class="bg-orb orb-2"></div>
+    </div>
+
+    <!-- Ultra Premium Sidebar -->
+    <aside class="sidebar">
+        <!-- User Profile -->
+        <div class="user-profile">
+            <div class="user-avatar">
+                <div class="avatar-ring"></div>
+                <div class="avatar-img">
+                    <i class="ri-user-3-fill"></i>
+                </div>
+            </div>
+            <div class="user-info">
+                <div class="user-name">John Doe</div>
+                <div class="user-status">
+                    <span class="status-dot"></span>
+                    VIP Member
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu -->
+        <ul class="menu">
+            <li class="menu-item">
+                <a href="#" class="menu-link active">
+                    <i class="ri-home-5-fill menu-icon"></i>
+                    <span class="menu-text">Dashboard</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <i class="ri-pie-chart-2-fill menu-icon"></i>
+                    <span class="menu-text">Usage</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <i class="ri-global-line menu-icon"></i>
+                    <span class="menu-text">Servers</span>
+                    <span class="menu-badge">13</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <i class="ri-download-cloud-2-line menu-icon"></i>
+                    <span class="menu-text">Apps</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <i class="ri-secure-payment-line menu-icon"></i>
+                    <span class="menu-text">Renew</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <i class="ri-question-answer-line menu-icon"></i>
+                    <span class="menu-text">FAQ</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <i class="ri-settings-3-line menu-icon"></i>
+                    <span class="menu-text">Settings</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Progress Section -->
+        <div class="progress-section">
+            <div class="progress-title">Data Usage</div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="progress-text">
+                <span>65 GB used</span>
+                <span>100 GB</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <div class="header-card">
+            <h1 class="header-title">Ultra Premium Dashboard 🚀</h1>
+            <p class="header-subtitle">با منوی خفن و تعاملی - طراحی شده با Glassmorphism و انیمیشن‌های حرفه‌ای</p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="ri-database-2-fill"></i>
+                </div>
+                <div class="stat-label">Total Data</div>
+                <div class="stat-value">100 GB</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="ri-download-cloud-fill"></i>
+                </div>
+                <div class="stat-label">Remaining</div>
+                <div class="stat-value">65 GB</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="ri-time-fill"></i>
+                </div>
+                <div class="stat-label">Days Left</div>
+                <div class="stat-value">15</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="ri-server-fill"></i>
+                </div>
+                <div class="stat-label">Servers</div>
+                <div class="stat-value">13</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Navigation (Mobile Only) -->
+    <nav class="bottom-nav">
+        <div class="bottom-nav-items">
+            <a href="#" class="bottom-nav-item active" data-page="home">
+                <div class="bottom-nav-indicator"></div>
+                <i class="ri-home-5-fill bottom-nav-icon"></i>
+                <span class="bottom-nav-label">Home</span>
+            </a>
+            <a href="#" class="bottom-nav-item" data-page="usage">
+                <div class="bottom-nav-indicator"></div>
+                <i class="ri-pie-chart-2-fill bottom-nav-icon"></i>
+                <span class="bottom-nav-label">Usage</span>
+            </a>
+            <a href="#" class="bottom-nav-item" data-page="servers">
+                <div class="bottom-nav-indicator"></div>
+                <i class="ri-global-line bottom-nav-icon"></i>
+                <span class="bottom-nav-label">Servers</span>
+                <span class="bottom-nav-badge">13</span>
+            </a>
+            <a href="#" class="bottom-nav-item" data-page="apps">
+                <div class="bottom-nav-indicator"></div>
+                <i class="ri-download-cloud-2-line bottom-nav-icon"></i>
+                <span class="bottom-nav-label">Apps</span>
+            </a>
+            <a href="#" class="bottom-nav-item" data-page="profile">
+                <div class="bottom-nav-indicator"></div>
+                <i class="ri-user-3-fill bottom-nav-icon"></i>
+                <span class="bottom-nav-label">Profile</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        // Sidebar menu click handlers
+        document.querySelectorAll('.menu-link').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelectorAll('.menu-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Bottom navigation click handlers
+        document.querySelectorAll('.bottom-nav-item').forEach(item => {
+            item.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                // Remove active from all bottom nav items
+                document.querySelectorAll('.bottom-nav-item').forEach(i => i.classList.remove('active'));
+
+                // Add active to clicked item
+                this.classList.add('active');
+
+                // Get page name
+                const page = this.getAttribute('data-page');
+                console.log('Navigating to:', page);
+
+                // You can add page navigation logic here
+            });
+        });
+    </script>
+</body>
+
+</html>
