@@ -1220,7 +1220,7 @@
         }
 
         /* Apps - V3 Style */
-        .apps-sec {
+        <section id="apps-section">.apps-sec {
             margin-bottom: 2rem
         }
 
@@ -1290,20 +1290,33 @@
 
         .app-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: .75rem
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            /* Better auto-fit */
+            gap: 1rem;
         }
 
-        @media(max-width:1024px) {
+        /* Not needed due to auto-fill above, but keeping for specific breakpoints if needed */
+        @media(max-width:1200px) {
             .app-grid {
-                grid-template-columns: repeat(3, 1fr)
+                /* grid-template-columns: repeat(3, 1fr) */
             }
         }
 
-        @media(max-width:640px) {
+        .srv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            /* Slightly smaller min-width */
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .srv-grid {
+                grid-template-columns: 1fr;
+            }
+
             .app-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: .5rem
             }
         }
 
@@ -1410,19 +1423,7 @@
             font-size: .9rem;
         }
 
-        /* Server List / Configs - Premium Design */
-        .srv-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .srv-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+        /* Server List / Configs - Premium Design defined above with responsive fixes */
 
         .srv {
             background: linear-gradient(135deg, rgba(14, 14, 20, 0.95), rgba(21, 21, 32, 0.9));
@@ -1958,6 +1959,534 @@
         .footer-link-inline:hover {
             color: var(--accent);
         }
+
+        /* ============================================
+           NAVIGATION SYSTEM - Sidebar & Bottom Nav
+           ============================================ */
+
+        /* Sidebar Navigation - Desktop */
+        .nav-sidebar {
+            display: flex;
+            /* Re-enabled */
+            position: fixed;
+            left: 20px;
+            /* Back to Left */
+            top: 20px;
+            bottom: 20px;
+            width: 280px;
+            background: linear-gradient(135deg,
+                    rgba(14, 14, 20, 0.7) 0%,
+                    rgba(21, 21, 32, 0.8) 100%);
+            backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 1.5rem;
+            z-index: 1000;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-direction: column;
+        }
+
+        .nav-sidebar::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 1px;
+            background: linear-gradient(135deg,
+                    rgba(29, 185, 84, 0.3),
+                    rgba(168, 85, 247, 0.3));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .nav-sidebar:hover::before {
+            opacity: 1;
+        }
+
+        /* Create Space for Sidebar (Desktop Only) */
+        @media (min-width: 769px) {
+            body:has(.nav-sidebar) {
+                padding-left: 320px;
+                /* Push EVERYTHING right */
+                transition: padding-left 0.4s ease;
+            }
+
+            /* Fix Header alignment */
+            body:has(.nav-sidebar) header {
+                left: 320px;
+                /* Start header after sidebar */
+                width: calc(100% - 320px);
+                /* Adjust width */
+                right: 0;
+            }
+
+            /* Ensure main content is centered in remaining space */
+            body:has(.nav-sidebar) main {
+                margin: 0 auto;
+                max-width: 1400px;
+                /* Limit max width for readability */
+            }
+        }
+
+        /* User Profile in Sidebar */
+        .nav-user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-user-profile:hover {
+            background: rgba(29, 185, 84, 0.1);
+            border-color: rgba(29, 185, 84, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .nav-user-avatar {
+            position: relative;
+            width: 48px;
+            height: 48px;
+        }
+
+        .nav-avatar-ring {
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #a855f7);
+            animation: nav-rotate 3s linear infinite;
+        }
+
+        @keyframes nav-rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .nav-avatar-img {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid var(--card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .nav-avatar-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .nav-user-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .nav-user-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .nav-user-status {
+            font-size: 0.75rem;
+            color: var(--text3);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .nav-status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--glow);
+            animation: nav-pulse 2s infinite;
+        }
+
+        @keyframes nav-pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Navigation Menu */
+        <section id="nav-menu-section">.nav-menu {
+            list-style: none;
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-menu::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .nav-menu::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .nav-menu::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .nav-menu-item {
+            margin-bottom: 0.4rem;
+        }
+
+        .nav-menu-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.9rem 1rem;
+            border-radius: 14px;
+            color: var(--text2);
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .nav-menu-link::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg,
+                    rgba(29, 185, 84, 0.15),
+                    rgba(29, 185, 84, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .nav-menu-link:hover::before,
+        .nav-menu-link.active::before {
+            opacity: 1;
+        }
+
+        .nav-menu-link:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .nav-menu-link.active {
+            color: var(--accent);
+            background: rgba(29, 185, 84, 0.1);
+            border: 1px solid rgba(29, 185, 84, 0.2);
+            box-shadow: 0 4px 12px rgba(29, 185, 84, 0.2);
+        }
+
+        .nav-menu-icon {
+            font-size: 1.3rem;
+            min-width: 28px;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+
+        .nav-menu-link:hover .nav-menu-icon,
+        .nav-menu-link.active .nav-menu-icon {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 8px var(--glow));
+        }
+
+        .nav-menu-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-menu-badge {
+            margin-left: auto;
+            background: var(--accent);
+            color: #000;
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            position: relative;
+            z-index: 1;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        /* Progress Section in Sidebar */
+        .nav-progress-section {
+            margin-top: auto;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-progress-title {
+            font-size: 0.75rem;
+            color: var(--text3);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .nav-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #15803d);
+            border-radius: 10px;
+            width: 0%;
+            position: relative;
+            transition: width 1s ease;
+        }
+
+        .nav-progress-fill::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.3),
+                    transparent);
+            animation: nav-shimmer 2s infinite;
+        }
+
+        @keyframes nav-shimmer {
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(100%);
+            }
+        }
+
+        .nav-progress-text {
+            font-size: 0.8rem;
+            color: var(--text2);
+            margin-top: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Bottom Navigation - Mobile Only */
+        .nav-bottom {
+            display: none;
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .nav-sidebar {
+                display: none;
+            }
+
+            body:has(.nav-sidebar) main {
+                margin-left: 0;
+                padding-bottom: 100px;
+            }
+
+            .nav-bottom {
+                display: block;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg,
+                        rgba(14, 14, 20, 0.95) 0%,
+                        rgba(21, 21, 32, 0.98) 100%);
+                backdrop-filter: blur(30px) saturate(180%);
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                padding: 0.75rem 0.5rem calc(0.75rem + env(safe-area-inset-bottom));
+                z-index: 1000;
+                box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+            }
+
+            .nav-bottom::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: linear-gradient(90deg,
+                        transparent,
+                        var(--accent),
+                        transparent);
+                opacity: 0.5;
+            }
+
+            .nav-bottom-items {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .nav-bottom-item {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.25rem;
+                padding: 0.5rem 0.75rem;
+                color: var(--text3);
+                text-decoration: none;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                cursor: pointer;
+                flex: 1;
+                max-width: 80px;
+            }
+
+            .nav-bottom-item::before {
+                content: '';
+                position: absolute;
+                inset: -8px;
+                border-radius: 16px;
+                background: radial-gradient(circle,
+                        rgba(29, 185, 84, 0.2),
+                        transparent 70%);
+                opacity: 0;
+                transform: scale(0.8);
+                transition: all 0.3s;
+            }
+
+            .nav-bottom-item.active::before {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            .nav-bottom-icon {
+                position: relative;
+                font-size: 1.4rem;
+                transition: all 0.3s;
+            }
+
+            .nav-bottom-item.active .nav-bottom-icon {
+                color: var(--accent);
+                transform: translateY(-3px) scale(1.1);
+                filter: drop-shadow(0 0 8px var(--glow));
+            }
+
+            .nav-bottom-label {
+                font-size: 0.65rem;
+                font-weight: 600;
+                transition: all 0.3s;
+                opacity: 0.7;
+            }
+
+            .nav-bottom-item.active .nav-bottom-label {
+                color: var(--accent);
+                opacity: 1;
+                font-weight: 700;
+            }
+
+            .nav-bottom-badge {
+                position: absolute;
+                top: 0.25rem;
+                right: 0.5rem;
+                background: var(--accent);
+                color: #000;
+                font-size: 0.6rem;
+                font-weight: 800;
+                padding: 0.15rem 0.35rem;
+                border-radius: 10px;
+                min-width: 18px;
+                text-align: center;
+                box-shadow: 0 2px 8px var(--glow);
+                animation: nav-badge-pulse 2s infinite;
+            }
+
+            @keyframes nav-badge-pulse {
+
+                0%,
+                100% {
+                    transform: scale(1);
+                }
+
+                50% {
+                    transform: scale(1.1);
+                }
+            }
+
+            .nav-bottom-indicator {
+                position: absolute;
+                top: -2px;
+                left: 50%;
+                transform: translateX(-50%) scaleX(0);
+                width: 30px;
+                height: 3px;
+                background: linear-gradient(90deg, var(--accent), #15803d);
+                border-radius: 0 0 10px 10px;
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .nav-bottom-item.active .nav-bottom-indicator {
+                transform: translateX(-50%) scaleX(1);
+            }
+
+            .nav-bottom-item::after {
+                content: '';
+                position: absolute;
+                inset: 0;
+                border-radius: 16px;
+                background: radial-gradient(circle,
+                        rgba(29, 185, 84, 0.3),
+                        transparent);
+                opacity: 0;
+                transform: scale(0);
+                transition: all 0.4s;
+            }
+
+            .nav-bottom-item:active::after {
+                opacity: 1;
+                transform: scale(1.5);
+                transition: all 0s;
+            }
+        }
+
+        /* ============================================
+           END NAVIGATION SYSTEM
+           ============================================ */
 
         .version-badge {
             background: rgba(29, 185, 84, 0.15);
@@ -3300,7 +3829,7 @@
            PREMIUM SUPPORT SECTION
            ============================================ */
 
-        .support {
+        <section id="support-section">.support {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1rem;
@@ -3390,7 +3919,7 @@
            MODERN FAQ ACCORDION
            ============================================ */
 
-        .faq {
+        <section id="faq-section">.faq {
             max-width: 700px;
             margin: 0 auto;
         }
@@ -3464,18 +3993,17 @@
            PREMIUM FOOTER DESIGN
            ============================================ */
 
-        footer {
-            background: linear-gradient(135deg,
-                    rgba(29, 185, 84, 0.04) 0%,
-                    rgba(59, 130, 246, 0.03) 50%,
-                    rgba(168, 85, 247, 0.04) 100%);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid var(--border);
-            padding: 3.5rem 1.5rem 2rem;
-            margin-top: 5rem;
-            position: relative;
-            overflow: hidden;
+        <footer>background: linear-gradient(135deg,
+            rgba(29, 185, 84, 0.04) 0%,
+            rgba(59, 130, 246, 0.03) 50%,
+            rgba(168, 85, 247, 0.04) 100%);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-top: 1px solid var(--border);
+        padding: 3.5rem 1.5rem 2rem;
+        margin-top: 5rem;
+        position: relative;
+        overflow: hidden;
         }
 
         footer::before {
@@ -3872,7 +4400,7 @@
         }
 
         /* --- ULTRA PREMIUM PAYMENT CARD --- */
-        .pay-section {
+        <section id="renew-section">.pay-section {
             margin: 3rem 0;
             perspective: 1000px;
         }
@@ -4063,7 +4591,7 @@
         }
 
         /* --- ULTRA DATA CARD --- */
-        .usage-card {
+        <section id="usage-section">.usage-card {
             background: linear-gradient(145deg, rgba(20, 20, 30, 0.6), rgba(10, 10, 20, 0.4));
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 24px;
@@ -4144,7 +4672,7 @@
         }
 
         /* --- ULTRA HELP CENTER --- */
-        .help-grid {
+        <section id="help-center-section">.help-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 1.5rem;
@@ -4268,9 +4796,84 @@
         </div>
     </header>
 
+    <!-- Premium Sidebar Navigation -->
+    <aside class="nav-sidebar">
+        <!-- User Profile -->
+        <div class="nav-user-profile">
+            <div class="nav-user-avatar">
+                <div class="nav-avatar-ring"></div>
+                <div class="nav-avatar-img">
+                    <img src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?w=740&t=st=1702498262~exp=1702498862~hmac=56ddd62b9a7b7324546416196235483849646464634"
+                        alt="User Avatar" id="navUserAvatar">
+                </div>
+            </div>
+            <div class="nav-user-info">
+                <div class="nav-user-name" id="navUserName">{{ user.username }}</div>
+                <div class="nav-user-status">
+                    <span class="nav-status-dot"></span>
+                    <span data-t="vip">VIP Member</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <ul class="nav-menu">
+            <li class="nav-menu-item">
+                <a href="#dashboard-section" class="nav-menu-link active" data-section="dashboard">
+                    <i class="ri-home-5-fill nav-menu-icon"></i>
+                    <span class="nav-menu-text" data-t="dashboard">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-menu-item">
+                <a href="#usage-section" class="nav-menu-link" data-section="usage">
+                    <i class="ri-pie-chart-2-fill nav-menu-icon"></i>
+                    <span class="nav-menu-text" data-t="stats">Usage</span>
+                </a>
+            </li>
+            <li class="nav-menu-item">
+                <a href="#servers-section" class="nav-menu-link" data-section="servers">
+                    <i class="ri-global-line nav-menu-icon"></i>
+                    <span class="nav-menu-text" data-t="servers">Servers</span>
+                    <span class="nav-menu-badge" id="navServerCount">13</span>
+                </a>
+            </li>
+            <li class="nav-menu-item">
+                <a href="#apps-section" class="nav-menu-link" data-section="apps">
+                    <i class="ri-download-cloud-2-line nav-menu-icon"></i>
+                    <span class="nav-menu-text" data-t="apps">Apps</span>
+                </a>
+            </li>
+            <li class="nav-menu-item">
+                <a href="#renew-section" class="nav-menu-link" data-section="renew">
+                    <i class="ri-secure-payment-line nav-menu-icon"></i>
+                    <span class="nav-menu-text" data-t="renew">Renew</span>
+                </a>
+            </li>
+            <li class="nav-menu-item">
+                <a href="#faq-section" class="nav-menu-link" data-section="faq">
+                    <i class="ri-question-answer-line nav-menu-icon"></i>
+                    <span class="nav-menu-text" data-t="faqTitle">FAQ</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Payment Section -->
+        <section id="renew-section">
+            <div class="nav-progress-section">
+                <div class="nav-progress-title" data-t="dataUsage">Data Usage</div>
+                <div class="nav-progress-bar">
+                    <div class="nav-progress-fill" id="navProgressFill"></div>
+                </div>
+                <div class="nav-progress-text">
+                    <span id="navUsedData">-</span>
+                    <span id="navTotalData">-</span>
+                </div>
+            </div>
+    </aside>
+
     <main>
         <!-- Hero -->
-        <section class="hero">
+        <section class="hero" id="dashboard-section">
             <div class="avatar-container">
                 <div class="avatar-rings">
                     <div class="ring"></div>
@@ -4292,508 +4895,522 @@
             <h1 class="uname" id="uname">{{ user.username }}</h1>
 
             <!-- Ultra Premium Stats Grid -->
-            <div class="stats-grid">
-                <!-- Total Data -->
-                <div class="stat-card sc-blue">
-                    <div class="stat-header">
-                        <div class="stat-icon"><i class="ri-database-2-fill"></i></div>
-                        <div class="stat-trend" style="color:#3b82f6">100%</div>
-                    </div>
-                    <div class="stat-label">Total Package</div>
-                    <div class="stat-value" id="cardTotal">Loading...</div>
-                    <div class="stat-progress">
-                        <div class="stat-progress-bar" style="width: 100%"></div>
-                    </div>
-                </div>
-
-                <!-- Consumed -->
-                <div class="stat-card sc-orange">
-                    <div class="stat-header">
-                        <div class="stat-icon"><i class="ri-pie-chart-fill"></i></div>
-                        <div class="stat-trend" style="color:#f59e0b" id="trendUsed">-</div>
-                    </div>
-                    <div class="stat-label">Consumed</div>
-                    <div class="stat-value" id="cardUsed">-</div>
-                    <div class="stat-progress">
-                        <div class="stat-progress-bar" id="barUsed"></div>
-                    </div>
-                </div>
-
-                <!-- Remaining -->
-                <div class="stat-card sc-green">
-                    <div class="stat-header">
-                        <div class="stat-icon"><i class="ri-download-cloud-fill"></i></div>
-                        <div class="stat-trend" style="color:#22c55e" id="trendRem">-</div>
-                    </div>
-                    <div class="stat-label">Remaining</div>
-                    <div class="stat-value" id="cardRemaining">-</div>
-                    <div class="stat-progress">
-                        <div class="stat-progress-bar" id="barRemaining"></div>
-                    </div>
-                </div>
-
-                <!-- Days Left -->
-                <div class="stat-card sc-pink">
-                    <div class="stat-header">
-                        <div class="stat-icon"><i class="ri-time-fill"></i></div>
-                        <div class="stat-trend" style="color:#ec4899" id="trendDays">-</div>
-                    </div>
-                    <div class="stat-label">Days Left</div>
-                    <div class="stat-value" id="cardDays">-</div>
-                    <div class="stat-progress">
-                        <div class="stat-progress-bar" id="barDays"></div>
-                    </div>
-                </div>
-
-                <!-- Total Period -->
-                <div class="stat-card sc-purple">
-                    <div class="stat-header">
-                        <div class="stat-icon"><i class="ri-calendar-check-fill"></i></div>
-                        <div class="stat-trend" style="color:#a855f7">∞</div>
-                    </div>
-                    <div class="stat-label">Total Period</div>
-                    <div class="stat-value" id="cardPeriod">-</div>
-                    <div class="stat-progress">
-                        <div class="stat-progress-bar" style="width: 100%"></div>
-                    </div>
-                </div>
-
-                <!-- Servers -->
-                <div class="stat-card sc-cyan">
-                    <div class="stat-header">
-                        <div class="stat-icon"><i class="ri-global-fill"></i></div>
-                        <div class="stat-trend" style="color:#06b6d4">All</div>
-                    </div>
-                    <div class="stat-label">Servers</div>
-                    <div class="stat-value" id="cardServers">-</div>
-                    <div class="stat-progress">
-                        <div class="stat-progress-bar" style="width: 100%"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Hidden Data Fields (Preserved) -->
-            <div class="hidden-data" id="uExpire" style="display:none">{{ user.expire }}</div>
-            <div class="hidden-data" id="uLimit" style="display:none">{{ user.data_limit }}</div>
-            <div class="hidden-data" id="uUsed" style="display:none">{{ user.used_traffic }}</div>
-            <div class="hidden-data" id="uOnline" style="display:none">{{ user.online_at }}</div>
-            <div class="hidden-data" id="uCreated" style="display:none">{{ user.created_at }}</div>
-
-            <!-- Action Buttons -->
-            <div class="hero-actions">
-                <button class="action-btn primary" onclick="copyAll()">
-                    <i class="ri-file-copy-line"></i> <span data-t="copyAll">Copy Config</span>
-                </button>
-                <button class="action-btn secondary" onclick="showQR()">
-                    <i class="ri-qr-code-line"></i>
-                </button>
-                <button class="action-btn accent" onclick="renew()">
-                    <i class="ri-refresh-line"></i> <span data-t="renew">Renew</span>
-                </button>
-            </div>
-
-            <!-- Collapsible Tutorial -->
-            <div class="tute-sect" id="tuteSection">
-                <div class="tute-head" onclick="toggleTutorial()">
-                    <span><i class="ri-lightbulb-flash-line"></i> <span data-t="howToUse">How to Connect?</span></span>
-                    <i class="ri-arrow-down-s-line arrow"></i>
-                </div>
-                <div class="tute-body">
-                    <div class="step-row">
-                        <div class="step-n">1</div>
-                        <div>
-                            <div class="step-t" data-t="step1Title">Download App</div>
-                            <div class="step-d" data-t="step1Desc">Choose your device below</div>
+            <section id="usage-section">
+                <div class="stats-grid">
+                    <!-- Total Data -->
+                    <div class="stat-card sc-blue">
+                        <div class="stat-header">
+                            <div class="stat-icon"><i class="ri-database-2-fill"></i></div>
+                            <div class="stat-trend" style="color:#3b82f6">100%</div>
+                        </div>
+                        <div class="stat-label">Total Package</div>
+                        <div class="stat-value" id="cardTotal">Loading...</div>
+                        <div class="stat-progress">
+                            <div class="stat-progress-bar" style="width: 100%"></div>
                         </div>
                     </div>
-                    <div class="step-row">
-                        <div class="step-n">2</div>
-                        <div>
-                            <div class="step-t" data-t="step2Title">Copy Config</div>
-                            <div class="step-d" data-t="step2Desc">Click "Copy All" button</div>
+
+                    <!-- Consumed -->
+                    <div class="stat-card sc-orange">
+                        <div class="stat-header">
+                            <div class="stat-icon"><i class="ri-pie-chart-fill"></i></div>
+                            <div class="stat-trend" style="color:#f59e0b" id="trendUsed">-</div>
+                        </div>
+                        <div class="stat-label">Consumed</div>
+                        <div class="stat-value" id="cardUsed">-</div>
+                        <div class="stat-progress">
+                            <div class="stat-progress-bar" id="barUsed"></div>
                         </div>
                     </div>
-                    <div class="step-row">
-                        <div class="step-n">3</div>
-                        <div>
-                            <div class="step-t" data-t="step3Title">Import & Connect</div>
-                            <div class="step-d" data-t="step3Desc">Paste in app and enjoy!</div>
+
+                    <!-- Remaining -->
+                    <div class="stat-card sc-green">
+                        <div class="stat-header">
+                            <div class="stat-icon"><i class="ri-download-cloud-fill"></i></div>
+                            <div class="stat-trend" style="color:#22c55e" id="trendRem">-</div>
+                        </div>
+                        <div class="stat-label">Remaining</div>
+                        <div class="stat-value" id="cardRemaining">-</div>
+                        <div class="stat-progress">
+                            <div class="stat-progress-bar" id="barRemaining"></div>
+                        </div>
+                    </div>
+
+                    <!-- Days Left -->
+                    <div class="stat-card sc-pink">
+                        <div class="stat-header">
+                            <div class="stat-icon"><i class="ri-time-fill"></i></div>
+                            <div class="stat-trend" style="color:#ec4899" id="trendDays">-</div>
+                        </div>
+                        <div class="stat-label">Days Left</div>
+                        <div class="stat-value" id="cardDays">-</div>
+                        <div class="stat-progress">
+                            <div class="stat-progress-bar" id="barDays"></div>
+                        </div>
+                    </div>
+
+                    <!-- Total Period -->
+                    <div class="stat-card sc-purple">
+                        <div class="stat-header">
+                            <div class="stat-icon"><i class="ri-calendar-check-fill"></i></div>
+                            <div class="stat-trend" style="color:#a855f7">∞</div>
+                        </div>
+                        <div class="stat-label">Total Period</div>
+                        <div class="stat-value" id="cardPeriod">-</div>
+                        <div class="stat-progress">
+                            <div class="stat-progress-bar" style="width: 100%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Servers -->
+                    <div class="stat-card sc-cyan">
+                        <div class="stat-header">
+                            <div class="stat-icon"><i class="ri-global-fill"></i></div>
+                            <div class="stat-trend" style="color:#06b6d4">All</div>
+                        </div>
+                        <div class="stat-label">Servers</div>
+                        <div class="stat-value" id="cardServers">-</div>
+                        <div class="stat-progress">
+                            <div class="stat-progress-bar" style="width: 100%"></div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- Ultra Premium Subscription Status -->
-        <div class="sub-status-card">
-            <div class="ssc-content">
-                <div class="ssc-title"><i class="ri-vip-crown-fill"></i> <span data-t="subStatus">Subscription
-                        Status</span></div>
-                <div class="ssc-days"><span id="daysRemDisplay">--</span> <span
-                        style="font-size:1rem;font-weight:500;color:var(--text2)" data-t="daysRemaining">Days
-                        Remaining</span></div>
-                <div class="ssc-desc" id="subDesc">Your plan is active and running smoothly.</div>
-            </div>
-            <div class="ssc-extra">
-                <div class="expiry-badge">
-                    <i class="ri-calendar-event-line"></i>
-                    <span id="expiryDateDisplay">--/--/--</span>
+                <!-- Hidden Data Fields (Preserved) -->
+                <div class="hidden-data" id="uExpire" style="display:none">{{ user.expire }}</div>
+                <div class="hidden-data" id="uLimit" style="display:none">{{ user.data_limit }}</div>
+                <div class="hidden-data" id="uUsed" style="display:none">{{ user.used_traffic }}</div>
+                <div class="hidden-data" id="uOnline" style="display:none">{{ user.online_at }}</div>
+                <div class="hidden-data" id="uCreated" style="display:none">{{ user.created_at }}</div>
+
+                <!-- Action Buttons -->
+                <div class="hero-actions">
+                    <button class="action-btn primary" onclick="copyAll()">
+                        <i class="ri-file-copy-line"></i> <span data-t="copyAll">Copy Config</span>
+                    </button>
+                    <button class="action-btn secondary" onclick="showQR()">
+                        <i class="ri-qr-code-line"></i>
+                    </button>
+                    <button class="action-btn accent" onclick="renew()">
+                        <i class="ri-refresh-line"></i> <span data-t="renew">Renew</span>
+                    </button>
+                </div>
+
+                <!-- Collapsible Tutorial -->
+                <div class="tute-sect" id="tuteSection">
+                    <div class="tute-head" onclick="toggleTutorial()">
+                        <span><i class="ri-lightbulb-flash-line"></i> <span data-t="howToUse">How to
+                                Connect?</span></span>
+                        <i class="ri-arrow-down-s-line arrow"></i>
+                    </div>
+                    <div class="tute-body">
+                        <div class="step-row">
+                            <div class="step-n">1</div>
+                            <div>
+                                <div class="step-t" data-t="step1Title">Download App</div>
+                                <div class="step-d" data-t="step1Desc">Choose your device below</div>
+                            </div>
+                        </div>
+                        <div class="step-row">
+                            <div class="step-n">2</div>
+                            <div>
+                                <div class="step-t" data-t="step2Title">Copy Config</div>
+                                <div class="step-d" data-t="step2Desc">Click "Copy All" button</div>
+                            </div>
+                        </div>
+                        <div class="step-row">
+                            <div class="step-n">3</div>
+                            <div>
+                                <div class="step-t" data-t="step3Title">Import & Connect</div>
+                                <div class="step-d" data-t="step3Desc">Paste in app and enjoy!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ultra Premium Subscription Status -->
+            <div class="sub-status-card">
+                <div class="ssc-content">
+                    <div class="ssc-title"><i class="ri-vip-crown-fill"></i> <span data-t="subStatus">Subscription
+                            Status</span></div>
+                    <div class="ssc-days"><span id="daysRemDisplay">--</span> <span
+                            style="font-size:1rem;font-weight:500;color:var(--text2)" data-t="daysRemaining">Days
+                            Remaining</span></div>
+                    <div class="ssc-desc" id="subDesc">Your plan is active and running smoothly.</div>
+                </div>
+                <div class="ssc-extra">
+                    <div class="expiry-badge">
+                        <i class="ri-calendar-event-line"></i>
+                        <span id="expiryDateDisplay">--/--/--</span>
+                    </div>
+                </div>
+                <div class="ssc-chart">
+                    <svg viewBox="0 0 36 36" class="circular-chart">
+                        <path class="circle-bg"
+                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path class="circle" id="daysCircle" stroke-dasharray="0, 100"
+                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    </svg>
+                    <div class="ssc-icon"><i class="ri-timer-flash-line"></i></div>
                 </div>
             </div>
-            <div class="ssc-chart">
-                <svg viewBox="0 0 36 36" class="circular-chart">
-                    <path class="circle-bg"
-                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                    <path class="circle" id="daysCircle" stroke-dasharray="0, 100"
-                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                </svg>
-                <div class="ssc-icon"><i class="ri-timer-flash-line"></i></div>
-            </div>
-        </div>
 
-        <!-- Stats Section Removed (Redundant with Ultra Grid) -->
+            <!-- Stats Section Removed (Redundant with Ultra Grid) -->
 
-        <!-- Ultra Premium Data Usage Card -->
-        <h2 class="sec-h"><i class="ri-pie-chart-2-fill"></i> <span data-t="analytics">Data Overview</span></h2>
-        <div class="usage-card">
-            <div class="uc-chart">
-                <svg viewBox="0 0 36 36" class="circular-chart">
-                    <path class="circle-bg"
-                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                    <path class="circle" id="usageCircle" stroke-dasharray="0, 100" stroke="#06b6d4"
-                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                </svg>
-                <div
-                    style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
-                    <span style="font-size:1.5rem;font-weight:800;color:#fff" id="usagePct">0%</span>
-                    <span style="font-size:0.7rem;color:var(--text2);text-transform:uppercase">Used</span>
+            <!-- Ultra Premium Data Usage Card -->
+            <h2 class="sec-h"><i class="ri-pie-chart-2-fill"></i> <span data-t="analytics">Data Overview</span></h2>
+            <div class="usage-card">
+                <div class="uc-chart">
+                    <svg viewBox="0 0 36 36" class="circular-chart">
+                        <path class="circle-bg"
+                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path class="circle" id="usageCircle" stroke-dasharray="0, 100" stroke="#06b6d4"
+                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    </svg>
+                    <div
+                        style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+                        <span style="font-size:1.5rem;font-weight:800;color:#fff" id="usagePct">0%</span>
+                        <span style="font-size:0.7rem;color:var(--text2);text-transform:uppercase">Used</span>
+                    </div>
+                </div>
+
+                <div class="uc-info">
+                    <div class="uc-row">
+                        <span class="uc-label"><span class="uc-dot" style="background:#06b6d4"></span> <span
+                                data-t="used">Used Traffic</span></span>
+                        <span class="uc-val" id="ucUsed">-</span>
+                    </div>
+                    <div class="uc-row">
+                        <span class="uc-label"><span class="uc-dot" style="background:rgba(255,255,255,0.2)"></span>
+                            <span data-t="remaining">Free Traffic</span></span>
+                        <span class="uc-val" id="ucFree">-</span>
+                    </div>
+                    <div class="uc-row">
+                        <span class="uc-label"><span class="uc-dot" style="background:var(--accent)"></span> <span
+                                data-t="total">Total Capacity</span></span>
+                        <span class="uc-val" id="ucTotal">-</span>
+                    </div>
                 </div>
             </div>
+            <!-- Servers -->
+            <section class="sec">
+                <h2 class="sec-h"><i class="ri-global-line"></i> <span data-t="serverList">Servers</span></h2>
+                <div class="srv-grid" id="srvList"></div>
+            </section>
 
-            <div class="uc-info">
-                <div class="uc-row">
-                    <span class="uc-label"><span class="uc-dot" style="background:#06b6d4"></span> <span
-                            data-t="used">Used Traffic</span></span>
-                    <span class="uc-val" id="ucUsed">-</span>
+            <!-- Apps -->
+            <section class="apps-sec">
+                <h2 class="sec-h"><i class="ri-download-cloud-2-line"></i> <span data-t="apps">Download Apps</span></h2>
+                <div class="app-tabs">
+                    <button class="app-tab active" onclick="showApps('android')"><i class="ri-android-fill"></i>
+                        Android</button>
+                    <button class="app-tab" onclick="showApps('ios')"><i class="ri-apple-fill"></i> iOS</button>
+                    <button class="app-tab" onclick="showApps('windows')"><i class="ri-windows-fill"></i>
+                        Windows</button>
+                    <button class="app-tab" onclick="showApps('macos')"><i class="ri-mac-fill"></i> macOS</button>
+                    <button class="app-tab" onclick="showApps('linux')"><i class="ri-ubuntu-fill"></i> Linux</button>
                 </div>
-                <div class="uc-row">
-                    <span class="uc-label"><span class="uc-dot" style="background:rgba(255,255,255,0.2)"></span> <span
-                            data-t="remaining">Free Traffic</span></span>
-                    <span class="uc-val" id="ucFree">-</span>
+                <!-- Android Apps -->
+                <div class="app-grid" id="apps-android">
+                    <div class="app">
+                        <div class="app-i">🌐</div>
+                        <div class="app-n">Universal</div>
+                        <div class="app-d">v2rayNG</div>
+                        <div class="app-v">v1.9.32</div>
+                        <a href="https://github.com/2dust/v2rayNG/releases/download/1.9.32/v2rayNG_1.9.32_universal.apk"
+                            target="_blank" class="app-download-btn">
+                            <i class="ri-download-line"></i> Download
+                        </a>
+                    </div>
+                    <div class="app">
+                        <div class="app-i">🔮</div>
+                        <div class="app-n">Universal</div>
+                        <div class="app-d">Hiddify</div>
+                        <div class="app-v">v2.5.7</div>
+                        <a href="https://github.com/hiddify/hiddify-app/releases/download/v2.5.7/Hiddify-Android-universal.apk"
+                            target="_blank" class="app-download-btn">
+                            <i class="ri-download-line"></i> Download
+                        </a>
+                    </div>
                 </div>
-                <div class="uc-row">
-                    <span class="uc-label"><span class="uc-dot" style="background:var(--accent)"></span> <span
-                            data-t="total">Total Capacity</span></span>
-                    <span class="uc-val" id="ucTotal">-</span>
-                </div>
-            </div>
-        </div>
-        <!-- Servers -->
-        <section class="sec">
-            <h2 class="sec-h"><i class="ri-global-line"></i> <span data-t="serverList">Servers</span></h2>
-            <div class="srv-grid" id="srvList"></div>
-        </section>
-
-        <!-- Apps -->
-        <section class="apps-sec">
-            <h2 class="sec-h"><i class="ri-download-cloud-2-line"></i> <span data-t="apps">Download Apps</span></h2>
-            <div class="app-tabs">
-                <button class="app-tab active" onclick="showApps('android')"><i class="ri-android-fill"></i>
-                    Android</button>
-                <button class="app-tab" onclick="showApps('ios')"><i class="ri-apple-fill"></i> iOS</button>
-                <button class="app-tab" onclick="showApps('windows')"><i class="ri-windows-fill"></i> Windows</button>
-                <button class="app-tab" onclick="showApps('macos')"><i class="ri-mac-fill"></i> macOS</button>
-                <button class="app-tab" onclick="showApps('linux')"><i class="ri-ubuntu-fill"></i> Linux</button>
-            </div>
-            <!-- Android Apps -->
-            <div class="app-grid" id="apps-android">
-                <div class="app">
-                    <div class="app-i">🌐</div>
-                    <div class="app-n">Universal</div>
-                    <div class="app-d">v2rayNG</div>
-                    <div class="app-v">v1.9.32</div>
-                    <a href="https://github.com/2dust/v2rayNG/releases/download/1.9.32/v2rayNG_1.9.32_universal.apk"
-                        target="_blank" class="app-download-btn">
-                        <i class="ri-download-line"></i> Download
+                <!-- iOS Apps -->
+                <div class="app-grid" id="apps-ios" style="display:none">
+                    <a href="https://apps.apple.com/app/streisand/id6450534064" target="_blank" class="app">
+                        <div class="app-i">🎭</div>
+                        <div class="app-n">Streisand</div>
+                        <div class="app-d">Free</div>
+                        <div class="app-v">App Store</div>
+                    </a>
+                    <a href="https://apps.apple.com/app/v2box-v2ray-client/id6446814690" target="_blank" class="app">
+                        <div class="app-i">📦</div>
+                        <div class="app-n">V2Box</div>
+                        <div class="app-d">Free</div>
+                        <div class="app-v">App Store</div>
+                    </a>
+                    <a href="https://apps.apple.com/app/foxray/id6448898396" target="_blank" class="app">
+                        <div class="app-i">🦊</div>
+                        <div class="app-n">FoXray</div>
+                        <div class="app-d">Free</div>
+                        <div class="app-v">App Store</div>
+                    </a>
+                    <a href="https://apps.apple.com/app/shadowrocket/id932747118" target="_blank" class="app">
+                        <div class="app-i">🚀</div>
+                        <div class="app-n">Shadowrocket</div>
+                        <div class="app-d">Paid ($2.99)</div>
+                        <div class="app-v">App Store</div>
                     </a>
                 </div>
-                <div class="app">
-                    <div class="app-i">🔮</div>
-                    <div class="app-n">Universal</div>
-                    <div class="app-d">Hiddify</div>
-                    <div class="app-v">v2.5.7</div>
-                    <a href="https://github.com/hiddify/hiddify-app/releases/download/v2.5.7/Hiddify-Android-universal.apk"
-                        target="_blank" class="app-download-btn">
-                        <i class="ri-download-line"></i> Download
+                <!-- Windows Apps -->
+                <div class="app-grid" id="apps-windows" style="display:none">
+                    <a href="https://github.com/2dust/v2rayN/releases/download/7.10.5/v2rayN-windows-64-SelfContained.zip"
+                        target="_blank" class="app">
+                        <div class="app-i">💻</div>
+                        <div class="app-n">v2rayN</div>
+                        <div class="app-d">x64 Self-Contained</div>
+                        <div class="app-v">v7.10.5</div>
+                    </a>
+                    <a href="https://github.com/hiddify/hiddify-app/releases/download/v2.5.7/Hiddify-Windows-Setup-x64.exe"
+                        target="_blank" class="app">
+                        <div class="app-i">🔮</div>
+                        <div class="app-n">Hiddify</div>
+                        <div class="app-d">Setup x64</div>
+                        <div class="app-v">v2.5.7</div>
+                    </a>
+                    <a href="https://github.com/MatsuriDayo/nekoray/releases/download/4.0.1/nekoray-4.0.1-2024-12-01-windows64.zip"
+                        target="_blank" class="app">
+                        <div class="app-i">🐱</div>
+                        <div class="app-n">Nekoray</div>
+                        <div class="app-d">x64</div>
+                        <div class="app-v">v4.0.1</div>
+                    </a>
+                    <a href="https://github.com/GUI-for-Cores/GUI.for" target="_blank" class="app">
+                        <div class="app-i">⚡</div>
+                        <div class="app-n">GUI.for.Cores</div>
+                        <div class="app-d">Multi-Core</div>
+                        <div class="app-v">Latest</div>
                     </a>
                 </div>
-            </div>
-            <!-- iOS Apps -->
-            <div class="app-grid" id="apps-ios" style="display:none">
-                <a href="https://apps.apple.com/app/streisand/id6450534064" target="_blank" class="app">
-                    <div class="app-i">🎭</div>
-                    <div class="app-n">Streisand</div>
-                    <div class="app-d">Free</div>
-                    <div class="app-v">App Store</div>
-                </a>
-                <a href="https://apps.apple.com/app/v2box-v2ray-client/id6446814690" target="_blank" class="app">
-                    <div class="app-i">📦</div>
-                    <div class="app-n">V2Box</div>
-                    <div class="app-d">Free</div>
-                    <div class="app-v">App Store</div>
-                </a>
-                <a href="https://apps.apple.com/app/foxray/id6448898396" target="_blank" class="app">
-                    <div class="app-i">🦊</div>
-                    <div class="app-n">FoXray</div>
-                    <div class="app-d">Free</div>
-                    <div class="app-v">App Store</div>
-                </a>
-                <a href="https://apps.apple.com/app/shadowrocket/id932747118" target="_blank" class="app">
-                    <div class="app-i">🚀</div>
-                    <div class="app-n">Shadowrocket</div>
-                    <div class="app-d">Paid ($2.99)</div>
-                    <div class="app-v">App Store</div>
-                </a>
-            </div>
-            <!-- Windows Apps -->
-            <div class="app-grid" id="apps-windows" style="display:none">
-                <a href="https://github.com/2dust/v2rayN/releases/download/7.10.5/v2rayN-windows-64-SelfContained.zip"
-                    target="_blank" class="app">
-                    <div class="app-i">💻</div>
-                    <div class="app-n">v2rayN</div>
-                    <div class="app-d">x64 Self-Contained</div>
-                    <div class="app-v">v7.10.5</div>
-                </a>
-                <a href="https://github.com/hiddify/hiddify-app/releases/download/v2.5.7/Hiddify-Windows-Setup-x64.exe"
-                    target="_blank" class="app">
-                    <div class="app-i">🔮</div>
-                    <div class="app-n">Hiddify</div>
-                    <div class="app-d">Setup x64</div>
-                    <div class="app-v">v2.5.7</div>
-                </a>
-                <a href="https://github.com/MatsuriDayo/nekoray/releases/download/4.0.1/nekoray-4.0.1-2024-12-01-windows64.zip"
-                    target="_blank" class="app">
-                    <div class="app-i">🐱</div>
-                    <div class="app-n">Nekoray</div>
-                    <div class="app-d">x64</div>
-                    <div class="app-v">v4.0.1</div>
-                </a>
-                <a href="https://github.com/GUI-for-Cores/GUI.for" target="_blank" class="app">
-                    <div class="app-i">⚡</div>
-                    <div class="app-n">GUI.for.Cores</div>
-                    <div class="app-d">Multi-Core</div>
-                    <div class="app-v">Latest</div>
-                </a>
-            </div>
-            <!-- macOS Apps -->
-            <div class="app-grid" id="apps-macos" style="display:none">
-                <a href="https://github.com/hiddify/hiddify-app/releases/download/v2.5.7/Hiddify-MacOS-Universal.dmg"
-                    target="_blank" class="app">
-                    <div class="app-i">🔮</div>
-                    <div class="app-n">Hiddify</div>
-                    <div class="app-d">Universal</div>
-                    <div class="app-v">v2.5.7</div>
-                </a>
-                <a href="https://github.com/2dust/v2rayU/releases" target="_blank" class="app">
-                    <div class="app-i">💻</div>
-                    <div class="app-n">V2RayU</div>
-                    <div class="app-d">Universal</div>
-                    <div class="app-v">Latest</div>
-                </a>
-                <a href="https://github.com/abbabon/Clash-for-FlClash" target="_blank" class="app">
-                    <div class="app-i">⚔️</div>
-                    <div class="app-n">FlClash</div>
-                    <div class="app-d">GUI</div>
-                    <div class="app-v">Latest</div>
-                </a>
-            </div>
-            <!-- Linux Apps -->
-            <div class="app-grid" id="apps-linux" style="display:none">
-                <a href="https://github.com/hiddify/hiddify-app/releases/download/v2.5.7/Hiddify-Linux-x64.AppImage"
-                    target="_blank" class="app">
-                    <div class="app-i">🔮</div>
-                    <div class="app-n">Hiddify</div>
-                    <div class="app-d">AppImage x64</div>
-                    <div class="app-v">v2.5.7</div>
-                </a>
-                <a href="https://github.com/MatsuriDayo/nekoray/releases/download/4.0.1/nekoray-4.0.1-2024-12-01-linux64.zip"
-                    target="_blank" class="app">
-                    <div class="app-i">🐱</div>
-                    <div class="app-n">Nekoray</div>
-                    <div class="app-d">x64</div>
-                    <div class="app-v">v4.0.1</div>
-                </a>
-                <a href="https://github.com/GUI-for-Cores/GUI.for.SingBox" target="_blank" class="app">
-                    <div class="app-i">⚡</div>
-                    <div class="app-n">GUI.for.SingBox</div>
-                    <div class="app-d">GUI</div>
-                    <div class="app-v">Latest</div>
-                </a>
-            </div>
-        </section>
-
-        <!-- Ultra Premium Payment Section -->
-        <section class="pay-section">
-            <h2 class="sec-h"><i class="ri-secure-payment-line"></i> <span data-t="renewSub">Renew Subscription</span>
-            </h2>
-
-            <div class="credit-card">
-                <div class="cc-header">
-                    <div class="cc-chip"></div>
-                    <div class="cc-bank"><i class="ri-bank-card-2-line"></i> TEJARAT BANK</div>
+                <!-- macOS Apps -->
+                <div class="app-grid" id="apps-macos" style="display:none">
+                    <a href="https://github.com/hiddify/hiddify-app/releases/download/v2.5.7/Hiddify-MacOS-Universal.dmg"
+                        target="_blank" class="app">
+                        <div class="app-i">🔮</div>
+                        <div class="app-n">Hiddify</div>
+                        <div class="app-d">Universal</div>
+                        <div class="app-v">v2.5.7</div>
+                    </a>
+                    <a href="https://github.com/2dust/v2rayU/releases" target="_blank" class="app">
+                        <div class="app-i">💻</div>
+                        <div class="app-n">V2RayU</div>
+                        <div class="app-d">Universal</div>
+                        <div class="app-v">Latest</div>
+                    </a>
+                    <a href="https://github.com/abbabon/Clash-for-FlClash" target="_blank" class="app">
+                        <div class="app-i">⚔️</div>
+                        <div class="app-n">FlClash</div>
+                        <div class="app-d">GUI</div>
+                        <div class="app-v">Latest</div>
+                    </a>
                 </div>
-
-                <div class="cc-number">
-                    <span id="ccNumDisplay">5859 8311 1983 7713</span>
-                    <button class="cc-copy-btn" onclick="copyCardNum()"><i class="ri-file-copy-line"></i></button>
+                <!-- Linux Apps -->
+                <div class="app-grid" id="apps-linux" style="display:none">
+                    <a href="https://github.com/hiddify/hiddify-app/releases/download/v2.5.7/Hiddify-Linux-x64.AppImage"
+                        target="_blank" class="app">
+                        <div class="app-i">🔮</div>
+                        <div class="app-n">Hiddify</div>
+                        <div class="app-d">AppImage x64</div>
+                        <div class="app-v">v2.5.7</div>
+                    </a>
+                    <a href="https://github.com/MatsuriDayo/nekoray/releases/download/4.0.1/nekoray-4.0.1-2024-12-01-linux64.zip"
+                        target="_blank" class="app">
+                        <div class="app-i">🐱</div>
+                        <div class="app-n">Nekoray</div>
+                        <div class="app-d">x64</div>
+                        <div class="app-v">v4.0.1</div>
+                    </a>
+                    <a href="https://github.com/GUI-for-Cores/GUI.for.SingBox" target="_blank" class="app">
+                        <div class="app-i">⚡</div>
+                        <div class="app-n">GUI.for.SingBox</div>
+                        <div class="app-d">GUI</div>
+                        <div class="app-v">Latest</div>
+                    </a>
                 </div>
+            </section>
 
-                <div class="cc-details">
-                    <div>
-                        <div class="cc-label">Card Holder</div>
-                        <div class="cc-val">Tavanna Mohammadi</div>
+            <!-- Ultra Premium Payment Section -->
+            <section class="pay-section">
+                <h2 class="sec-h"><i class="ri-secure-payment-line"></i> <span data-t="renewSub">Renew
+                        Subscription</span>
+                </h2>
+
+                <div class="credit-card">
+                    <div class="cc-header">
+                        <div class="cc-chip"></div>
+                        <div class="cc-bank"><i class="ri-bank-card-2-line"></i> TEJARAT BANK</div>
                     </div>
-                    <div style="text-align:right">
-                        <div class="cc-label">Expires</div>
-                        <div class="cc-val">12/28</div>
+
+                    <div class="cc-number">
+                        <span id="ccNumDisplay">5859 8311 1983 7713</span>
+                        <button class="cc-copy-btn" onclick="copyCardNum()"><i class="ri-file-copy-line"></i></button>
+                    </div>
+
+                    <div class="cc-details">
+                        <div>
+                            <div class="cc-label">Card Holder</div>
+                            <div class="cc-val">Tavanna Mohammadi</div>
+                        </div>
+                        <div style="text-align:right">
+                            <div class="cc-label">Expires</div>
+                            <div class="cc-val">12/28</div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="pay-controls">
-                <div style="color:var(--text2);font-size:0.9rem;margin-bottom:-0.5rem">Enter Amount (Toman):</div>
-                <div class="amount-input-group">
-                    <span class="amount-symbol">T</span>
-                    <input type="tel" class="amount-input" id="customAmount" placeholder="e.g. 200,000"
-                        oninput="formatAmount(this)">
+                <div class="pay-controls">
+                    <div style="color:var(--text2);font-size:0.9rem;margin-bottom:-0.5rem">Enter Amount (Toman):</div>
+                    <div class="amount-input-group">
+                        <span class="amount-symbol">T</span>
+                        <input type="tel" class="amount-input" id="customAmount" placeholder="e.g. 200,000"
+                            oninput="formatAmount(this)">
+                    </div>
+
+                    <div class="presets">
+                        <div class="preset-chip" onclick="setAmount(150000)">150,000</div>
+                        <div class="preset-chip" onclick="setAmount(400000)">400,000</div>
+                        <div class="preset-chip" onclick="setAmount(1500000)">1,500,000</div>
+                        <div class="preset-chip" onclick="setAmount(3000000)">3,000,000</div>
+                    </div>
+
+                    <button class="pay-action-btn" onclick="sendReceipt()">
+                        <i class="ri-send-plane-fill"></i> Send Receipt
+                    </button>
+                    <div style="text-align:center;font-size:0.8rem;color:var(--text3);margin-top:0.5rem">
+                        Transfer amount to the card above, then click Send Receipt.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Support -->
+            <!-- Ultra Premium Help Center -->
+            <section class="sec">
+                <h2 class="sec-h"><i class="ri-customer-service-2-line"></i> <span data-t="support">Help Center</span>
+                    <span class="sup-247">24/7</span>
+                </h2>
+
+                <div class="help-grid">
+                    <!-- Telegram Support -->
+                    <a href="https://t.me/rahbarusd" target="_blank" class="help-card">
+                        <div class="help-icon-box hc-tg">
+                            <i class="ri-telegram-plane-fill"></i>
+                            <!-- Glow effect -->
+                            <div style="position:absolute;inset:0;border-radius:50%;box-shadow:0 0 20px rgba(34,158,217,0.4);opacity:0;transition:0.3s"
+                                class="glow"></div>
+                        </div>
+                        <div class="help-title">Telegram Support</div>
+                        <div class="help-sub">@rahbarusd</div>
+                    </a>
+
+                    <!-- Telegram Channel -->
+                    <a href="https://t.me/panbehnet" target="_blank" class="help-card">
+                        <div class="help-icon-box hc-ch">
+                            <i class="ri-megaphone-fill"></i>
+                        </div>
+                        <div class="help-title" data-t="channel">Channel</div>
+                        <div class="help-sub">@panbehnet</div>
+                    </a>
+
+                    <!-- WhatsApp -->
+                    <a href="https://wa.me/989901120235" target="_blank" class="help-card">
+                        <div class="help-icon-box hc-wa">
+                            <i class="ri-whatsapp-fill"></i>
+                        </div>
+                        <div class="help-title">WhatsApp</div>
+                        <div class="help-sub">+98 990 112 0235</div>
+                    </a>
+
+                    <!-- Call -->
+                    <a href="tel:+989901120235" class="help-card">
+                        <div class="help-icon-box hc-ph">
+                            <i class="ri-phone-fill"></i>
+                        </div>
+                        <div class="help-title" data-t="phone">Call Us</div>
+                        <div class="help-sub">+98 990 112 0235</div>
+                    </a>
                 </div>
 
-                <div class="presets">
-                    <div class="preset-chip" onclick="setAmount(150000)">150,000</div>
-                    <div class="preset-chip" onclick="setAmount(400000)">400,000</div>
-                    <div class="preset-chip" onclick="setAmount(1500000)">1,500,000</div>
-                    <div class="preset-chip" onclick="setAmount(3000000)">3,000,000</div>
+            </section>
+
+            <!-- Server Status -->
+            <div class="srv-status">
+                <div class="srv-status-h"><i class="ri-pulse-line"></i> <span data-t="srvStatus">Server Status</span>
                 </div>
-
-                <button class="pay-action-btn" onclick="sendReceipt()">
-                    <i class="ri-send-plane-fill"></i> Send Receipt
-                </button>
-                <div style="text-align:center;font-size:0.8rem;color:var(--text3);margin-top:0.5rem">
-                    Transfer amount to the card above, then click Send Receipt.
+                <div class="status-grid">
+                    <div class="status-item">
+                        <div class="status-v">99.9%</div>
+                        <div class="status-l">Uptime</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-v">1Gbps</div>
+                        <div class="status-l">Bandwidth</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-v">13</div>
+                        <div class="status-l">Active</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-v">45ms</div>
+                        <div class="status-l">Avg Ping</div>
+                    </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- Support -->
-        <!-- Ultra Premium Help Center -->
-        <section class="sec">
-            <h2 class="sec-h"><i class="ri-customer-service-2-line"></i> <span data-t="support">Help Center</span> <span
-                    class="sup-247">24/7</span></h2>
-
-            <div class="help-grid">
-                <!-- Telegram Support -->
-                <a href="https://t.me/rahbarusd" target="_blank" class="help-card">
-                    <div class="help-icon-box hc-tg">
-                        <i class="ri-telegram-plane-fill"></i>
-                        <!-- Glow effect -->
-                        <div style="position:absolute;inset:0;border-radius:50%;box-shadow:0 0 20px rgba(34,158,217,0.4);opacity:0;transition:0.3s"
-                            class="glow"></div>
-                    </div>
-                    <div class="help-title">Telegram Support</div>
-                    <div class="help-sub">@rahbarusd</div>
-                </a>
-
-                <!-- Telegram Channel -->
-                <a href="https://t.me/panbehnet" target="_blank" class="help-card">
-                    <div class="help-icon-box hc-ch">
-                        <i class="ri-megaphone-fill"></i>
-                    </div>
-                    <div class="help-title" data-t="channel">Channel</div>
-                    <div class="help-sub">@panbehnet</div>
-                </a>
-
-                <!-- WhatsApp -->
-                <a href="https://wa.me/989901120235" target="_blank" class="help-card">
-                    <div class="help-icon-box hc-wa">
-                        <i class="ri-whatsapp-fill"></i>
-                    </div>
-                    <div class="help-title">WhatsApp</div>
-                    <div class="help-sub">+98 990 112 0235</div>
-                </a>
-
-                <!-- Call -->
-                <a href="tel:+989901120235" class="help-card">
-                    <div class="help-icon-box hc-ph">
-                        <i class="ri-phone-fill"></i>
-                    </div>
-                    <div class="help-title" data-t="phone">Call Us</div>
-                    <div class="help-sub">+98 990 112 0235</div>
-                </a>
             </div>
 
         </section>
-
-        <!-- Server Status -->
-        <div class="srv-status">
-            <div class="srv-status-h"><i class="ri-pulse-line"></i> <span data-t="srvStatus">Server Status</span></div>
-            <div class="status-grid">
-                <div class="status-item">
-                    <div class="status-v">99.9%</div>
-                    <div class="status-l">Uptime</div>
-                </div>
-                <div class="status-item">
-                    <div class="status-v">1Gbps</div>
-                    <div class="status-l">Bandwidth</div>
-                </div>
-                <div class="status-item">
-                    <div class="status-v">13</div>
-                    <div class="status-l">Active</div>
-                </div>
-                <div class="status-item">
-                    <div class="status-v">45ms</div>
-                    <div class="status-l">Avg Ping</div>
-                </div>
-            </div>
-        </div>
 
         <!-- FAQ -->
-        <section class="sec faq">
-            <h2 class="sec-h"><i class="ri-question-answer-line"></i> <span data-t="faqTitle">FAQ</span></h2>
-            <div class="faq-item" onclick="this.classList.toggle('open')">
-                <div class="faq-q"><span data-t="faq1q">How to connect?</span><i class="ri-arrow-down-s-line"></i></div>
-                <div class="faq-a" data-t="faq1a">Download the app, copy your subscription link, and import it.</div>
-            </div>
-            <div class="faq-item" onclick="this.classList.toggle('open')">
-                <div class="faq-q"><span data-t="faq2q">Connection issues?</span><i class="ri-arrow-down-s-line"></i>
+        <section id="faq-section">
+            <section class="sec faq">
+                <h2 class="sec-h"><i class="ri-question-answer-line"></i> <span data-t="faqTitle">FAQ</span></h2>
+                <div class="faq-item" onclick="this.classList.toggle('open')">
+                    <div class="faq-q"><span data-t="faq1q">How to connect?</span><i class="ri-arrow-down-s-line"></i>
+                    </div>
+                    <div class="faq-a" data-t="faq1a">Download the app, copy your subscription link, and import it.
+                    </div>
                 </div>
-                <div class="faq-a" data-t="faq2a">Try switching servers or update your subscription.</div>
-            </div>
-            <div class="faq-item" onclick="this.classList.toggle('open')">
-                <div class="faq-q"><span data-t="faq3q">How to renew?</span><i class="ri-arrow-down-s-line"></i></div>
-                <div class="faq-a" data-t="faq3a">Transfer to the card above and send receipt via Telegram.</div>
-            </div>
-            <div class="faq-item" onclick="this.classList.toggle('open')">
-                <div class="faq-q"><span data-t="faq4q">Why is the speed slow?</span><i
-                        class="ri-arrow-down-s-line"></i></div>
-                <div class="faq-a" data-t="faq4a">Connect to a closer server and check your internet connection.</div>
-            </div>
+                <div class="faq-item" onclick="this.classList.toggle('open')">
+                    <div class="faq-q"><span data-t="faq2q">Connection issues?</span><i
+                            class="ri-arrow-down-s-line"></i>
+                    </div>
+                    <div class="faq-a" data-t="faq2a">Try switching servers or update your subscription.</div>
+                </div>
+                <div class="faq-item" onclick="this.classList.toggle('open')">
+                    <div class="faq-q"><span data-t="faq3q">How to renew?</span><i class="ri-arrow-down-s-line"></i>
+                    </div>
+                    <div class="faq-a" data-t="faq3a">Transfer to the card above and send receipt via Telegram.</div>
+                </div>
+                <div class="faq-item" onclick="this.classList.toggle('open')">
+                    <div class="faq-q"><span data-t="faq4q">Why is the speed slow?</span><i
+                            class="ri-arrow-down-s-line"></i></div>
+                    <div class="faq-a" data-t="faq4a">Connect to a closer server and check your internet connection.
+                    </div>
+                </div>
 
-            <div class="faq-item" onclick="this.classList.toggle('open')">
-                <div class="faq-q"><span data-t="faq6q">Can I use on multiple devices?</span><i
-                        class="ri-arrow-down-s-line"></i></div>
-                <div class="faq-a" data-t="faq6a">Yes! Use the same config on all your devices simultaneously.</div>
-            </div>
+                <div class="faq-item" onclick="this.classList.toggle('open')">
+                    <div class="faq-q"><span data-t="faq6q">Can I use on multiple devices?</span><i
+                            class="ri-arrow-down-s-line"></i></div>
+                    <div class="faq-a" data-t="faq6a">Yes! Use the same config on all your devices simultaneously.</div>
+                </div>
 
-            <div class="faq-item" onclick="this.classList.toggle('open')">
-                <div class="faq-q"><span data-t="faq8q">Are activity logs kept?</span><i
-                        class="ri-arrow-down-s-line"></i></div>
-                <div class="faq-a" data-t="faq8a">No. We have a strict no-logs policy for your privacy.</div>
-            </div>
-
-
+                <div class="faq-item" onclick="this.classList.toggle('open')">
+                    <div class="faq-q"><span data-t="faq8q">Are activity logs kept?</span><i
+                            class="ri-arrow-down-s-line"></i></div>
+                    <div class="faq-a" data-t="faq8a">No. We have a strict no-logs policy for your privacy.</div>
+                </div>
 
 
-        </section>
+
+
+            </section>
     </main>
 
     <footer>
@@ -4820,6 +5437,38 @@
             </div>
         </div>
     </footer>
+
+    <!-- Bottom Navigation (Mobile Only) -->
+    <nav class="nav-bottom">
+        <div class="nav-bottom-items">
+            <a href="#dashboard-section" class="nav-bottom-item active" data-section="dashboard">
+                <div class="nav-bottom-indicator"></div>
+                <i class="ri-home-5-fill nav-bottom-icon"></i>
+                <span class="nav-bottom-label" data-t="dashboard">Home</span>
+            </a>
+            <a href="#usage-section" class="nav-bottom-item" data-section="usage">
+                <div class="nav-bottom-indicator"></div>
+                <i class="ri-pie-chart-2-fill nav-bottom-icon"></i>
+                <span class="nav-bottom-label" data-t="stats">Usage</span>
+            </a>
+            <a href="#servers-section" class="nav-bottom-item" data-section="servers">
+                <div class="nav-bottom-indicator"></div>
+                <i class="ri-global-line nav-bottom-icon"></i>
+                <span class="nav-bottom-label" data-t="servers">Servers</span>
+                <span class="nav-bottom-badge" id="bottomNavServerCount">13</span>
+            </a>
+            <a href="#apps-section" class="nav-bottom-item" data-section="apps">
+                <div class="nav-bottom-indicator"></div>
+                <i class="ri-download-cloud-2-line nav-bottom-icon"></i>
+                <span class="nav-bottom-label" data-t="apps">Apps</span>
+            </a>
+            <a href="#renew-section" class="nav-bottom-item" data-section="renew">
+                <div class="nav-bottom-indicator"></div>
+                <i class="ri-secure-payment-line nav-bottom-icon"></i>
+                <span class="nav-bottom-label" data-t="renew">Renew</span>
+            </a>
+        </div>
+    </nav>
 
     <div class="fab" onclick="copyAll()"><i class="ri-file-copy-line"></i></div>
 
@@ -5519,6 +6168,131 @@
                     .catch(err => console.log('SW failed', err));
             });
         }
+
+        // ============================================
+        // NAVIGATION SYSTEM LOGIC
+        // ============================================
+
+        // Smooth scroll to section
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                const offset = window.innerWidth <= 768 ? 80 : 100;
+                const elementPosition = section.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Update active state for all navigation items
+        function updateActiveNav(sectionName) {
+            // Update sidebar
+            document.querySelectorAll('.nav-menu-link').forEach(link => {
+                if (link.getAttribute('data-section') === sectionName) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+
+            // Update bottom nav
+            document.querySelectorAll('.nav-bottom-item').forEach(item => {
+                if (item.getAttribute('data-section') === sectionName) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+
+        // Handle navigation clicks
+        function initNavigation() {
+            // Sidebar navigation
+            document.querySelectorAll('.nav-menu-link').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const sectionId = this.getAttribute('href').substring(1);
+                    const sectionName = this.getAttribute('data-section');
+
+                    scrollToSection(sectionId);
+                    updateActiveNav(sectionName);
+                });
+            });
+
+            // Bottom navigation
+            document.querySelectorAll('.nav-bottom-item').forEach(item => {
+                item.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const sectionId = this.getAttribute('href').substring(1);
+                    const sectionName = this.getAttribute('data-section');
+
+                    scrollToSection(sectionId);
+                    updateActiveNav(sectionName);
+                });
+            });
+        }
+
+        // Sync navigation data with dashboard data
+        function syncNavigationData() {
+            // Sync user name
+            const userName = document.getElementById('uname');
+            const navUserName = document.getElementById('navUserName');
+            if (userName && navUserName) {
+                navUserName.textContent = userName.textContent;
+            }
+
+            // Sync server count
+            const serverCount = document.getElementById('cardServers');
+            const navServerCount = document.getElementById('navServerCount');
+            const bottomNavServerCount = document.getElementById('bottomNavServerCount');
+            if (serverCount) {
+                const count = serverCount.textContent;
+                if (navServerCount) navServerCount.textContent = count;
+                if (bottomNavServerCount) bottomNavServerCount.textContent = count;
+            }
+
+            // Sync progress bar
+            const consumed = document.getElementById('cardConsumed');
+            const total = document.getElementById('cardTotal');
+            const navProgressFill = document.getElementById('navProgressFill');
+            const navUsedData = document.getElementById('navUsedData');
+            const navTotalData = document.getElementById('navTotalData');
+
+            if (consumed && total && navProgressFill) {
+                const consumedText = consumed.textContent;
+                const totalText = total.textContent;
+
+                // Calculate percentage
+                const consumedValue = parseFloat(consumedText);
+                const totalValue = parseFloat(totalText);
+                if (!isNaN(consumedValue) && !isNaN(totalValue) && totalValue > 0) {
+                    const percentage = (consumedValue / totalValue) * 100;
+                    navProgressFill.style.width = percentage + '%';
+                }
+
+                if (navUsedData) navUsedData.textContent = consumedText;
+                if (navTotalData) navTotalData.textContent = totalText;
+            }
+        }
+
+        // Initialize navigation on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            initNavigation();
+
+            // Sync data after a short delay to ensure dashboard data is loaded
+            setTimeout(syncNavigationData, 500);
+
+            // Re-sync every 5 seconds
+            setInterval(syncNavigationData, 5000);
+        });
+
+        // ============================================
+        // END NAVIGATION SYSTEM
+        // ============================================
     </script>
 </body>
 
