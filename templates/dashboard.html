@@ -208,7 +208,7 @@
         }
 
         main {
-            padding: 80px 1rem 2rem;
+            padding: 110px 1rem 2rem;
             max-width: 1000px;
             margin: 0 auto
         }
@@ -1427,6 +1427,13 @@
             flex-wrap: wrap;
         }
 
+        .pay .btn {
+            width: 100%;
+            margin-top: 1rem;
+            padding: 1rem;
+            font-size: 1rem;
+        }
+
         .pay-card {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
@@ -2540,20 +2547,15 @@
 
         /* Header - PERFECTLY CENTERED */
         .cd-header {
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.75rem;
             margin: 0 auto 2.5rem auto;
-            background: rgba(var(--text-rgb), 0.05);
-            padding: 0.5rem 1.25rem;
-            border-radius: 99px;
-            border: 1px solid rgba(var(--text-rgb), 0.1);
-            width: fit-content;
-            position: relative;
-            left: 50%;
-            transform: translateX(-50%);
+            width: 100%;
+            text-align: center;
         }
+
 
         .status-dot {
             width: 8px;
@@ -4573,6 +4575,7 @@
                 const expEl = document.getElementById('uExpire');
                 if (expEl) {
                     const exp = expEl.textContent.trim();
+                    console.log("Raw Expire Data:", exp); // Debug Log
                     const now = Math.floor(Date.now() / 1000);
                     if (exp && !isNaN(exp) && parseInt(exp) > 0) {
                         const diff = parseInt(exp) - now;
