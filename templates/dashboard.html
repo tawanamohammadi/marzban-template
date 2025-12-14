@@ -312,6 +312,12 @@
             z-index: 10;
         }
 
+        @media (max-width: 768px) {
+            .avatar-container {
+                margin-top: 80px;
+            }
+        }
+
         .avatar-rings {
             position: absolute;
             inset: -20px;
@@ -353,13 +359,40 @@
             z-index: -1;
         }
 
-        /* Override .av for wrapper usage */
-        .avatar-container .av {
+        /* Correct Avatar Styles */
+        .avatar {
+            position: relative;
             margin: 0;
             width: 120px;
             height: 120px;
-            border: 4px solid var(--card);
+            border-radius: 50%;
+            border: 4px solid var(--bg);
             background: linear-gradient(135deg, #2a2a2a, #000);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .vip-badge {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 0.2rem 0.6rem;
+            border-radius: 50px;
+            border: 3px solid var(--bg);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+            z-index: 5;
         }
 
         .hero-date {
@@ -4009,6 +4042,106 @@
                 width: 100%;
             }
         }
+
+        /* --- ULTRA HELP CENTER --- */
+        .help-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .help-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .help-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.3);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+        }
+
+        .help-icon-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .help-card:hover .help-icon-box {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .hc-tg {
+            color: #229ED9;
+            background: rgba(34, 158, 217, 0.1);
+        }
+
+        .hc-wa {
+            color: #25D366;
+            background: rgba(37, 211, 102, 0.1);
+        }
+
+        .hc-ph {
+            color: #F59E0B;
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        /* Orange for phone */
+        .hc-ch {
+            color: #A855F7;
+            background: rgba(168, 85, 247, 0.1);
+        }
+
+        .help-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+        }
+
+        .help-sub {
+            font-size: 0.8rem;
+            color: var(--text2);
+        }
+
+        /* 3D Touch */
+        .help-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .help-card:hover::before {
+            opacity: 1;
+        }
     </style>
 
 </head>
@@ -4044,9 +4177,10 @@
                     <div class="ring"></div>
                 </div>
                 <div class="avatar-glow"></div>
-                <div class="av">
-                    <img src="https://avatar.iran.liara.run/public/38" alt="Avatar">
-                    <div class="av-badge">VIP</div>
+                <div class="avatar">
+                    <img src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?w=740&t=st=1702498262~exp=1702498862~hmac=56ddd62b9a7b7324546416196235483849646464634"
+                        alt="User Avatar" style="object-fit:cover;">
+                    <div class="vip-badge">VIP</div>
                 </div>
             </div>
             <div class="hero-date">
@@ -4459,33 +4593,52 @@
         </section>
 
         <!-- Support -->
+        <!-- Ultra Premium Help Center -->
         <section class="sec">
-            <h2 class="sec-h"><i class="ri-customer-service-2-line"></i> <span data-t="support">Support</span> <span
+            <h2 class="sec-h"><i class="ri-customer-service-2-line"></i> <span data-t="support">Help Center</span> <span
                     class="sup-247">24/7</span></h2>
-            <div class="support">
-                <a href="https://t.me/rahbarusd" target="_blank" class="sup">
-                    <div class="sup-i tg"><i class="ri-telegram-fill"></i></div>
-                    <div class="sup-t">Telegram</div>
-                    <div class="sup-d">@rahbarusd</div>
+
+            <div class="help-grid">
+                <!-- Telegram Support -->
+                <a href="https://t.me/rahbarusd" target="_blank" class="help-card">
+                    <div class="help-icon-box hc-tg">
+                        <i class="ri-telegram-plane-fill"></i>
+                        <!-- Glow effect -->
+                        <div style="position:absolute;inset:0;border-radius:50%;box-shadow:0 0 20px rgba(34,158,217,0.4);opacity:0;transition:0.3s"
+                            class="glow"></div>
+                    </div>
+                    <div class="help-title">Telegram Support</div>
+                    <div class="help-sub">@rahbarusd</div>
                 </a>
-                <a href="https://t.me/panbehnet" target="_blank" class="sup">
-                    <div class="sup-i tg"><i class="ri-send-plane-fill"></i></div>
-                    <div class="sup-t" data-t="channel">Channel</div>
-                    <div class="sup-d">@panbehnet</div>
+
+                <!-- Telegram Channel -->
+                <a href="https://t.me/panbehnet" target="_blank" class="help-card">
+                    <div class="help-icon-box hc-ch">
+                        <i class="ri-megaphone-fill"></i>
+                    </div>
+                    <div class="help-title" data-t="channel">Channel</div>
+                    <div class="help-sub">@panbehnet</div>
                 </a>
-                <a href="https://wa.me/989901120235" target="_blank" class="sup hl">
-                    <div class="sup-i" style="background:linear-gradient(135deg,#25D366,#128C7E)"><i
-                            class="ri-whatsapp-fill"></i></div>
-                    <div class="sup-t">WhatsApp</div>
-                    <div class="sup-d">+98 990 112 0235</div>
+
+                <!-- WhatsApp -->
+                <a href="https://wa.me/989901120235" target="_blank" class="help-card">
+                    <div class="help-icon-box hc-wa">
+                        <i class="ri-whatsapp-fill"></i>
+                    </div>
+                    <div class="help-title">WhatsApp</div>
+                    <div class="help-sub">+98 990 112 0235</div>
                 </a>
-                <a href="tel:+989901120235" class="sup">
-                    <div class="sup-i" style="background:linear-gradient(135deg,#3b82f6,#1e40af)"><i
-                            class="ri-phone-fill"></i></div>
-                    <div class="sup-t" data-t="phone">Phone</div>
-                    <div class="sup-d">+98 990 112 0235</div>
+
+                <!-- Call -->
+                <a href="tel:+989901120235" class="help-card">
+                    <div class="help-icon-box hc-ph">
+                        <i class="ri-phone-fill"></i>
+                    </div>
+                    <div class="help-title" data-t="phone">Call Us</div>
+                    <div class="help-sub">+98 990 112 0235</div>
                 </a>
             </div>
+
         </section>
 
         <!-- Server Status -->
