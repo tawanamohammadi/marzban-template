@@ -58,9 +58,9 @@
             --card2: #f2f2f7;
             --card3: #e5e5ea;
             --text: #1d1d1f;
-            --text2: #86868b;
-            --text3: #aeaeb2;
-            --border: rgba(0, 0, 0, 0.06);
+            --text2: #464649;
+            --text3: #86868b;
+            --border: rgba(0, 0, 0, 0.1);
             --green: #34c759;
             --red: #ff3b30;
             --orange: #ff9500;
@@ -3993,17 +3993,25 @@
            PREMIUM FOOTER DESIGN
            ============================================ */
 
-        <footer>background: linear-gradient(135deg,
-            rgba(29, 185, 84, 0.04) 0%,
-            rgba(59, 130, 246, 0.03) 50%,
-            rgba(168, 85, 247, 0.04) 100%);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-top: 1px solid var(--border);
-        padding: 3.5rem 1.5rem 2rem;
-        margin-top: 5rem;
-        position: relative;
-        overflow: hidden;
+        footer {
+            background: linear-gradient(135deg,
+                    rgba(29, 185, 84, 0.04) 0%,
+                    rgba(59, 130, 246, 0.03) 50%,
+                    rgba(168, 85, 247, 0.04) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border);
+            padding: 3.5rem 1.5rem 2rem;
+            margin-top: 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            footer {
+                margin-top: 2rem;
+                padding: 2rem 1rem 80px;
+            }
         }
 
         footer::before {
@@ -4400,13 +4408,13 @@
         }
 
         /* --- ULTRA PREMIUM PAYMENT CARD --- */
-        <section id="renew-section">.pay-section {
+        .pay-section {
             margin: 3rem 0;
             perspective: 1000px;
         }
 
         .credit-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            background: linear-gradient(135deg, var(--card), var(--card2));
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 24px;
@@ -4437,7 +4445,7 @@
         .cc-chip {
             width: 50px;
             height: 36px;
-            background: linear-gradient(135deg, #d4af37, #f9df74);
+            background: linear-gradient(135deg, #151520, #0e0e14);
             border-radius: 8px;
             position: relative;
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
@@ -4517,9 +4525,9 @@
 
         .amount-input {
             width: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff;
+            background: var(--card3);
+            border: 1px solid var(--border);
+            color: var(--text);
             padding: 1rem 1rem 1rem 3rem;
             border-radius: 16px;
             font-size: 1.1rem;
@@ -4550,8 +4558,9 @@
         }
 
         .preset-chip {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--card3);
+            border: 1px solid var(--border);
+            color: var(--text);
             padding: 0.5rem 1rem;
             border-radius: 50px;
             font-size: 0.85rem;
@@ -4591,9 +4600,9 @@
         }
 
         /* --- ULTRA DATA CARD --- */
-        <section id="usage-section">.usage-card {
-            background: linear-gradient(145deg, rgba(20, 20, 30, 0.6), rgba(10, 10, 20, 0.4));
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        .usage-card {
+            background: var(--card);
+            border: 1px solid var(--border);
             border-radius: 24px;
             padding: 2rem;
             margin: 2rem 0;
@@ -4672,7 +4681,7 @@
         }
 
         /* --- ULTRA HELP CENTER --- */
-        <section id="help-center-section">.help-grid {
+        .help-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 1.5rem;
@@ -4680,7 +4689,7 @@
         }
 
         .help-card {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            background: var(--card);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
@@ -4858,7 +4867,7 @@
         </ul>
 
         <!-- Payment Section -->
-        <section id="renew-section">
+        <section>
             <div class="nav-progress-section">
                 <div class="nav-progress-title" data-t="dataUsage">Data Usage</div>
                 <div class="nav-progress-bar">
@@ -4895,7 +4904,7 @@
             <h1 class="uname" id="uname">{{ user.username }}</h1>
 
             <!-- Ultra Premium Stats Grid -->
-            <section id="usage-section">
+            <section>
                 <div class="stats-grid">
                     <!-- Total Data -->
                     <div class="stat-card sc-blue">
@@ -5059,7 +5068,8 @@
             <!-- Stats Section Removed (Redundant with Ultra Grid) -->
 
             <!-- Ultra Premium Data Usage Card -->
-            <h2 class="sec-h"><i class="ri-pie-chart-2-fill"></i> <span data-t="analytics">Data Overview</span></h2>
+            <h2 class="sec-h" id="usage-section"><i class="ri-pie-chart-2-fill"></i> <span data-t="analytics">Data
+                    Overview</span></h2>
             <div class="usage-card">
                 <div class="uc-chart">
                     <svg viewBox="0 0 36 36" class="circular-chart">
@@ -5094,13 +5104,13 @@
                 </div>
             </div>
             <!-- Servers -->
-            <section class="sec">
+            <section class="sec" id="servers-section">
                 <h2 class="sec-h"><i class="ri-global-line"></i> <span data-t="serverList">Servers</span></h2>
                 <div class="srv-grid" id="srvList"></div>
             </section>
 
             <!-- Apps -->
-            <section class="apps-sec">
+            <section class="apps-sec" id="apps-section">
                 <h2 class="sec-h"><i class="ri-download-cloud-2-line"></i> <span data-t="apps">Download Apps</span></h2>
                 <div class="app-tabs">
                     <button class="app-tab active" onclick="showApps('android')"><i class="ri-android-fill"></i>
@@ -5239,7 +5249,7 @@
             </section>
 
             <!-- Ultra Premium Payment Section -->
-            <section class="pay-section">
+            <section class="pay-section" id="renew-section">
                 <h2 class="sec-h"><i class="ri-secure-payment-line"></i> <span data-t="renewSub">Renew
                         Subscription</span>
                 </h2>
