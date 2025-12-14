@@ -1989,6 +1989,23 @@
             flex-direction: column;
         }
 
+        /* Light Theme Sidebar */
+        [data-theme="light"] .nav-sidebar {
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.95) 0%,
+                    rgba(245, 245, 247, 0.98) 100%);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        /* RTL Support - Move sidebar to right */
+        [dir="rtl"] .nav-sidebar {
+            left: auto;
+            right: 20px;
+        }
+
         .nav-sidebar::before {
             content: '';
             position: absolute;
@@ -2018,6 +2035,12 @@
                 transition: padding-left 0.4s ease;
             }
 
+            /* RTL: Push content to left instead */
+            [dir="rtl"] body:has(.nav-sidebar) {
+                padding-left: 0;
+                padding-right: 320px;
+            }
+
             /* Fix Header alignment */
             body:has(.nav-sidebar) header {
                 left: 320px;
@@ -2025,6 +2048,12 @@
                 width: calc(100% - 320px);
                 /* Adjust width */
                 right: 0;
+            }
+
+            /* RTL: Header alignment */
+            [dir="rtl"] body:has(.nav-sidebar) header {
+                left: 0;
+                right: 320px;
             }
 
             /* Ensure main content is centered in remaining space */
@@ -2049,10 +2078,20 @@
             transition: all 0.3s;
         }
 
+        [data-theme="light"] .nav-user-profile {
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
         .nav-user-profile:hover {
             background: rgba(29, 185, 84, 0.1);
             border-color: rgba(29, 185, 84, 0.3);
             transform: translateY(-2px);
+        }
+
+        [data-theme="light"] .nav-user-profile:hover {
+            background: rgba(250, 45, 72, 0.1);
+            border-color: rgba(250, 45, 72, 0.3);
         }
 
         .nav-user-avatar {
@@ -2252,6 +2291,11 @@
             background: rgba(255, 255, 255, 0.03);
             border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        [data-theme="light"] .nav-progress-section {
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.08);
         }
 
         .nav-progress-title {
@@ -4912,7 +4956,7 @@
                             <div class="stat-icon"><i class="ri-database-2-fill"></i></div>
                             <div class="stat-trend" style="color:#3b82f6">100%</div>
                         </div>
-                        <div class="stat-label">Total Package</div>
+                        <div class="stat-label" data-t="totalPackage">Total Package</div>
                         <div class="stat-value" id="cardTotal">Loading...</div>
                         <div class="stat-progress">
                             <div class="stat-progress-bar" style="width: 100%"></div>
@@ -4925,7 +4969,7 @@
                             <div class="stat-icon"><i class="ri-pie-chart-fill"></i></div>
                             <div class="stat-trend" style="color:#f59e0b" id="trendUsed">-</div>
                         </div>
-                        <div class="stat-label">Consumed</div>
+                        <div class="stat-label" data-t="consumed">Consumed</div>
                         <div class="stat-value" id="cardUsed">-</div>
                         <div class="stat-progress">
                             <div class="stat-progress-bar" id="barUsed"></div>
@@ -4938,7 +4982,7 @@
                             <div class="stat-icon"><i class="ri-download-cloud-fill"></i></div>
                             <div class="stat-trend" style="color:#22c55e" id="trendRem">-</div>
                         </div>
-                        <div class="stat-label">Remaining</div>
+                        <div class="stat-label" data-t="remaining">Remaining</div>
                         <div class="stat-value" id="cardRemaining">-</div>
                         <div class="stat-progress">
                             <div class="stat-progress-bar" id="barRemaining"></div>
@@ -4951,7 +4995,7 @@
                             <div class="stat-icon"><i class="ri-time-fill"></i></div>
                             <div class="stat-trend" style="color:#ec4899" id="trendDays">-</div>
                         </div>
-                        <div class="stat-label">Days Left</div>
+                        <div class="stat-label" data-t="daysLeft">Days Left</div>
                         <div class="stat-value" id="cardDays">-</div>
                         <div class="stat-progress">
                             <div class="stat-progress-bar" id="barDays"></div>
@@ -4964,7 +5008,7 @@
                             <div class="stat-icon"><i class="ri-calendar-check-fill"></i></div>
                             <div class="stat-trend" style="color:#a855f7">∞</div>
                         </div>
-                        <div class="stat-label">Total Period</div>
+                        <div class="stat-label" data-t="totalPeriod">Total Period</div>
                         <div class="stat-value" id="cardPeriod">-</div>
                         <div class="stat-progress">
                             <div class="stat-progress-bar" style="width: 100%"></div>
@@ -4977,7 +5021,7 @@
                             <div class="stat-icon"><i class="ri-global-fill"></i></div>
                             <div class="stat-trend" style="color:#06b6d4">All</div>
                         </div>
-                        <div class="stat-label">Servers</div>
+                        <div class="stat-label" data-t="servers">Servers</div>
                         <div class="stat-value" id="cardServers">-</div>
                         <div class="stat-progress">
                             <div class="stat-progress-bar" style="width: 100%"></div>
@@ -5686,7 +5730,15 @@
                 version: "نسخه",
                 lastUpdate: "آخرین بروزرسانی",
                 subStatus: "وضعیت اشتراک",
-                daysRemaining: "روز باقی‌مانده"
+                daysRemaining: "روز باقی‌مانده",
+                dashboard: "داشبورد",
+                usage: "آمار",
+                consumed: "مصرف شده",
+                remaining: "باقیمانده",
+                totalPackage: "کل بسته",
+                servers: "سرورها",
+                totalPeriod: "کل دوره",
+                daysLeft: "روز باقیمانده"
             }
         };
 
