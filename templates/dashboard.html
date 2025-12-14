@@ -304,6 +304,64 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3)
         }
 
+        /* Ultra Premium Avatar Styles */
+        .avatar-container {
+            position: relative;
+            display: inline-block;
+            margin: 0 auto 1.5rem;
+            z-index: 10;
+        }
+
+        .avatar-rings {
+            position: absolute;
+            inset: -20px;
+            pointer-events: none;
+        }
+
+        .ring {
+            position: absolute;
+            inset: 0;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+        .ring:nth-child(1) {
+            border-color: var(--accent);
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            opacity: 0.5;
+        }
+
+        .ring:nth-child(2) {
+            border-color: var(--purple);
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            opacity: 0.2;
+            border-style: dashed;
+        }
+
+        .avatar-glow {
+            position: absolute;
+            inset: -30px;
+            background: radial-gradient(circle, var(--glow), transparent 60%);
+            filter: blur(30px);
+            z-index: -1;
+        }
+
+        /* Override .av for wrapper usage */
+        .avatar-container .av {
+            margin: 0;
+            width: 120px;
+            height: 120px;
+            border: 4px solid var(--card);
+            background: linear-gradient(135deg, #2a2a2a, #000);
+        }
+
         .hero-date {
             font-size: .7rem;
             color: var(--text3);
@@ -3417,8 +3475,539 @@
             font-size: 0.75rem;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
             box-shadow: 0 4px 12px rgba(29, 185, 84, 0.15);
+        }
+
+        /* --- ULTRA PREMIUM STATS GRID --- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        @media (min-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.25rem;
+            }
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.25rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: var(--gradient);
+            box-shadow: 0 4px 15px var(--shadow);
+            color: #fff;
+        }
+
+        .stat-trend {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text2);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-progress {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-progress-bar {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 1s ease;
+        }
+
+        .stat-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+        }
+
+        .stat-status {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-weight: 700;
+            padding: 0.2rem 0.6rem;
+            border-radius: 8px;
+        }
+
+        .status-good {
+            color: #22c55e;
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .status-warning {
+            color: #f59e0b;
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .status-critical {
+            color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        /* Card Colors */
+        .sc-blue {
+            --gradient: linear-gradient(135deg, #3b82f6, #2563eb);
+            --shadow: rgba(59, 130, 246, 0.4);
+        }
+
+        .sc-orange {
+            --gradient: linear-gradient(135deg, #f59e0b, #d97706);
+            --shadow: rgba(245, 158, 11, 0.4);
+        }
+
+        .sc-green {
+            --gradient: linear-gradient(135deg, #1DB954, #15803d);
+            --shadow: rgba(29, 185, 84, 0.4);
+        }
+
+        .sc-pink {
+            --gradient: linear-gradient(135deg, #ec4899, #db2777);
+            --shadow: rgba(236, 72, 153, 0.4);
+        }
+
+        .sc-purple {
+            --gradient: linear-gradient(135deg, #a855f7, #7c3aed);
+            --shadow: rgba(168, 85, 247, 0.4);
+        }
+
+        .sc-cyan {
+            --gradient: linear-gradient(135deg, #06b6d4, #0891b2);
+            --shadow: rgba(6, 182, 212, 0.4);
+        }
+
+        /* --- SUBSCRIPTION STATUS BANNER --- */
+        .sub-status-card {
+            background: linear-gradient(135deg, rgba(29, 185, 84, 0.1), rgba(0, 0, 0, 0));
+            border: 1px solid rgba(29, 185, 84, 0.3);
+            border-radius: 24px;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .sub-status-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(29, 185, 84, 0.15), transparent 60%);
+            z-index: 0;
+        }
+
+        .ssc-content {
+            z-index: 1;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .ssc-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ssc-days {
+            font-size: 2.5rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #fff, #b3b3b3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .ssc-desc {
+            font-size: 0.9rem;
+            color: var(--text2);
+        }
+
+        .ssc-chart {
+            z-index: 1;
+            width: 80px;
+            height: 80px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .circular-chart {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .circle-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.1);
+            stroke-width: 3.8;
+        }
+
+        .circle {
+            fill: none;
+            stroke-width: 2.8;
+            stroke-linecap: round;
+            animation: progress 1s ease-out forwards;
+            stroke: var(--accent);
+        }
+
+        .ssc-icon {
+            position: absolute;
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+
+        .expiry-badge {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- ULTRA PREMIUM PAYMENT CARD --- */
+        .pay-section {
+            margin: 3rem 0;
+            perspective: 1000px;
+        }
+
+        .credit-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s;
+        }
+
+        .credit-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.15), transparent 70%);
+            z-index: 0;
+        }
+
+        .cc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cc-chip {
+            width: 50px;
+            height: 36px;
+            background: linear-gradient(135deg, #d4af37, #f9df74);
+            border-radius: 8px;
+            position: relative;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        .cc-bank {
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cc-number {
+            font-family: 'Courier New', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cc-copy-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: color 0.2s;
+        }
+
+        .cc-copy-btn:hover {
+            color: #fff;
+        }
+
+        .cc-details {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cc-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 0.25rem;
+        }
+
+        .cc-val {
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Payment Inputs */
+        .pay-controls {
+            margin-top: 2rem;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .amount-input-group {
+            position: relative;
+        }
+
+        .amount-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 1rem 1rem 1rem 3rem;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .amount-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(29, 185, 84, 0.15);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .amount-symbol {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text2);
+        }
+
+        .presets {
+            display: flex;
+            gap: 0.75rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        .preset-chip {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .preset-chip:hover,
+        .preset-chip.active {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent);
+            font-weight: 600;
+        }
+
+        .pay-action-btn {
+            width: 100%;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            padding: 1rem;
+            border-radius: 16px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .pay-action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(29, 185, 84, 0.3);
+        }
+
+        /* --- ULTRA DATA CARD --- */
+        .usage-card {
+            background: linear-gradient(145deg, rgba(20, 20, 30, 0.6), rgba(10, 10, 20, 0.4));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 2rem;
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .usage-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.05));
+            pointer-events: none;
+        }
+
+        .uc-chart {
+            width: 140px;
+            height: 140px;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .uc-info {
+            flex: 1;
+        }
+
+        .uc-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .uc-row:last-child {
+            border-bottom: none;
+        }
+
+        .uc-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text2);
+        }
+
+        .uc-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .uc-val {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+        }
+
+        @media (max-width: 600px) {
+            .usage-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .uc-row {
+                width: 100%;
+            }
         }
     </style>
 
@@ -3449,9 +4038,16 @@
     <main>
         <!-- Hero -->
         <section class="hero">
-            <div class="av">
-                <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Felix" alt="Avatar">
-                <div class="av-badge">VIP</div>
+            <div class="avatar-container">
+                <div class="avatar-rings">
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                </div>
+                <div class="avatar-glow"></div>
+                <div class="av">
+                    <img src="https://avatar.iran.liara.run/public/38" alt="Avatar">
+                    <div class="av-badge">VIP</div>
+                </div>
             </div>
             <div class="hero-date">
                 <span><i class="ri-calendar-line"></i> <span id="dateFa">۱۹ آذر ۱۴۰۳</span></span>
@@ -3461,41 +4057,93 @@
             <p class="welcome" data-t="welcome">Welcome back,</p>
             <h1 class="uname" id="uname">{{ user.username }}</h1>
 
-            <!-- Standardized Status Card -->
-            <div class="dash-card">
-                <div class="dc-header">
-                    <div class="dc-status">
-                        <span class="pulse-dot"></span>
-                        <span data-t="heroTitle">Premium VPN Active</span>
+            <!-- Ultra Premium Stats Grid -->
+            <div class="stats-grid">
+                <!-- Total Data -->
+                <div class="stat-card sc-blue">
+                    <div class="stat-header">
+                        <div class="stat-icon"><i class="ri-database-2-fill"></i></div>
+                        <div class="stat-trend" style="color:#3b82f6">100%</div>
                     </div>
-                    <div class="dc-age">
-                        <i class="ri-medal-line"></i> <span id="months">10</span> <span
-                            data-t="monthsWith">Months</span>
+                    <div class="stat-label">Total Package</div>
+                    <div class="stat-value" id="cardTotal">Loading...</div>
+                    <div class="stat-progress">
+                        <div class="stat-progress-bar" style="width: 100%"></div>
                     </div>
                 </div>
 
-                <div class="dc-stats">
-                    <div class="dc-stat">
-                        <div class="dcs-val" id="qDays">-</div>
-                        <div class="dcs-lbl" data-t="daysLeft">Days</div>
+                <!-- Consumed -->
+                <div class="stat-card sc-orange">
+                    <div class="stat-header">
+                        <div class="stat-icon"><i class="ri-pie-chart-fill"></i></div>
+                        <div class="stat-trend" style="color:#f59e0b" id="trendUsed">-</div>
                     </div>
-                    <div class="dc-divider"></div>
-                    <div class="dc-stat">
-                        <div class="dcs-val" id="qData">-</div>
-                        <div class="dcs-lbl" data-t="dataLeft">Data</div>
+                    <div class="stat-label">Consumed</div>
+                    <div class="stat-value" id="cardUsed">-</div>
+                    <div class="stat-progress">
+                        <div class="stat-progress-bar" id="barUsed"></div>
                     </div>
-                    <div class="hidden-data" id="uExpire" style="display:none">{{ user.expire }}</div>
-                    <div class="hidden-data" id="uLimit" style="display:none">{{ user.data_limit }}</div>
-                    <div class="hidden-data" id="uUsed" style="display:none">{{ user.used_traffic }}</div>
-                    <div class="hidden-data" id="uOnline" style="display:none">{{ user.online_at }}</div>
-                    <div class="hidden-data" id="uCreated" style="display:none">{{ user.created_at }}</div>
-                    <div class="dc-divider"></div>
-                    <div class="dc-stat">
-                        <div class="dcs-val" id="qServers">13</div>
-                        <div class="dcs-lbl" data-t="servers">Servers</div>
+                </div>
+
+                <!-- Remaining -->
+                <div class="stat-card sc-green">
+                    <div class="stat-header">
+                        <div class="stat-icon"><i class="ri-download-cloud-fill"></i></div>
+                        <div class="stat-trend" style="color:#22c55e" id="trendRem">-</div>
+                    </div>
+                    <div class="stat-label">Remaining</div>
+                    <div class="stat-value" id="cardRemaining">-</div>
+                    <div class="stat-progress">
+                        <div class="stat-progress-bar" id="barRemaining"></div>
+                    </div>
+                </div>
+
+                <!-- Days Left -->
+                <div class="stat-card sc-pink">
+                    <div class="stat-header">
+                        <div class="stat-icon"><i class="ri-time-fill"></i></div>
+                        <div class="stat-trend" style="color:#ec4899" id="trendDays">-</div>
+                    </div>
+                    <div class="stat-label">Days Left</div>
+                    <div class="stat-value" id="cardDays">-</div>
+                    <div class="stat-progress">
+                        <div class="stat-progress-bar" id="barDays"></div>
+                    </div>
+                </div>
+
+                <!-- Total Period -->
+                <div class="stat-card sc-purple">
+                    <div class="stat-header">
+                        <div class="stat-icon"><i class="ri-calendar-check-fill"></i></div>
+                        <div class="stat-trend" style="color:#a855f7">∞</div>
+                    </div>
+                    <div class="stat-label">Total Period</div>
+                    <div class="stat-value" id="cardPeriod">-</div>
+                    <div class="stat-progress">
+                        <div class="stat-progress-bar" style="width: 100%"></div>
+                    </div>
+                </div>
+
+                <!-- Servers -->
+                <div class="stat-card sc-cyan">
+                    <div class="stat-header">
+                        <div class="stat-icon"><i class="ri-global-fill"></i></div>
+                        <div class="stat-trend" style="color:#06b6d4">All</div>
+                    </div>
+                    <div class="stat-label">Servers</div>
+                    <div class="stat-value" id="cardServers">-</div>
+                    <div class="stat-progress">
+                        <div class="stat-progress-bar" style="width: 100%"></div>
                     </div>
                 </div>
             </div>
+
+            <!-- Hidden Data Fields (Preserved) -->
+            <div class="hidden-data" id="uExpire" style="display:none">{{ user.expire }}</div>
+            <div class="hidden-data" id="uLimit" style="display:none">{{ user.data_limit }}</div>
+            <div class="hidden-data" id="uUsed" style="display:none">{{ user.used_traffic }}</div>
+            <div class="hidden-data" id="uOnline" style="display:none">{{ user.online_at }}</div>
+            <div class="hidden-data" id="uCreated" style="display:none">{{ user.created_at }}</div>
 
             <!-- Action Buttons -->
             <div class="hero-actions">
@@ -3542,168 +4190,70 @@
             </div>
         </section>
 
-        <!-- Circular Countdown - Enhanced -->
-        <!-- Cyber-Glass Countdown -->
-        <div class="countdown-sec">
-            <div class="cd-glow"></div>
-            <div class="cd-content">
-                <div class="cd-header">
-                    <div class="status-dot"></div>
-                    <div class="cd-title" data-t="expiresIn">SUBSCRIPTION EXPIRES IN</div>
+        <!-- Ultra Premium Subscription Status -->
+        <div class="sub-status-card">
+            <div class="ssc-content">
+                <div class="ssc-title"><i class="ri-vip-crown-fill"></i> <span data-t="subStatus">Subscription
+                        Status</span></div>
+                <div class="ssc-days"><span id="daysRemDisplay">--</span> <span
+                        style="font-size:1rem;font-weight:500;color:var(--text2)" data-t="daysRemaining">Days
+                        Remaining</span></div>
+                <div class="ssc-desc" id="subDesc">Your plan is active and running smoothly.</div>
+            </div>
+            <div class="ssc-extra">
+                <div class="expiry-badge">
+                    <i class="ri-calendar-event-line"></i>
+                    <span id="expiryDateDisplay">--/--/--</span>
                 </div>
-
-                <div class="circ-timer-wrap">
-                    <!-- Days -->
-                    <div class="circ-timer">
-                        <div class="circ-val" id="cdDaysVal">0</div>
-                        <div class="circ-lbl" data-t="days">Days</div>
-                    </div>
-                    <div class="sep">:</div>
-                    <!-- Hours -->
-                    <div class="circ-timer">
-                        <div class="circ-val" id="cdHrsVal">0</div>
-                        <div class="circ-lbl" data-t="hours">Hours</div>
-                    </div>
-                    <div class="sep">:</div>
-                    <!-- Minutes -->
-                    <div class="circ-timer">
-                        <div class="circ-val" id="cdMinsVal">0</div>
-                        <div class="circ-lbl" data-t="mins">Mins</div>
-                    </div>
-                    <div class="sep">:</div>
-                    <!-- Seconds -->
-                    <div class="circ-timer">
-                        <div class="circ-val" id="cdSecsVal">0</div>
-                        <div class="circ-lbl" data-t="secs">Secs</div>
-                    </div>
-                </div>
+            </div>
+            <div class="ssc-chart">
+                <svg viewBox="0 0 36 36" class="circular-chart">
+                    <path class="circle-bg"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <path class="circle" id="daysCircle" stroke-dasharray="0, 100"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                </svg>
+                <div class="ssc-icon"><i class="ri-timer-flash-line"></i></div>
             </div>
         </div>
 
-        <!-- Stats -->
-        <section class="sec">
-            <h2 class="sec-h"><i class="ri-bar-chart-box-fill"></i> <span data-t="stats">Statistics</span></h2>
-            <div class="stats">
-                <div class="stat">
-                    <div class="stat-i">📊</div>
-                    <div class="stat-v" id="used">1.35 TB</div>
-                    <div class="stat-l" data-t="used">Used</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-i">📅</div>
-                    <div class="stat-v" id="expire">Feb 9</div>
-                    <div class="stat-l" data-t="expires">Expires</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-i">🕐</div>
-                    <div class="stat-v" id="online">2m</div>
-                    <div class="stat-l" data-t="lastSeen">Last Seen</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-i">📱</div>
-                    <div class="stat-v" id="app">v2rayNG</div>
-                    <div class="stat-l" data-t="app">App</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-i">📈</div>
-                    <div class="stat-v" id="lifetime">5.12 TB</div>
-                    <div class="stat-l" data-t="lifetime">Lifetime</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-i">🌐</div>
-                    <div class="stat-v" id="conns">13</div>
-                    <div class="stat-l" data-t="conns">Servers</div>
-                </div>
-            </div>
-        </section>
+        <!-- Stats Section Removed (Redundant with Ultra Grid) -->
 
-        <!-- Chart -->
-        <div class="chart-sec">
-            <div class="chart-head">
-                <h3 class="sec-h" style="margin:0"><i class="ri-pie-chart-fill"></i> <span data-t="analytics">Usage
-                        Analytics</span></h3>
-                <div class="c-tabs"><button class="c-tab active" data-t="month">Month</button><button class="c-tab"
-                        data-t="week">Week</button><button class="c-tab" data-t="today">Today</button></div>
-            </div>
-            <div class="chart-grid">
-                <div class="chart-left">
-                    <div class="donut" style="--p:95">
-                        <div class="donut-in">
-                            <div class="donut-v">95%</div>
-                            <div class="donut-l" data-t="used">Used</div>
-                        </div>
-                    </div>
-                    <div class="legends">
-                        <div class="leg">
-                            <div class="leg-d" style="background:var(--accent)"></div>
-                            <div class="leg-l" data-t="used">Used</div>
-                            <div class="leg-v">1.35 TB</div>
-                        </div>
-                        <div class="leg">
-                            <div class="leg-d" style="background:rgba(255,255,255,.1)"></div>
-                            <div class="leg-l" data-t="remaining">Remaining</div>
-                            <div class="leg-v">71 GB</div>
-                        </div>
-                        <div class="leg">
-                            <div class="leg-d" style="background:var(--purple)"></div>
-                            <div class="leg-l" data-t="lifetime">Lifetime</div>
-                            <div class="leg-v">5.12 TB</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="chart-right">
-                    <div class="bar-chart">
-                        <div class="bar-title" data-t="daily">Daily Usage (Last 7 Days)</div>
-                        <div class="bars">
-                            <div class="bar-row"><span class="bar-day">Sat</span>
-                                <div class="bar-wrap">
-                                    <div class="bar-fill" style="width:75%"></div>
-                                </div><span class="bar-val">45GB</span>
-                            </div>
-                            <div class="bar-row"><span class="bar-day">Sun</span>
-                                <div class="bar-wrap">
-                                    <div class="bar-fill" style="width:63%"></div>
-                                </div><span class="bar-val">38GB</span>
-                            </div>
-                            <div class="bar-row"><span class="bar-day">Mon</span>
-                                <div class="bar-wrap">
-                                    <div class="bar-fill" style="width:87%"></div>
-                                </div><span class="bar-val">52GB</span>
-                            </div>
-                            <div class="bar-row"><span class="bar-day">Tue</span>
-                                <div class="bar-wrap">
-                                    <div class="bar-fill" style="width:47%"></div>
-                                </div><span class="bar-val">28GB</span>
-                            </div>
-                            <div class="bar-row"><span class="bar-day">Wed</span>
-                                <div class="bar-wrap">
-                                    <div class="bar-fill" style="width:68%"></div>
-                                </div><span class="bar-val">41GB</span>
-                            </div>
-                            <div class="bar-row"><span class="bar-day">Thu</span>
-                                <div class="bar-wrap">
-                                    <div class="bar-fill" style="width:100%"></div>
-                                </div><span class="bar-val">60GB</span>
-                            </div>
-                            <div class="bar-row"><span class="bar-day">Fri</span>
-                                <div class="bar-wrap">
-                                    <div class="bar-fill" style="width:37%"></div>
-                                </div><span class="bar-val">22GB</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chart-footer">
-                        <div class="prog-h"><span data-t="total">Total Progress</span><span>95%</span></div>
-                        <div class="prog-bar">
-                            <div class="prog-fill" style="width:95%"></div>
-                        </div>
-                    </div>
+        <!-- Ultra Premium Data Usage Card -->
+        <h2 class="sec-h"><i class="ri-pie-chart-2-fill"></i> <span data-t="analytics">Data Overview</span></h2>
+        <div class="usage-card">
+            <div class="uc-chart">
+                <svg viewBox="0 0 36 36" class="circular-chart">
+                    <path class="circle-bg"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <path class="circle" id="usageCircle" stroke-dasharray="0, 100" stroke="#06b6d4"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                </svg>
+                <div
+                    style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+                    <span style="font-size:1.5rem;font-weight:800;color:#fff" id="usagePct">0%</span>
+                    <span style="font-size:0.7rem;color:var(--text2);text-transform:uppercase">Used</span>
                 </div>
             </div>
-            <div class="chart-alert"><i class="ri-alert-line"></i> <span data-t="alert">At this rate, your data will run
-                    out in ~5 days!</span></div>
+
+            <div class="uc-info">
+                <div class="uc-row">
+                    <span class="uc-label"><span class="uc-dot" style="background:#06b6d4"></span> <span
+                            data-t="used">Used Traffic</span></span>
+                    <span class="uc-val" id="ucUsed">-</span>
+                </div>
+                <div class="uc-row">
+                    <span class="uc-label"><span class="uc-dot" style="background:rgba(255,255,255,0.2)"></span> <span
+                            data-t="remaining">Free Traffic</span></span>
+                    <span class="uc-val" id="ucFree">-</span>
+                </div>
+                <div class="uc-row">
+                    <span class="uc-label"><span class="uc-dot" style="background:var(--accent)"></span> <span
+                            data-t="total">Total Capacity</span></span>
+                    <span class="uc-val" id="ucTotal">-</span>
+                </div>
+            </div>
         </div>
-
         <!-- Servers -->
         <section class="sec">
             <h2 class="sec-h"><i class="ri-global-line"></i> <span data-t="serverList">Servers</span></h2>
@@ -3856,42 +4406,57 @@
             </div>
         </section>
 
-        <!-- Payment -->
-        <div class="pay">
-            <div class="pay-i">💳</div>
-            <h3 class="pay-t" data-t="renewSub">Renew Subscription</h3>
-            <p class="pay-d" data-t="payDesc">Transfer and send receipt via Telegram</p>
-            <div class="pay-cards">
-                <div class="pay-card">
-                    <div class="pay-card-l">شماره کارت / Card Number</div>
-                    <div class="pay-card-n" id="cardNum">5859 8311 1983 7713</div>
+        <!-- Ultra Premium Payment Section -->
+        <section class="pay-section">
+            <h2 class="sec-h"><i class="ri-secure-payment-line"></i> <span data-t="renewSub">Renew Subscription</span>
+            </h2>
+
+            <div class="credit-card">
+                <div class="cc-header">
+                    <div class="cc-chip"></div>
+                    <div class="cc-bank"><i class="ri-bank-card-2-line"></i> TEJARAT BANK</div>
                 </div>
-                <div class="pay-card">
-                    <div class="pay-card-l">دارنده کارت / Holder</div>
-                    <div class="pay-card-n">توانا محمدی</div>
+
+                <div class="cc-number">
+                    <span id="ccNumDisplay">5859 8311 1983 7713</span>
+                    <button class="cc-copy-btn" onclick="copyCardNum()"><i class="ri-file-copy-line"></i></button>
                 </div>
-                <div class="pay-card">
-                    <div class="pay-card-l">بانک / Bank</div>
-                    <div class="pay-card-n">تجارت</div>
-                </div>
-            </div>
-            <div class="pay-prices">
-                <div class="pay-opt">
-                    <div class="pay-opt-t">1 Month</div>
-                    <div class="pay-opt-p">150,000 T</div>
-                </div>
-                <div class="pay-opt active">
-                    <div class="pay-opt-t">3 Months</div>
-                    <div class="pay-opt-p">400,000 T</div>
-                </div>
-                <div class="pay-opt">
-                    <div class="pay-opt-t">1 Year</div>
-                    <div class="pay-opt-p">1,500,000 T</div>
+
+                <div class="cc-details">
+                    <div>
+                        <div class="cc-label">Card Holder</div>
+                        <div class="cc-val">Tavanna Mohammadi</div>
+                    </div>
+                    <div style="text-align:right">
+                        <div class="cc-label">Expires</div>
+                        <div class="cc-val">12/28</div>
+                    </div>
                 </div>
             </div>
-            <button class="btn btn-r" onclick="renew()"><i class="ri-telegram-fill"></i> <span data-t="sendReceipt">Send
-                    Receipt</span></button>
-        </div>
+
+            <div class="pay-controls">
+                <div style="color:var(--text2);font-size:0.9rem;margin-bottom:-0.5rem">Enter Amount (Toman):</div>
+                <div class="amount-input-group">
+                    <span class="amount-symbol">T</span>
+                    <input type="tel" class="amount-input" id="customAmount" placeholder="e.g. 200,000"
+                        oninput="formatAmount(this)">
+                </div>
+
+                <div class="presets">
+                    <div class="preset-chip" onclick="setAmount(150000)">150,000</div>
+                    <div class="preset-chip" onclick="setAmount(400000)">400,000</div>
+                    <div class="preset-chip" onclick="setAmount(1500000)">1,500,000</div>
+                    <div class="preset-chip" onclick="setAmount(3000000)">3,000,000</div>
+                </div>
+
+                <button class="pay-action-btn" onclick="sendReceipt()">
+                    <i class="ri-send-plane-fill"></i> Send Receipt
+                </button>
+                <div style="text-align:center;font-size:0.8rem;color:var(--text3);margin-top:0.5rem">
+                    Transfer amount to the card above, then click Send Receipt.
+                </div>
+            </div>
+        </section>
 
         <!-- Support -->
         <section class="sec">
@@ -4135,7 +4700,8 @@
                 servers: "Servers",
                 vip: "VIP Member",
                 copyAll: "Copy All",
-                renew: "Renew",
+                vip: "VIP Member",
+                copyAll: "Copy All",
                 expiresIn: "Subscription expires in:",
                 hours: "Hours",
                 mins: "Mins",
@@ -4200,7 +4766,9 @@
                 terms: "Terms of Service",
                 followUs: "Follow Us",
                 version: "Version",
-                lastUpdate: "Last Update"
+                lastUpdate: "Last Update",
+                subStatus: "Subscription Status",
+                daysRemaining: "Days Remaining"
             },
             fa: {
                 welcome: "خوش آمدید،",
@@ -4272,7 +4840,7 @@
                 faq7a: "با تیم پشتیبانی از طریق تلگرام @rahbarusd تماس بگیرید. اشتراک شما تا تاریخ انقضا فعال خواهد ماند.",
                 faq8q: "آیا لاگ فعالیت نگه‌داری می‌شود؟",
                 faq8a: "خیر. ما سیاست عدم ثبت لاگ داریم. فعالیت‌های مرور و لاگ‌های اتصال شما هرگز ذخیره نمی‌شود.",
-                faq9q: "چه پروتکل‌هایی پشتیبانی می‌شود؟",
+                faq9q: "چه پروتکل‌هایی پشتی پشتیبانی می‌شود؟",
                 faq9a: "ما از پروتکل‌های VLESS، VMess، Trojan و Shadowsocks با رمزگذاری TLS و Reality پشتیبانی می‌کنیم.",
                 faq10q: "چگونه مشکلات DNS را حل کنم؟",
                 faq10a: "در تنظیمات برنامه، DNS را به 1.1.1.1 یا 8.8.8.8 تغییر دهید. همچنین مطمئن شوید مسیریابی DNS فعال است.",
@@ -4287,7 +4855,9 @@
                 terms: "شرایط استفاده",
                 followUs: "ما را دنبال کنید",
                 version: "نسخه",
-                lastUpdate: "آخرین بروزرسانی"
+                lastUpdate: "آخرین بروزرسانی",
+                subStatus: "وضعیت اشتراک",
+                daysRemaining: "روز باقی‌مانده"
             }
         };
 
@@ -4432,59 +5002,6 @@
             document.getElementById('dateFa').textContent = now.toLocaleDateString('fa-IR', opts);
             document.getElementById('timeEn').textContent = now.toLocaleDateString('en-US', { ...opts, weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }) + ' • ' + now.toLocaleTimeString('en-US', { ...opts, hour: '2-digit', minute: '2-digit', hour12: false });
             document.getElementById('timeFa').textContent = now.toLocaleDateString('fa-IR', opts);
-
-            // CIRCULAR COUNTDOWN LOGIC
-            const expEl = document.getElementById('uExpire');
-            if (expEl) {
-                const expTimestamp = parseInt(expEl.textContent.trim());
-                if (expTimestamp && !isNaN(expTimestamp)) {
-                    const diff = expTimestamp - Math.floor(Date.now() / 1000);
-
-                    if (diff > 0) {
-                        const d = Math.floor(diff / 86400);
-                        const h = Math.floor((diff % 86400) / 3600);
-                        const m = Math.floor((diff % 3600) / 60);
-
-                        // Update Values
-                        document.getElementById('cdDaysVal').textContent = d;
-                        document.getElementById('cdHrsVal').textContent = h;
-                        document.getElementById('cdMinsVal').textContent = m;
-
-                        // Update Rings (Assuming max 30 days for visual scaling, 24h, 60m)
-                        // Circumference = 2 * PI * 35 ≈ 220
-                        const MAX_C = 220;
-
-                        const dPct = Math.min(d / 30, 1); // Max 30 days scale
-                        const hPct = h / 24;
-                        const mPct = m / 60;
-
-                        setRing('ctDays', dPct, MAX_C);
-                        setRing('ctHrs', hPct, MAX_C);
-                        setRing('ctMins', mPct, MAX_C);
-
-                        // Color Logic
-                        if (d < 3) document.getElementById('ctDays').classList.add('crit');
-                        else if (d < 7) document.getElementById('ctDays').classList.add('warn');
-                    } else {
-                        document.getElementById('cdDaysVal').textContent = 0;
-                        document.getElementById('cdHrsVal').textContent = 0;
-                        document.getElementById('cdMinsVal').textContent = 0;
-                    }
-                }
-            }
-        }
-
-        function setRing(id, pct, max) {
-            const el = document.querySelector(`#${id} .circ-circle-fg`);
-            if (el) {
-                // StrokeDashoffset: max means empty, 0 means full
-                // We want to show REMAINING time
-                // If pct is 1 (full time), offset should be 0? 
-                // Actually usually countdowns show "full" and decrease. 
-                // Let's standardise: Full ring = full health. 
-                // As time goes down, ring empties.
-                el.style.strokeDashoffset = max * (1 - pct);
-            }
         }
 
         // ===== V4 NEW FEATURES =====
@@ -4569,6 +5086,44 @@
             }
         }
 
+        // --- PAYMENT LOGIC ---
+        const CARD_NUM = "5859831119837713";
+
+        function copyCardNum() {
+            navigator.clipboard.writeText(CARD_NUM).then(() => {
+                toast("Card Number Copied!");
+            });
+        }
+
+        function formatAmount(input) {
+            // Remove non-digits
+            let val = input.value.replace(/\D/g, '');
+            if (val) {
+                // Add commas
+                val = parseInt(val).toLocaleString();
+                input.value = val;
+            }
+        }
+
+        function setAmount(amount) {
+            const input = document.getElementById('customAmount');
+            input.value = amount.toLocaleString();
+            // Highlight active chip (simple logic)
+            document.querySelectorAll('.preset-chip').forEach(c => c.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function sendReceipt() {
+            const amt = document.getElementById('customAmount').value;
+            if (!amt) {
+                toast("Please enter amount first!");
+                return;
+            }
+            const msg = `Hi Support, I have transferred ${amt} Toman for renewal. Please check.`;
+            const url = `https://t.me/rahbarusd?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank');
+        }
+
         // Toggle Tutorial
         function toggleTutorial() {
             document.getElementById('tuteSection').classList.toggle('open');
@@ -4586,100 +5141,148 @@
             event.target.classList.add('active');
         }
 
-        // Initialize Data from Hidden Fields
+        // Initialize Data from Hidden Fields for Ultra Grid
         function initData() {
             try {
-                // Days Left
+                // DATA CALCS
+                const limEl = document.getElementById('uLimit');
+                const usedEl = document.getElementById('uUsed');
+                let total = 0, used = 0;
+
+                if (limEl) total = parseInt(limEl.textContent.trim()) || 0;
+                if (usedEl) used = parseInt(usedEl.textContent.trim()) || 0;
+
+                // Total
+                if (total > 0) {
+                    document.getElementById('cardTotal').textContent = formatBytes(total);
+                } else {
+                    document.getElementById('cardTotal').textContent = '∞';
+                }
+
+                // Used
+                document.getElementById('cardUsed').textContent = formatBytes(used);
+                let usedPct = total > 0 ? (used / total) * 100 : 0;
+                if (usedPct > 100) usedPct = 100;
+                if (document.getElementById('barUsed')) document.getElementById('barUsed').style.width = usedPct + '%';
+                if (document.getElementById('trendUsed')) document.getElementById('trendUsed').textContent = Math.round(usedPct) + '%';
+                // Update old 'Used' stat if exists
+                if (document.getElementById('used')) document.getElementById('used').textContent = formatBytes(used);
+
+                // NEW USAGE CARD POPULATION
+                document.getElementById('ucUsed').textContent = formatBytes(used);
+                document.getElementById('ucTotal').textContent = total > 0 ? formatBytes(total) : '∞';
+                document.getElementById('ucFree').textContent = total > 0 ? formatBytes(total - used) : '∞';
+                document.getElementById('usagePct').textContent = Math.round(usedPct) + '%';
+                document.getElementById('usageCircle').setAttribute('stroke-dasharray', `${usedPct}, 100`);
+                if (usedPct >= 90) document.getElementById('usageCircle').style.stroke = '#ef4444'; // Red if full
+                else if (usedPct >= 75) document.getElementById('usageCircle').style.stroke = '#f59e0b'; // Orange
+                else document.getElementById('usageCircle').style.stroke = '#06b6d4'; // Blue default
+
+                // Remaining
+                if (total > 0) {
+                    const rem = total - used;
+                    document.getElementById('cardRemaining').textContent = formatBytes(rem > 0 ? rem : 0);
+                    let remPct = (rem / total) * 100;
+                    if (remPct < 0) remPct = 0;
+                    if (document.getElementById('barRemaining')) document.getElementById('barRemaining').style.width = remPct + '%';
+                    if (document.getElementById('trendRem')) document.getElementById('trendRem').textContent = Math.round(remPct) + '%';
+                } else {
+                    document.getElementById('cardRemaining').textContent = '∞';
+                    if (document.getElementById('barRemaining')) document.getElementById('barRemaining').style.width = '100%';
+                }
+
+
+                // DAYS LEFT
                 const expEl = document.getElementById('uExpire');
                 if (expEl) {
                     const exp = expEl.textContent.trim();
-                    console.log("Raw Expire Data:", exp); // Debug Log
                     const now = Math.floor(Date.now() / 1000);
                     if (exp && !isNaN(exp) && parseInt(exp) > 0) {
                         const diff = parseInt(exp) - now;
                         const d = Math.ceil(diff / 86400);
-                        document.getElementById('qDays').textContent = d > 0 ? d : 0;
+                        document.getElementById('cardDays').textContent = d > 0 ? d : 0;
+
+                        // Fake progress for days (assuming 30 days scale or just visually nice)
+                        const daysPct = d > 30 ? 100 : (d / 30) * 100;
+                        if (document.getElementById('barDays')) document.getElementById('barDays').style.width = daysPct + '%';
+                        if (document.getElementById('trendDays')) document.getElementById('trendDays').textContent = d + 'd';
+
+                        // Update date string
+                        const el = document.getElementById('expire');
+                        if (el) {
+                            const date = new Date(parseInt(exp) * 1000);
+                            el.textContent = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                        }
+
+                        // --- NEW CARD UPDATE LOGIC ---
+                        document.getElementById('daysRemDisplay').textContent = d > 0 ? d : 0;
+                        const dateObj = new Date(parseInt(exp) * 1000);
+                        document.getElementById('expiryDateDisplay').textContent = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+
+                        // Circle Progress (assuming 30d max for visual)
+                        const circlePct = d > 30 ? 100 : (d / 30) * 100;
+                        document.getElementById('daysCircle').setAttribute('stroke-dasharray', `${circlePct}, 100`);
+
+                        if (d <= 3) {
+                            document.getElementById('subDesc').textContent = 'Your subscription is ending soon!';
+                            document.getElementById('subDesc').style.color = '#f59e0b';
+                        } else {
+                            document.getElementById('subDesc').textContent = 'Your plan is active and running smoothly.';
+                            document.getElementById('subDesc').style.color = 'var(--text2)';
+                        }
+
                     } else {
-                        document.getElementById('qDays').textContent = '∞';
+                        document.getElementById('cardDays').textContent = '∞';
+                        if (document.getElementById('barDays')) document.getElementById('barDays').style.width = '100%';
+                        if (document.getElementById('expire')) document.getElementById('expire').textContent = '∞';
+
+                        // --- NEW CARD ---
+                        document.getElementById('daysRemDisplay').textContent = '∞';
+                        document.getElementById('expiryDateDisplay').textContent = 'Never';
+                        document.getElementById('daysCircle').setAttribute('stroke-dasharray', `100, 100`);
+                        document.getElementById('subDesc').textContent = 'You have an unlimited subscription.';
                     }
                 }
 
-                // Data Usage
-                const limEl = document.getElementById('uLimit');
-                const usedEl = document.getElementById('uUsed');
-
-                if (limEl && usedEl) {
-                    const lim = limEl.textContent.trim();
-                    const used = usedEl.textContent.trim();
-                    // Update main stats
-                    document.getElementById('used').textContent = formatBytes(used || 0);
-
-                    // Update Data Left Card
-                    if (lim && !isNaN(lim) && parseInt(lim) > 0) {
-                        const rem = parseInt(lim) - parseInt(used || 0);
-                        document.getElementById('qData').textContent = formatBytes(rem > 0 ? rem : 0);
-                        document.querySelector('[data-t="dataLeft"]').textContent = 'Data Left';
-                    } else {
-                        document.getElementById('qData').textContent = '∞';
-                        document.getElementById('qData').style.fontSize = '2rem';
-                        document.querySelector('[data-t="dataLeft"]').textContent = 'Unlimited';
-                    }
-                }
-
-                // Last Seen & Created
-                const onEl = document.getElementById('uOnline');
+                // TOTAL PERIOD CALCULATION
                 const crEl = document.getElementById('uCreated');
+                const expElRef = document.getElementById('uExpire');
 
-                if (onEl) {
-                    const t = onEl.textContent.trim();
-                    const el = document.getElementById('online');
-                    if (t && t !== 'None' && !isNaN(t) && parseInt(t) > 0) {
-                        const diff = Math.floor((Date.now() / 1000) - parseInt(t));
-                        if (diff < 60) el.textContent = 'Just now';
-                        else if (diff < 3600) el.textContent = Math.floor(diff / 60) + 'm ago';
-                        else if (diff < 86400) el.textContent = Math.floor(diff / 3600) + 'h ago';
-                        else el.textContent = Math.floor(diff / 86400) + 'd ago';
+                if (crEl && expElRef) {
+                    const c = parseInt(crEl.textContent.trim()) || 0;
+                    const e = parseInt(expElRef.textContent.trim()) || 0;
+                    const elP = document.getElementById('cardPeriod');
+
+                    if (c > 0 && e > 0) {
+                        const diff = e - c;
+                        const daysTotal = Math.ceil(diff / 86400);
+                        elP.textContent = daysTotal + ' Days';
                     } else {
-                        if (el && el.parentElement) el.parentElement.style.display = 'none';
+                        elP.textContent = '∞'; // Unlimited duration
+                        elP.style.fontSize = '2rem';
                     }
                 }
 
-                if (crEl) {
-                    const t = crEl.textContent.trim();
-                    const el = document.getElementById('months');
-                    // If created_at is available, calculate age, else hide "Months with us"
-                    if (t && t !== 'None' && !isNaN(t) && parseInt(t) > 0) {
-                        const diff = Math.floor((Date.now() / 1000) - parseInt(t));
-                        const m = Math.floor(diff / 2592000); // approx month
-                        if (el) el.textContent = m;
-                    } else {
-                        // Hide the badge if no data
-                        const badge = document.querySelector('.dc-age');
-                        if (badge) badge.style.display = 'none';
-                    }
-                }
-
-                // SERVER COUNT
+                // Servers
                 if (typeof SERVERS !== 'undefined' && SERVERS.length > 0) {
-                    const srvEl = document.getElementById('qServers');
+                    const srvEl = document.getElementById('cardServers');
                     if (srvEl) srvEl.textContent = SERVERS.length;
                     const connEl = document.getElementById('conns');
                     if (connEl) connEl.textContent = SERVERS.length;
                 }
 
-                // DATE FORMATTING
-                const expElDate = document.getElementById('uExpire');
-                if (expElDate) {
-                    const t = expElDate.textContent.trim();
-                    const el = document.getElementById('expire');
-                    if (el) {
-                        if (t && !isNaN(t)) {
-                            const d = new Date(parseInt(t) * 1000);
-                            const opts = { month: 'short', day: 'numeric' };
-                            el.textContent = d.toLocaleDateString('en-US', opts);
-                        } else {
-                            el.textContent = '∞';
-                        }
+                // Online/Created (Helper updates)
+                const onEl = document.getElementById('uOnline');
+                if (onEl && document.getElementById('online')) {
+                    // ... (logic preserved roughly)
+                    const t = onEl.textContent.trim();
+                    if (t && t !== 'None' && !isNaN(t) && parseInt(t) > 0) {
+                        const diff = Math.floor((Date.now() / 1000) - parseInt(t));
+                        const el = document.getElementById('online');
+                        if (diff < 60) el.textContent = 'Just now';
+                        else if (diff < 3600) el.textContent = Math.floor(diff / 60) + 'm ago';
+                        else if (diff < 86400) el.textContent = Math.floor(diff / 3600) + 'h ago';
+                        else el.textContent = Math.floor(diff / 86400) + 'd ago';
                     }
                 }
 

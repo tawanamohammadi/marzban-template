@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOOKA - Minimal Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0f;
+            color: #fff;
+            font-family: 'Inter', -apple-system, system-ui;
+            min-height: 100vh;
+            padding: 3rem 1.5rem;
+        }
+
+        /* Subtle Background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(29, 185, 84, 0.08), transparent);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Clean Profile */
+        .profile {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, #1DB954, #1ed760);
+            padding: 3px;
+            position: relative;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #0a0a0f;
+        }
+
+        .vip-badge {
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #000;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 0.3rem 0.6rem;
+            border-radius: 12px;
+            border: 3px solid #0a0a0f;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .user-name {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.5px;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.25rem;
+            background: rgba(29, 185, 84, 0.1);
+            border: 1px solid rgba(29, 185, 84, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #1ed760;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background: #1ed760;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .member-info {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: #71717a;
+        }
+
+        /* Clean Stats Grid */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats {
+                gap: 1rem;
+            }
+        }
+
+        .stat {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 1.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .stat:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: var(--color);
+            color: #fff;
+        }
+
+        .stat-percent {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--color);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: #a1a1aa;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .stat-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-bar-fill {
+            height: 100%;
+            background: var(--color);
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        .stat-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+        }
+
+        .stat-subtitle {
+            color: #71717a;
+        }
+
+        .stat-status {
+            font-weight: 600;
+            color: var(--status-color);
+        }
+
+        /* Colors */
+        .stat:nth-child(1) {
+            --color: #3b82f6;
+        }
+
+        .stat:nth-child(2) {
+            --color: #f59e0b;
+        }
+
+        .stat:nth-child(3) {
+            --color: #1DB954;
+        }
+
+        .stat:nth-child(4) {
+            --color: #ec4899;
+        }
+
+        .stat:nth-child(5) {
+            --color: #a855f7;
+        }
+
+        .stat:nth-child(6) {
+            --color: #06b6d4;
+        }
+
+        .good {
+            --status-color: #22c55e;
+        }
+
+        .warning {
+            --status-color: #f59e0b;
+        }
+
+        .critical {
+            --status-color: #ef4444;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Clean Profile -->
+        <div class="profile">
+            <div class="avatar">
+                <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Felix" alt="Avatar">
+                <div class="vip-badge">VIP</div>
+            </div>
+
+            <h1 class="user-name">mahdi_test</h1>
+
+            <div class="status">
+                <div class="status-dot"></div>
+                <span>Premium Active</span>
+            </div>
+
+            <div class="member-info">
+                Member for 10 months
+            </div>
+        </div>
+
+        <!-- Clean Stats -->
+        <div class="stats">
+            <!-- Total Data -->
+            <div class="stat">
+                <div class="stat-top">
+                    <div class="stat-icon">
+                        <i class="ri-database-2-line"></i>
+                    </div>
+                    <div class="stat-percent">100%</div>
+                </div>
+                <div class="stat-label">Total Data</div>
+                <div class="stat-value">100 GB</div>
+                <div class="stat-bar">
+                    <div class="stat-bar-fill" style="width: 100%"></div>
+                </div>
+                <div class="stat-footer">
+                    <span class="stat-subtitle">Monthly Limit</span>
+                    <span class="stat-status good">Active</span>
+                </div>
+            </div>
+
+            <!-- Used Data -->
+            <div class="stat">
+                <div class="stat-top">
+                    <div class="stat-icon">
+                        <i class="ri-pie-chart-line"></i>
+                    </div>
+                    <div class="stat-percent">45%</div>
+                </div>
+                <div class="stat-label">Used Data</div>
+                <div class="stat-value">45.2 GB</div>
+                <div class="stat-bar">
+                    <div class="stat-bar-fill" style="width: 45%"></div>
+                </div>
+                <div class="stat-footer">
+                    <span class="stat-subtitle">Consumed</span>
+                    <span class="stat-status warning">Moderate</span>
+                </div>
+            </div>
+
+            <!-- Remaining -->
+            <div class="stat">
+                <div class="stat-top">
+                    <div class="stat-icon">
+                        <i class="ri-download-cloud-line"></i>
+                    </div>
+                    <div class="stat-percent">55%</div>
+                </div>
+                <div class="stat-label">Remaining</div>
+                <div class="stat-value">54.8 GB</div>
+                <div class="stat-bar">
+                    <div class="stat-bar-fill" style="width: 55%"></div>
+                </div>
+                <div class="stat-footer">
+                    <span class="stat-subtitle">Available</span>
+                    <span class="stat-status good">Healthy</span>
+                </div>
+            </div>
+
+            <!-- Days Left -->
+            <div class="stat">
+                <div class="stat-top">
+                    <div class="stat-icon">
+                        <i class="ri-time-line"></i>
+                    </div>
+                    <div class="stat-percent">80%</div>
+                </div>
+                <div class="stat-label">Days Left</div>
+                <div class="stat-value">24</div>
+                <div class="stat-bar">
+                    <div class="stat-bar-fill" style="width: 80%"></div>
+                </div>
+                <div class="stat-footer">
+                    <span class="stat-subtitle">Until Renewal</span>
+                    <span class="stat-status good">Active</span>
+                </div>
+            </div>
+
+            <!-- Total Period -->
+            <div class="stat">
+                <div class="stat-top">
+                    <div class="stat-icon">
+                        <i class="ri-calendar-check-line"></i>
+                    </div>
+                    <div class="stat-percent">100%</div>
+                </div>
+                <div class="stat-label">Total Period</div>
+                <div class="stat-value">30 Days</div>
+                <div class="stat-bar">
+                    <div class="stat-bar-fill" style="width: 100%"></div>
+                </div>
+                <div class="stat-footer">
+                    <span class="stat-subtitle">Full Duration</span>
+                    <span class="stat-status good">Premium</span>
+                </div>
+            </div>
+
+            <!-- Servers -->
+            <div class="stat">
+                <div class="stat-top">
+                    <div class="stat-icon">
+                        <i class="ri-global-line"></i>
+                    </div>
+                    <div class="stat-percent">All</div>
+                </div>
+                <div class="stat-label">Servers</div>
+                <div class="stat-value">13</div>
+                <div class="stat-bar">
+                    <div class="stat-bar-fill" style="width: 100%"></div>
+                </div>
+                <div class="stat-footer">
+                    <span class="stat-subtitle">Global Network</span>
+                    <span class="stat-status good">Online</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

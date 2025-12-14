@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOOKA - Ultra Premium Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000000;
+            color: #fff;
+            font-family: 'Inter', system-ui;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Ultra Premium Animated Background */
+        .bg-wrapper {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-gradient {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 100% 60% at 50% -10%, rgba(29, 185, 84, 0.2), transparent 50%),
+                radial-gradient(ellipse 80% 50% at 90% 90%, rgba(59, 130, 246, 0.15), transparent 50%),
+                radial-gradient(ellipse 70% 60% at 10% 80%, rgba(168, 85, 247, 0.12), transparent 50%);
+            animation: bgMove 20s ease-in-out infinite;
+        }
+
+        @keyframes bgMove {
+
+            0%,
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+
+            50% {
+                transform: scale(1.1) rotate(5deg);
+            }
+        }
+
+        .bg-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.3;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem;
+        }
+
+        /* Ultra Premium Profile */
+        .profile-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .avatar-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        .avatar-rings {
+            position: absolute;
+            inset: -30px;
+        }
+
+        .ring {
+            position: absolute;
+            inset: 0;
+            border: 2px solid;
+            border-radius: 50%;
+            animation: rotate 10s linear infinite;
+        }
+
+        .ring:nth-child(1) {
+            border-color: rgba(29, 185, 84, 0.3) transparent rgba(29, 185, 84, 0.3) transparent;
+            animation-duration: 8s;
+        }
+
+        .ring:nth-child(2) {
+            border-color: transparent rgba(59, 130, 246, 0.3) transparent rgba(59, 130, 246, 0.3);
+            animation-duration: 12s;
+            animation-direction: reverse;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .avatar-glow {
+            position: absolute;
+            inset: -25px;
+            background: radial-gradient(circle, rgba(29, 185, 84, 0.6), transparent 60%);
+            filter: blur(30px);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.4;
+                transform: scale(0.95);
+            }
+
+            50% {
+                opacity: 0.8;
+                transform: scale(1.05);
+            }
+        }
+
+        .avatar {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1DB954 0%, #1ed760 50%, #a855f7 100%);
+            padding: 5px;
+            box-shadow:
+                0 0 0 6px rgba(0, 0, 0, 0.8),
+                0 0 80px rgba(29, 185, 84, 0.4),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #000;
+        }
+
+        .vip-badge {
+            position: absolute;
+            bottom: 5px;
+            right: -10px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #000;
+            font-size: 0.75rem;
+            font-weight: 900;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            border: 4px solid #000;
+            text-transform: uppercase;
+            box-shadow:
+                0 0 20px rgba(251, 191, 36, 0.6),
+                0 4px 15px rgba(0, 0, 0, 0.5);
+            letter-spacing: 1px;
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .user-name {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #1ed760 50%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -2px;
+            text-shadow: 0 0 40px rgba(29, 185, 84, 0.3);
+        }
+
+        .status-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(29, 185, 84, 0.3);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            box-shadow:
+                0 8px 32px rgba(29, 185, 84, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            background: #1ed760;
+            border-radius: 50%;
+            box-shadow:
+                0 0 10px #1ed760,
+                0 0 20px rgba(29, 185, 84, 0.5);
+            animation: statusPulse 2s infinite;
+        }
+
+        @keyframes statusPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.4);
+                opacity: 0.6;
+            }
+        }
+
+        .status-text {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1ed760;
+            text-shadow: 0 0 10px rgba(29, 185, 84, 0.5);
+        }
+
+        .member-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(251, 191, 36, 0.1);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #fbbf24;
+        }
+
+        /* Ultra Premium Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                gap: 1rem;
+            }
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 1.75rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.5),
+                0 0 60px var(--shadow);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .stat-card:hover::after {
+            opacity: 1;
+        }
+
+        .stat-card:hover .stat-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .stat-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            background: var(--gradient);
+            box-shadow:
+                0 10px 30px var(--shadow),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.4s;
+        }
+
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.4rem 0.75rem;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: #a1a1aa;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-value {
+            font-size: 2.25rem;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 1rem;
+            letter-spacing: -1.5px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-progress-container {
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-progress {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .stat-progress-bar {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 10px;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            box-shadow: 0 0 15px var(--shadow);
+        }
+
+        .stat-progress-bar::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shimmer 2.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(200%);
+            }
+        }
+
+        .stat-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+
+        .stat-subtitle {
+            color: #71717a;
+            font-weight: 500;
+        }
+
+        .stat-status {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .status-good {
+            color: #22c55e;
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .status-warning {
+            color: #f59e0b;
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .status-critical {
+            color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        /* Color Schemes */
+        .stat-card:nth-child(1) {
+            --gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            --shadow: rgba(59, 130, 246, 0.4);
+        }
+
+        .stat-card:nth-child(2) {
+            --gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            --shadow: rgba(245, 158, 11, 0.4);
+        }
+
+        .stat-card:nth-child(3) {
+            --gradient: linear-gradient(135deg, #1DB954 0%, #15803d 100%);
+            --shadow: rgba(29, 185, 84, 0.4);
+        }
+
+        .stat-card:nth-child(4) {
+            --gradient: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+            --shadow: rgba(236, 72, 153, 0.4);
+        }
+
+        .stat-card:nth-child(5) {
+            --gradient: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+            --shadow: rgba(168, 85, 247, 0.4);
+        }
+
+        .stat-card:nth-child(6) {
+            --gradient: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+            --shadow: rgba(6, 182, 212, 0.4);
+        }
+
+        /* Responsive Typography */
+        @media (max-width: 640px) {
+            .user-name {
+                font-size: 2rem;
+            }
+
+            .stat-value {
+                font-size: 1.75rem;
+            }
+
+            .stat-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-wrapper">
+        <div class="bg-gradient"></div>
+        <div class="bg-grid"></div>
+    </div>
+
+    <div class="container">
+        <!-- Ultra Premium Profile -->
+        <div class="profile-section">
+            <div class="avatar-container">
+                <div class="avatar-rings">
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                </div>
+                <div class="avatar-glow"></div>
+                <div class="avatar">
+                    <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Felix" alt="Avatar">
+                </div>
+                <div class="vip-badge">⭐ VIP</div>
+            </div>
+
+            <h1 class="user-name">mahdi_test</h1>
+
+            <div class="status-container">
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span class="status-text">Premium Active</span>
+                </div>
+                <div class="member-badge">
+                    <i class="ri-medal-fill"></i>
+                    <span>10 Months</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ultra Premium Stats Grid -->
+        <div class="stats-grid">
+            <!-- Total Data -->
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="ri-database-2-fill"></i>
+                        </div>
+                        <div class="stat-trend" style="color: #3b82f6;">
+                            <i class="ri-arrow-up-line"></i>
+                            100%
+                        </div>
+                    </div>
+                    <div class="stat-label">Total Package</div>
+                    <div class="stat-value">100 GB</div>
+                    <div class="stat-progress-container">
+                        <div class="stat-progress">
+                            <div class="stat-progress-bar" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-subtitle">Monthly Limit</span>
+                        <span class="stat-status status-good">
+                            <i class="ri-checkbox-circle-fill"></i>
+                            Active
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Used Data -->
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="ri-pie-chart-fill"></i>
+                        </div>
+                        <div class="stat-trend" style="color: #f59e0b;">
+                            <i class="ri-arrow-up-line"></i>
+                            45%
+                        </div>
+                    </div>
+                    <div class="stat-label">Consumed</div>
+                    <div class="stat-value">45.2 GB</div>
+                    <div class="stat-progress-container">
+                        <div class="stat-progress">
+                            <div class="stat-progress-bar" style="width: 45%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-subtitle">Usage Rate</span>
+                        <span class="stat-status status-warning">
+                            <i class="ri-alert-fill"></i>
+                            Moderate
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Remaining Data -->
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="ri-download-cloud-fill"></i>
+                        </div>
+                        <div class="stat-trend" style="color: #1ed760;">
+                            <i class="ri-arrow-down-line"></i>
+                            55%
+                        </div>
+                    </div>
+                    <div class="stat-label">Remaining</div>
+                    <div class="stat-value">54.8 GB</div>
+                    <div class="stat-progress-container">
+                        <div class="stat-progress">
+                            <div class="stat-progress-bar" style="width: 55%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-subtitle">Available</span>
+                        <span class="stat-status status-good">
+                            <i class="ri-check-double-fill"></i>
+                            Healthy
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Days Left -->
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="ri-time-fill"></i>
+                        </div>
+                        <div class="stat-trend" style="color: #ec4899;">
+                            <i class="ri-calendar-line"></i>
+                            80%
+                        </div>
+                    </div>
+                    <div class="stat-label">Days Left</div>
+                    <div class="stat-value">24</div>
+                    <div class="stat-progress-container">
+                        <div class="stat-progress">
+                            <div class="stat-progress-bar" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-subtitle">Until Renewal</span>
+                        <span class="stat-status status-good">
+                            <i class="ri-timer-fill"></i>
+                            Active
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Period -->
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="ri-calendar-check-fill"></i>
+                        </div>
+                        <div class="stat-trend" style="color: #a855f7;">
+                            <i class="ri-infinity-fill"></i>
+                        </div>
+                    </div>
+                    <div class="stat-label">Total Period</div>
+                    <div class="stat-value">30 Days</div>
+                    <div class="stat-progress-container">
+                        <div class="stat-progress">
+                            <div class="stat-progress-bar" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-subtitle">Full Duration</span>
+                        <span class="stat-status status-good">
+                            <i class="ri-vip-crown-fill"></i>
+                            Premium
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Servers -->
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="ri-global-fill"></i>
+                        </div>
+                        <div class="stat-trend" style="color: #06b6d4;">
+                            <i class="ri-signal-tower-fill"></i>
+                            All
+                        </div>
+                    </div>
+                    <div class="stat-label">Servers</div>
+                    <div class="stat-value">13</div>
+                    <div class="stat-progress-container">
+                        <div class="stat-progress">
+                            <div class="stat-progress-bar" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-subtitle">Global Network</span>
+                        <span class="stat-status status-good">
+                            <i class="ri-wifi-fill"></i>
+                            Online
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
